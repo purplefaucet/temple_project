@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Reference books and scans - kept locally, never committed
+sources/
+*.pdf
+
+# Node
+node_modules/
+
+# Secrets
+.env
+.env.*
+
+# Claude Code local, machine-specific permissions
+.claude/settings.local.json
