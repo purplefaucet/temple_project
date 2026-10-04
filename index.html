@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A browser-based 3D generator for an idealized Chola-style temple tower, with every element and dimension tagged by the evidence behind it.">
+<style>
+/* base reset the page relies on */
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Vimana Grammar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Rozha+One&display=swap">
+<style>
+/* Layout: a sticky 3D stage beside a single control column. Stacks under 860px with the stage pinned on top. */
+:root{
+  --bg:#e9ecea; --surface:#f6f8f7; --fg:#1b2220; --muted:#566360; --line:#c9d1ce;
+  --accent:#17606a; --accent-fg:#ffffff; --warn:#a4560f;
+  --rule:#8f877a; --inf:#cf8a1f; --inv:#8a5cc8;
+  --font-display:'Rozha One','Georgia',serif;
+  --font-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111615; --surface:#192120; --fg:#e4eae7; --muted:#97a5a0; --line:#2b3633;
+    --accent:#62c5cf; --accent-fg:#06201f; --warn:#e8a15a;
+    --rule:#b3aa9a; --inf:#e6aa43; --inv:#a982e0; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111615; --surface:#192120; --fg:#e4eae7; --muted:#97a5a0; --line:#2b3633;
+  --accent:#62c5cf; --accent-fg:#06201f; --warn:#e8a15a;
+  --rule:#b3aa9a; --inf:#e6aa43; --inv:#a982e0; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:14px;line-height:1.5}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1320px;margin-inline:auto;padding-inline:16px;padding-block:16px}
+.app{display:grid;grid-template-columns:minmax(0,1fr) 23.5rem;gap:16px;align-items:start}
+.stage{position:sticky;top:16px;height:calc(100svh - 32px);min-height:440px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:linear-gradient(to bottom,var(--sky-a,#7db0de),var(--sky-b,#d8e7f3));z-index:3}
+#view{position:absolute;inset:0}
+#view canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;outline-offset:-3px}
+.title-card{position:absolute;top:12px;left:12px;max-width:min(22rem,calc(100% - 24px));background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:8px 12px;opacity:.92;pointer-events:none}
+.title-card h1{margin:0;font:400 1.55rem/1.1 var(--font-display);letter-spacing:.01em}
+.title-card p{margin:2px 0 0;color:var(--muted);font-size:12.5px}
+.stage-foot{position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;pointer-events:none}
+.hint{background:var(--surface);color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:4px 10px;font:12px/1.4 var(--font-mono);opacity:.92;min-width:0}
+.btn{font:500 13px/1 var(--font-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:9px 12px;cursor:pointer;pointer-events:auto}
+.btn:hover{border-color:var(--accent)}
+.fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--fg);background:var(--surface)}
+.panel{display:flex;flex-direction:column;gap:12px;min-width:0}
+.blk{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;min-width:0}
+.blk h2,.blk h3{margin:0 0 10px;font:500 11.5px/1.2 var(--font-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.blk p{margin:0 0 8px}
+.blk p:last-child{margin-bottom:0}
+.mono{font-family:var(--font-mono);font-size:12px}
+.muted{color:var(--muted)}
+.warn{color:var(--warn);font:500 11.5px var(--font-mono);margin-left:6px}
+/* inspector */
+.insp-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:8px}
+.insp-head h2{margin:0;font:400 1.2rem/1.2 var(--font-display);letter-spacing:0;text-transform:none;color:var(--fg);min-width:0;overflow-wrap:anywhere}
+.chip{display:inline-block;font:500 11px/1 var(--font-mono);letter-spacing:.04em;text-transform:uppercase;padding:5px 7px;border-radius:3px;border:1.5px solid var(--rule);color:var(--fg);white-space:nowrap}
+.c-rule{background:var(--rule);border-color:var(--rule);color:#14110c}
+.c-inf{border-style:dashed;border-color:var(--inf);background:transparent;color:var(--fg)}
+.c-inv{border-color:var(--inv);background:repeating-linear-gradient(45deg,transparent 0 3px,color-mix(in srgb,var(--inv) 45%,transparent) 3px 5px);color:var(--fg)}
+.kv{display:grid;grid-template-columns:7.2rem minmax(0,1fr);gap:6px 10px;margin:10px 0 0}
+.kv dt{color:var(--muted);font:500 11.5px/1.6 var(--font-mono)}
+.kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+/* legend */
+.leg{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+.leg:first-of-type{border-top:0;padding-top:0}
+.leg input{width:18px;height:18px;margin:0;accent-color:var(--accent)}
+.sw{position:relative;width:26px;height:18px;border-radius:2px;border:2px solid var(--rule)}
+.sw.rule{background:var(--rule)}
+.sw.inf{border:2px dashed var(--inf)}
+.sw.inf::after{content:"";position:absolute;inset:0;background:var(--inf);opacity:.4}
+.sw.inv{border-color:var(--inv);background:repeating-linear-gradient(45deg,var(--inv) 0 2px,transparent 2px 5px)}
+.sw.part{border-color:var(--inf);background:var(--inf)}
+.c-src{background:var(--rule);border-color:var(--rule);color:#14110c}
+.c-part{background:var(--inf);border-color:var(--inf);color:#14110c}
+.c-est{border-color:var(--inv);background:repeating-linear-gradient(45deg,transparent 0 3px,color-mix(in srgb,var(--inv) 45%,transparent) 3px 5px);color:var(--fg)}
+.dims{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.dims li{display:grid;grid-template-columns:4.9rem minmax(0,1fr);gap:8px;align-items:start}
+.dims li>span:last-child{min-width:0;overflow-wrap:anywhere}
+.dk{font:500 10.5px/1 var(--font-mono);letter-spacing:.04em;text-transform:uppercase;padding:4px 4px;border-radius:3px;text-align:center;border:1.5px solid var(--rule);margin-top:2px}
+.dk.text,.dk.bldg{background:var(--rule);color:#14110c}
+.dk.est{border-color:var(--inv);background:repeating-linear-gradient(45deg,transparent 0 3px,color-mix(in srgb,var(--inv) 45%,transparent) 3px 5px)}
+.leg label{font-weight:600;cursor:pointer}
+.leg .n{font:500 12px var(--font-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.leg .d{grid-column:3 / 5;color:var(--muted);font-size:12.5px;line-height:1.4}
+/* controls */
+.ctl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;margin-bottom:12px}
+.ctl label{font-weight:600}
+.ctl output{font:500 12.5px var(--font-mono);font-variant-numeric:tabular-nums}
+.ctl input[type=range]{grid-column:1 / 3;width:100%;margin:4px 0 0;accent-color:var(--accent)}
+.ctl select{grid-column:1 / 3;width:100%;font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px}
+.ctl .help{grid-column:1 / 3;color:var(--muted);font-size:12.5px;line-height:1.4}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:500 13px/1 var(--font-body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:9px 11px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.seg button:disabled{color:var(--muted);cursor:not-allowed;border-style:dashed;opacity:.8}
+.seg button:not(:disabled):not([aria-pressed="true"]):hover{border-color:var(--accent)}
+.sublabel{font:500 11.5px var(--font-mono);color:var(--muted);margin:10px 0 6px;letter-spacing:.04em}
+pre.gram{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.6 var(--font-mono);color:var(--fg)}
+ol.src{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+ol.src li{display:grid;grid-template-columns:2.2rem minmax(0,1fr);gap:0 6px}
+ol.src .id{font:500 12px var(--font-mono);color:var(--muted)}
+ol.src a{font-weight:600;overflow-wrap:anywhere}
+ol.src .use{grid-column:2;color:var(--fg);font-size:13px}
+ol.src .rel{grid-column:2;color:var(--muted);font-size:12.5px}
+ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
+@media (max-width:860px){
+  .app{display:block}
+  .stage{top:0;height:min(54svh,500px);min-height:320px;margin-bottom:12px}
+  .title-card h1{font-size:1.25rem}
+  .title-card p{display:none}
+  .hint{font-size:11px}
+}
+@media (prefers-reduced-motion: no-preference){
+  .stage{transition:background .4s}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="app">
+    <main class="stage" id="stage" style="--sky-a:#7db0de;--sky-b:#d8e7f3">
+      <div id="view"></div>
+      <div class="title-card">
+        <h1>Vimana Grammar</h1>
+        <p>An idealized Chola-style tower built from stacked rules. Exterior only.</p>
+      </div>
+      <div class="stage-foot">
+        <div class="hint" id="hint">Drag to orbit. Scroll or pinch to zoom. Click an element.</div>
+        <button class="btn" id="reset" type="button">Reset view</button>
+      </div>
+    </main>
+
+    <aside class="panel" aria-label="Controls and evidence">
+      <section class="blk" id="inspector" aria-live="polite">
+        <h2>Selected element</h2>
+        <div class="insp-head"><span class="chip c-rule" id="i-tag">Rule-derived</span><span class="chip" id="i-dtag"></span></div>
+        <h2 id="i-name" style="margin:0 0 6px;font:400 1.2rem/1.2 var(--font-display);text-transform:none;letter-spacing:0;color:var(--fg)">Select an element</h2>
+        <p id="i-rule" style="margin:0">Click any part of the tower to see its evidence tier and the rule behind it.</p>
+        <dl class="kv" id="i-kv" hidden>
+          <dt>Basis</dt><dd id="i-basis"></dd>
+          <dt>Dimensions</dt><dd><ul class="dims" id="i-dims"></ul></dd>
+          <dt>Grammar</dt><dd id="i-gram" class="mono"></dd>
+          <dt>Confidence</dt><dd id="i-conf"></dd>
+          <dt>Sources</dt><dd id="i-src"></dd>
+        </dl>
+      </section>
+
+      <section class="blk">
+        <h3>Evidence</h3>
+        <div class="sublabel" style="margin-top:0">COLOUR BY</div>
+        <div class="seg" id="mode-seg" role="group" aria-label="Colour the tower by">
+          <button type="button" data-m="elem" aria-pressed="true">Element</button>
+          <button type="button" data-m="dim" aria-pressed="false">Dimensions</button>
+        </div>
+        <p class="muted" id="mode-q" style="margin:8px 0 12px"></p>
+        <div class="leg">
+          <input type="checkbox" id="v-0" checked>
+          <span class="sw" id="sw-0" aria-hidden="true"></span>
+          <label for="v-0" id="l-0"></label><span class="n" id="n-0">0</span>
+          <span class="d" id="d-0"></span>
+        </div>
+        <div class="leg">
+          <input type="checkbox" id="v-1" checked>
+          <span class="sw" id="sw-1" aria-hidden="true"></span>
+          <label for="v-1" id="l-1"></label><span class="n" id="n-1">0</span>
+          <span class="d" id="d-1"></span>
+        </div>
+        <div class="leg">
+          <input type="checkbox" id="v-2" checked>
+          <span class="sw" id="sw-2" aria-hidden="true"></span>
+          <label for="v-2" id="l-2"></label><span class="n" id="n-2">0</span>
+          <span class="d" id="d-2"></span>
+        </div>
+      </section>
+
+      <section class="blk">
+        <h3>Parameters</h3>
+        <div class="ctl">
+          <label for="p-tiers">Superstructure tiers</label><output id="o-tiers">13</output>
+          <input type="range" id="p-tiers" min="3" max="14" step="1" value="13">
+          <div class="help">Recorded counts: 13 at Thanjavur, 9 at Gangaikondacholapuram, 5 at Darasuram <a data-cite="unesco"></a>. Balasubrahmanyam gives thirteen storeys over the wall at Thanjavur <a data-cite="bala_tanj"></a> but nine “including the ground tala” at Gangaikondacholapuram <a data-cite="bala_gkc"></a>. The texts count from the ground up, to a maximum of 12 <a data-cite="man11"></a>. Dagens reads a mention of sixteen storeys in the Mayamata as a later addition made for the large Chola temples <a data-cite="hardy"></a>. These ways of counting have not been reconciled here.</div>
+        </div>
+        <div class="seg" id="tier-presets" style="margin:-4px 0 14px">
+          <button type="button" data-n="13">13</button>
+          <button type="button" data-n="9">9</button>
+          <button type="button" data-n="5">5</button>
+        </div>
+        <div class="ctl">
+          <label for="p-base">Base footprint</label><output id="o-base">10.0</output>
+          <input type="range" id="p-base" min="6" max="16" step="0.5" value="10">
+          <div class="help">Width of the square base in model units. Not a real-world scale.</div>
+        </div>
+        <div class="ctl">
+          <label for="p-taper">Taper ratio</label><output id="o-taper">0.36</output>
+          <input type="range" id="p-taper" min="0.2" max="0.7" step="0.01" value="0.36">
+          <div class="help">Top tier width as a fraction of the bottom tier width. Estimated, no source.</div>
+        </div>
+        <div class="ctl">
+          <label for="p-hratio">Top tier height</label><output id="o-hratio">0.55</output>
+          <input type="range" id="p-hratio" min="0.3" max="1" step="0.01" value="0.55">
+          <div class="help">Height of the top tier as a fraction of the bottom one, stepping down evenly. The Manasara's schemes fall between about 0.4 and 0.75 <a data-cite="man24"></a> <a data-cite="man26"></a>.</div>
+        </div>
+        <div class="ctl">
+          <span style="font-weight:600">Height ÷ base width</span><output id="o-ratio">0.00</output>
+          <div class="help">For comparison: the Manasara names height classes of 1¼, 1½, 1¾ and 2 times the breadth <a data-cite="man11"></a>, and the Samarangana ties height to the plan diagonal, about 1.41 <a data-cite="hardy"></a>. Measured: 2.10 at Thanjavur <a data-cite="bala_tanj"></a> and 1.60 at Gangaikondacholapuram <a data-cite="bala_gkc"></a>. This model does not enforce any of these.</div>
+        </div>
+        <div class="ctl">
+          <label for="p-density">Ornament density</label><output id="o-density">0.60</output>
+          <input type="range" id="p-density" min="0" max="1" step="0.05" value="0.6">
+          <div class="help">Controls how full the rows of pavilions are, plus wall panels and relief blocks.</div>
+        </div>
+        <div class="ctl" style="margin-bottom:0">
+          <label for="p-crown">Crowning element</label><span></span>
+          <select id="p-crown">
+            <option value="kalasa">Octagonal sikhara and kalasa</option>
+            <option value="spike">Sikhara, kalasa and spike</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="blk">
+        <h3>Light</h3>
+        <div class="seg" id="light-seg" role="group" aria-label="Lighting">
+          <button type="button" data-l="morning" aria-pressed="false">Morning</button>
+          <button type="button" data-l="noon" aria-pressed="true">Noon</button>
+          <button type="button" data-l="dusk" aria-pressed="false">Dusk</button>
+        </div>
+      </section>
+
+      <section class="blk">
+        <h3>Scope</h3>
+        <div class="sublabel">STYLE</div>
+        <div class="seg">
+          <button type="button" aria-pressed="true">Chola</button>
+          <button type="button" disabled title="Not built yet">Pallava</button>
+          <button type="button" disabled title="Not built yet">Pandya</button>
+          <button type="button" disabled title="Not built yet">Vijayanagara</button>
+          <button type="button" disabled title="Not built yet">Nayak</button>
+        </div>
+        <div class="sublabel">STRUCTURE</div>
+        <div class="seg">
+          <button type="button" aria-pressed="true">Vimana</button>
+          <button type="button" disabled title="Not built yet">Gopuram</button>
+        </div>
+        <p class="muted" style="margin-top:10px">Idealized composite, not a model of any specific temple. No sanctum interior and no deity imagery. Dashed buttons are not built yet.</p>
+      </section>
+
+      <section class="blk">
+        <h3>Grammar in use</h3>
+        <pre class="gram" id="gram"></pre>
+      </section>
+
+      <section class="blk">
+        <h3>Sources</h3>
+        <ol class="src" id="src-list"></ol>
+      </section>
+
+      <section class="blk">
+        <h3>Not verified</h3>
+        <ul class="nv">
+          <li>Texts and buildings are different kinds of evidence. Adam Hardy, who has tested texts by drawing them, says of text and measured building: “Often, they do correspond and often, they don't” <a data-cite="hardyint"></a>. A rule taken from a text shows a design tradition. It does not show what Chola builders did.</li>
+          <li>No element has every dimension sourced. Switch “Colour by” to Dimensions to see which sizes rest on a cited ratio or measurement and which are estimates.</li>
+          <li>The measurements come from two temples only, both royal foundations. The base heights are Thanjavur's <a data-cite="bala_tanj"></a> and the wall height is Gangaikondacholapuram's <a data-cite="bala_gkc"></a>. Mixing them into one tower is a choice made for this model.</li>
+          <li>How many pavilions a tier carries is set by how many parts fit its side, with each part about one storey tall. The Manasara gives every storey of a building the same row <a data-cite="man24"></a> <a data-cite="man30"></a>. Thinning the rows on the narrower upper tiers is an inference, not a sourced rule.</li>
+          <li>The Manasara's date is contested. According to <a href="https://en.wikipedia.org/wiki/Manasara" target="_blank" rel="noopener noreferrer">Wikipedia's summary of the scholarship</a>, P. K. Acharya put it at about the 5th to 7th century, George Michell at the 7th to 8th, and Tarapada Bhattacharyya read the surviving complete text as a South Indian recension of about the 11th century or later, built up in layers. Those three works were not read directly for this page. If Bhattacharyya is right, the text as we have it is no earlier than the great Chola temples.</li>
+          <li>The Manasara rules come from Acharya's 1933 translation <a data-cite="man19"></a> <a data-cite="man21"></a>, read as excerpts returned by a fetch tool, not as full pages. Only one complete manuscript is reported.</li>
+          <li>The Mayamata, which Hardy dates to before the end of the tenth century <a data-cite="hardy"></a>, is the closer text in time. Bruno Dagens's translation has not yet been read for this page. No Agama has been consulted.</li>
+          <li>Thanjavur is counted at 13 tiers by <a data-cite="unesco"></a> and 14 by <a data-cite="sahapedia"></a>. Its height is given as 63.41 m by Balasubrahmanyam <a data-cite="bala_tanj"></a> and as anything from about 61 m to 66 m elsewhere.</li>
+          <li>Tier heights step down evenly from bottom to top. The Manasara's sequences are close to even steps <a data-cite="man24"></a> <a data-cite="man26"></a>, while Hardy notes that those in the Samarangana follow no regular progression <a data-cite="hardy"></a>.</li>
+          <li>The dome and finial rest on the text alone. No source in this list describes their form in built temples. The one that did was an exam-prep summary and was removed.</li>
+          <li>A parametric Karnata-Dravida model exists <a data-cite="karnata"></a>. No published Chola shape grammar was found, in a search that was not exhaustive.</li>
+          <li>Only Chola has been researched. Whether Pallava, Pandya, Vijayanagara and Nayak are distinct enough to be separate rule sets is unchecked.</li>
+        </ul>
+      </section>
+
+      <section class="blk">
+        <h3>About this page</h3>
+        <p>An idealized composite, made for learning. It is not a model of any real temple, and no specialist in temple architecture has reviewed it.</p>
+        <p>Built with Claude, an AI model made by Anthropic. Claude read the sources, wrote the rules and set the confidence figures, which are its own estimates.</p>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ---------- Sources ---------- */
+var MANREL='1933 translation by P. K. Acharya of a text whose date is contested. Read as excerpts returned by a fetch tool, not full pages.';
+var BALREL='Standard survey of Chola temples. Read as excerpts returned by a fetch tool, not full pages.';
+var SRC={
+ unesco:{n:'UNESCO World Heritage Centre, The Great Living Chola Temples',u:'https://whc.unesco.org/document/153042',use:'Tier counts: 13 at Thanjavur, 9 at Gangaikondacholapuram, 5 at Darasuram. Recessed corners at one example.',rel:'Institutional source.'},
+ sahapedia:{n:'Sahapedia, The Chola temples',u:'https://www.sahapedia.org/the-chola-temples',use:'Square plan and a two-storey wall under the Thanjavur superstructure. Counts 14 tiers there, which disagrees with [@unesco].',rel:'Scholarly reference site.'},
+ soas:{n:'SOAS Research Online, Tamil Dravida language of temple architecture at the height of Vijayanagara authority',u:'https://soas-repository.worktribe.com/OutputFile/360337',use:'Vimana as a pyramidal shrine on moulded bases, built by piling pavilions into successively narrower tiers.',rel:'Academic text. Read as search excerpts only.'},
+ karnata:{n:'Conference paper on computational models of Karnata-Dravida temples (Architexturez)',u:'https://architexturez.net/doc/isbn/978-0-9955691-0-2pp-409-420',use:'Shows that parametric models of Karnata-Dravida vimana composition exist. Not a Chola grammar.',rel:'Abstract only.'},
+ shanlax:{n:'Vimana Architecture under the Cholas (Shanlax Journals)',u:'https://shanlaxjournals.in/journals/index.php/sijash/article/view/1172/994',use:'Overview of Chola vimanas, including sculpted panels on the adhisthana and tier counts of 13 and 9.',rel:'Journal article. Excerpts only.'},
+ man11:{n:'Manasara, chapter 11, The dimension of buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421058.html',use:'Temples may have one to twelve storeys. Names five height classes. The translator\'s note gives 1¼, 1½, 1¾ and 2 times the breadth for four of them.',rel:MANREL},
+ man18:{n:'Manasara, chapter 18, The general features of edifices',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421065.html',use:'Classes as Dravida a building that is octagonal or hexagonal in its upper part, with the part below the neck quadrangular. Describes the finial as a pitcher with a lotus and a pinnacle-staff.',rel:MANREL+' The wording of the Dravida passage is muddled in translation.'},
+ man19:{n:'Manasara, chapter 19, The one-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421066.html',use:'Height in 8 parts: plinth 1, pillar 2, entablature 1, neck 1, dome 2, finial 1 (lines 21 to 24). Neck width three quarters of the building (lines 25 to 26).',rel:MANREL},
+ man21:{n:'Manasara, chapter 21, The three-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421068.html',use:'Pillar heights shrink upward: 8, 6¾ and 6 parts. Corner kutas of one part each, a middle sala of two to four parts, and a hara with panjara between them (verses 55 to 63).',rel:MANREL},
+ bala_tanj:{n:'S. R. Balasubrahmanyam, Middle Chola Temples (1975), Tanjavur: The Central Shrine',u:'https://www.wisdomlib.org/south-asia/book/middle-chola-temples/d/doc210432.html',use:'Measurements at Thanjavur: base 30.18 m square, sub-base 1.40 m, moulded base 3.60 m, height 63.41 m, a two-storey wall with thirteen storeys over it, straight-sided.',rel:BALREL},
+ bala_gkc:{n:'S. R. Balasubrahmanyam, Middle Chola Temples (1975), Gangaikondasolapuram',u:'https://www.wisdomlib.org/south-asia/book/middle-chola-temples/d/doc211879.html',use:'Measurements at Gangaikondacholapuram: base 30.48 m, walls 10.67 m high in two equal courses, nine talas including the ground one, height 48.77 m, concave profile.',rel:BALREL},
+ man13:{n:'Manasara, chapter 13, The pedestals',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421060.html',use:'A pedestal (upapitha) under the base, sized as a fraction or multiple of the base.',rel:MANREL},
+ man14:{n:'Manasara, chapter 14, The bases',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421061.html',use:'Padabandha base in 24 parts: plinth 8, kumuda 7, neck 3 and band 3, with one-part fillets between.',rel:MANREL},
+ man16:{n:'Manasara, chapter 16, The entablatures',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421063.html',use:'Entablature heights from half the pillar up to twice it. Cornice projection equal to its height or less.',rel:MANREL},
+ man20:{n:'Manasara, chapter 20, The two-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421067.html',use:'Four salas, four kutas and eight haras with panjaras. A platform under the neck. Neck 1, dome 2, finial 1 in one scheme.',rel:MANREL},
+ man22:{n:'Manasara, chapter 22, The four-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421069.html',use:'Sala two parts, kutas one part each, the rest hara with panjara. Neck 1, dome 2, finial 1 in two schemes.',rel:MANREL},
+ man24:{n:'Manasara, chapter 24, The six-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421071.html',use:'Pillars of 7, 6, 5, 4.5 and 4.5 parts. Kuta one or two parts, middle chamber three to seven, hara one to five. Every storey carries all three.',rel:MANREL},
+ man26:{n:'Manasara, chapter 26, The eight-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421073.html',use:'Pillars of 4, 3.5, 3, 2.75, 2.5, 2 and 1.5 parts. Small halls beside the main ones.',rel:MANREL},
+ man30:{n:'Manasara, chapter 30, The twelve-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421077.html',use:'Each storey has a great hall, four kutas, eight small halls and sixteen hall-windows.',rel:MANREL},
+ hardy:{n:'Adam Hardy, Dravida Temples in the Samaranganasutradhara, South Asian Studies 25',u:'https://www.cardiff.ac.uk/__data/assets/pdf_file/0006/1344345/Dravida-Temples-in-the-Samaranganasutradhara-by-Adam-Hardy.pdf',use:'Order of kuta, panjara, sala, panjara, kuta across a tier. Base moulding sequence. Height tied to the plan diagonal. Dates the Mayamata to before the end of the tenth century and reports Dagens on its sixteen-storey passage.',rel:'Peer-reviewed. Read as tool-returned excerpts. Its subject is an 11th-century text from central India.'},
+ hardyint:{n:'K. T. Ravindran in conversation with Adam Hardy (Sahapedia)',u:'http://www.sahapedia.org/kt-ravindran-conversation-adam-hardy-correlating-text-and-form-temple-architecture',use:'On how far texts and built temples agree.',rel:'Interview with a specialist.'}
+};
+var NUM={}; Object.keys(SRC).forEach(function(k,i){NUM[k]=i+1;});
+function cite(t){return t.replace(/\[@(\w+)\]/g,function(_,k){return '['+NUM[k]+']';});}
+var KEYS=['rule','inf','inv'], DKEYS=['src','part','est'];
+var MODES={
+ elem:{keys:KEYS,q:'Is there evidence that this element exists and sits here?',
+  label:{rule:'Rule-derived',inf:'Inferred',inv:'Invented'},
+  desc:{rule:'A documented convention puts this element here. Shown solid.',inf:'Plausible but not firmly documented. Shown translucent.',inv:'Artistic filler with no source. Shown hatched.'},
+  sw:{rule:'rule',inf:'inf',inv:'inv'}},
+ dim:{keys:DKEYS,q:'Is there evidence for its size and proportions?',
+  label:{src:'Sourced',part:'Partly sourced',est:'Estimated'},
+  desc:{src:'Every dimension follows a cited ratio. Shown solid.',part:'At least one ratio is cited. The rest is estimated. Shown amber.',est:'No dimension has a source. Shown hatched.'},
+  sw:{src:'rule',part:'part',est:'inv'}}
+};
+var DKIND={text:'Text',bldg:'Buildings',est:'Estimate'};
+
+/* ---------- State ---------- */
+var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',light:'noon',mode:'elem',
+  vis:{rule:true,inf:true,inv:true,src:true,part:true,est:true}};
+var metas=new Map();
+var selKey=null, selMeta=null, outlines=[];
+function catOf(m){return P.mode==='elem'?m.tier:m.dcat;}
+var dirty=true, H=20;
+
+var $=function(id){return document.getElementById(id);};
+var clamp=function(v,a,b){return Math.max(a,Math.min(b,v));};
+
+/* ---------- Renderer ---------- */
+var view=$('view');
+var renderer;
+try{
+  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+}catch(err){
+  view.innerHTML='<div class="fallback"><p>This browser could not start 3D graphics, so the tower cannot be drawn here. Try another browser or device.</p></div>';
+  return;
+}
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputEncoding=THREE.sRGBEncoding;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.0;
+view.appendChild(renderer.domElement);
+var cv=renderer.domElement;
+cv.tabIndex=0;
+cv.setAttribute('aria-label','3D view of the generated tower. Arrow keys orbit, plus and minus zoom.');
+
+var scene=new THREE.Scene();
+var camera=new THREE.PerspectiveCamera(38,1,0.5,400);
+
+/* ---------- Lights ---------- */
+var hemi=new THREE.HemisphereLight(0xffffff,0x888888,0.7); scene.add(hemi);
+var sun=new THREE.DirectionalLight(0xffffff,2); sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);
+sun.shadow.camera.near=1; sun.shadow.camera.far=160;
+['left','bottom'].forEach(function(k){sun.shadow.camera[k]=-34;});
+['right','top'].forEach(function(k){sun.shadow.camera[k]=34;});
+sun.shadow.camera.updateProjectionMatrix();
+sun.shadow.bias=-0.0012; sun.shadow.normalBias=0.09;
+scene.add(sun); scene.add(sun.target);
+var LIGHTS={
+ morning:{sun:0xffd9b0,si:2.6,dir:[-0.7,0.45,0.55],sky:0xc6d6ea,gnd:0x8b7e6b,hi:1.0,a:'#a9c6dd',b:'#f1d6b8'},
+ noon:{sun:0xfff6e8,si:2.6,dir:[0.35,1.0,0.45],sky:0xd3e2f2,gnd:0x8d8678,hi:1.1,a:'#7db0de',b:'#d8e7f3'},
+ dusk:{sun:0xff9a66,si:2.5,dir:[0.85,0.22,-0.5],sky:0x7a7ab0,gnd:0x3a3040,hi:0.9,a:'#2b2a58',b:'#e48b5e'}
+};
+function applyLight(){
+  var L=LIGHTS[P.light];
+  var d=new THREE.Vector3(L.dir[0],L.dir[1],L.dir[2]).normalize();
+  sun.color.setHex(L.sun).convertSRGBToLinear(); sun.intensity=L.si;
+  sun.position.set(d.x*60,H*0.4+d.y*60,d.z*60);
+  sun.target.position.set(0,H*0.4,0);
+  var ext=Math.max(30,H*0.75+P.base);
+  sun.shadow.camera.left=sun.shadow.camera.bottom=-ext; sun.shadow.camera.right=sun.shadow.camera.top=ext;
+  sun.shadow.camera.updateProjectionMatrix();
+  hemi.color.setHex(L.sky).convertSRGBToLinear(); hemi.groundColor.setHex(L.gnd).convertSRGBToLinear(); hemi.intensity=L.hi;
+  var st=$('stage'); st.style.setProperty('--sky-a',L.a); st.style.setProperty('--sky-b',L.b);
+  dirty=true;
+}
+
+/* ---------- Materials ---------- */
+/* Hatching is drawn in screen space so it stays the same scale on small and large parts. */
+function hatchMaterial(){
+  var m=new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.85,metalness:0});
+  var a=new THREE.Color(0x8a5cc8).convertSRGBToLinear(), b=new THREE.Color(0xdccbf5).convertSRGBToLinear();
+  var px=7*Math.min(window.devicePixelRatio||1,2);
+  m.onBeforeCompile=function(sh){
+    sh.uniforms.hA={value:a}; sh.uniforms.hB={value:b}; sh.uniforms.hPx={value:px};
+    sh.fragmentShader='uniform vec3 hA;\nuniform vec3 hB;\nuniform float hPx;\n'+sh.fragmentShader.replace('#include <map_fragment>',
+      'float hStripe=step(0.6,fract((gl_FragCoord.x+gl_FragCoord.y)/hPx));\n diffuseColor.rgb=mix(hA,hB,hStripe);');
+  };
+  return m;
+}
+function stoneMaterial(){var m=new THREE.MeshStandardMaterial({color:0x8f877a,roughness:0.93,metalness:0}); m.color.convertSRGBToLinear(); return m;}
+function amberMaterial(solid){
+  var m=new THREE.MeshStandardMaterial({color:solid?0xb5770f:0xe09a1f,roughness:0.8,metalness:0});
+  if(!solid){m.transparent=true; m.opacity=0.6; m.depthWrite=false;}
+  m.color.convertSRGBToLinear(); return m;
+}
+function glow(m){m.emissive=new THREE.Color(0x12a5b5).convertSRGBToLinear(); m.emissiveIntensity=0.55; if(m.transparent)m.opacity=0.8; return m;}
+/* element view: rule, inf, inv. dimension view: src, part, est. Each has a selected twin with a teal glow. */
+var MAT={rule:stoneMaterial(),inf:amberMaterial(false),inv:hatchMaterial(),src:stoneMaterial(),part:amberMaterial(true),est:hatchMaterial()};
+var MATSEL={rule:glow(stoneMaterial()),inf:glow(amberMaterial(false)),inv:glow(hatchMaterial()),src:glow(stoneMaterial()),part:glow(amberMaterial(true)),est:glow(hatchMaterial())};
+
+/* ---------- Scene graph ---------- */
+var tower=new THREE.Group(); scene.add(tower);
+var ROOT=new THREE.Group(); tower.add(ROOT);
+var ground=new THREE.Mesh(new THREE.CircleGeometry(140,96),new THREE.MeshStandardMaterial({color:0x5d655f,roughness:1}));
+ground.material.color.convertSRGBToLinear();
+ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; scene.add(ground);
+
+/* ---------- Grammar helpers ---------- */
+function box(w,h,d){return new THREE.BoxGeometry(w,h,d);}
+function mk(key,name,tier,rule,o){
+  var dims=o.dims||[['Size','est','no source gives a ratio']];
+  var nEst=dims.filter(function(d){return d[1]==='est';}).length;
+  var m={key:key,name:name,tier:tier,rule:rule,parts:[],n:0,src:o.src||[],conf:(o.conf==null?null:o.conf),gram:o.gram||'',
+    dims:dims,dcat:nEst===0?'src':(nEst===dims.length?'est':'part'),
+    basis:o.basis||(tier==='inv'?'None. Invented.':'None found. An assumption.')};
+  metas.set(key,m); return m;
+}
+function put(meta,geom,x,y,z,ry,parent){
+  var m=new THREE.Mesh(geom,MAT[catOf(meta)]);
+  m.position.set(x,y,z); if(ry) m.rotation.y=ry;
+  m.castShadow=true; m.receiveShadow=true;
+  m.userData.meta=meta; meta.parts.push(m);
+  (parent||ROOT).add(m);
+  return m;
+}
+/* split along Y: returns stacked slabs [{y,h}] from y0 */
+function splitY(y0,heights){var y=y0;return heights.map(function(h){var s={y:y,h:h};y+=h;return s;});}
+/* repeat around the four sides: fn(theta, sin, cos) */
+function ring4(fn){for(var k=0;k<4;k++){var t=k*Math.PI/2;fn(t,Math.sin(t),Math.cos(t));}}
+function sideXZ(r,u,s,c){return [r*s+u*c, r*c-u*s];}
+function disposeTree(o){o.traverse(function(n){if(n.geometry)n.geometry.dispose();});}
+
+function clearBuild(){
+  clearOutline(); selMeta=null;
+  while(ROOT.children.length){var c=ROOT.children[0]; ROOT.remove(c); disposeTree(c);}
+  metas.clear();
+}
+/* apply the current colour mode and tier toggles to every part, and update the legend counts */
+function refresh(){
+  var keys=MODES[P.mode].keys, cnt={};
+  keys.forEach(function(k){cnt[k]=0;});
+  metas.forEach(function(m){
+    var c=catOf(m), vis=P.vis[c], mat=(m===selMeta?MATSEL:MAT)[c];
+    cnt[c]+=m.n;
+    m.parts.forEach(function(p){p.visible=vis; p.material=mat;});
+  });
+  keys.forEach(function(k,i){$('n-'+i).textContent=cnt[k];});
+  dirty=true;
+}
+function applyMode(){
+  var M=MODES[P.mode];
+  M.keys.forEach(function(k,i){
+    $('l-'+i).textContent=M.label[k]; $('d-'+i).textContent=M.desc[k];
+    $('sw-'+i).className='sw '+M.sw[k]; $('v-'+i).checked=P.vis[k];
+    $('v-'+i).setAttribute('aria-label','Show '+M.label[k].toLowerCase()+' elements');
+  });
+  $('mode-q').textContent=M.q;
+  Array.from($('mode-seg').children).forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.m===P.mode));});
+  if(selMeta&&!P.vis[catOf(selMeta)]) select(null);
+  refresh();
+}
+
+/* ---------- Build ---------- */
+var OCT=Math.PI/8, T='text', B='bldg', E='est';
+var HALF='half the pillar zone [@man19][@man21]';
+var PARTSIZE=['Size of one part',E,'about the height of the storey behind it'];
+/* outline of a pavilion with a rounded top: half-width a, body height hb */
+function archShape(a,hb){
+  var s=new THREE.Shape();
+  s.moveTo(-a,0); s.lineTo(a,0); s.lineTo(a,hb); s.absarc(0,hb,a,0,Math.PI,false); s.lineTo(-a,0);
+  return s;
+}
+/* barrel-roofed hall, long axis along local x */
+function salaGeom(len,depth,hb){
+  var g=new THREE.ExtrudeGeometry(archShape(depth/2,hb),{depth:len,bevelEnabled:false,curveSegments:6});
+  g.rotateY(Math.PI/2); g.translate(-len/2,0,0); return g;
+}
+/* arched niche facing outward along local z */
+function panjaraGeom(w,depth,hb){
+  var g=new THREE.ExtrudeGeometry(archShape(w/2,hb),{depth:depth,bevelEnabled:false,curveSegments:6});
+  g.translate(0,0,-depth/2); return g;
+}
+
+/* Hara: split one side of a storey into parts and assign them to pavilions.
+   y = top of the entablature, cw = its width, hn = height of the storey behind. Returns pavilions per side. */
+function hara(y,cw,hn,lvlMax,den,label,id,gramHead){
+  if(lvlMax<0) return 0;
+  var p=0.95*hn, n=Math.max(2,Math.round(cw/p)), pe=cw/n, hv=Math.min(pe,hn);
+  var seq=[], S, Hh, G, per=2;
+  if(lvlMax>=2&&n>=10){S=Math.min(4,n-8); Hh=(n-4-S)/4; seq=[['H',Hh],['s',1],['H',Hh],['S',S],['H',Hh],['s',1],['H',Hh]]; per=9;}
+  else if(lvlMax>=1&&n>=6){S=Math.min(4,n-4); Hh=(n-2-S)/2; seq=[['H',Hh],['S',S],['H',Hh]]; per=5;}
+  else if(n>=4){S=Math.min(4,n-2); G=(n-2-S)/2; seq=[['G',G],['S',S],['G',G]]; per=3;}
+  else if(n===3){seq=[['S',1]]; per=3;}
+  var has=function(t){return seq.some(function(e){return e[0]===t;});};
+
+  var mK=mk('kuta-'+id,label+', kuta (corner pavilion)','rule',
+    'Square pavilion at each corner. The Manasara divides the width of a storey into parts and gives the kutas one part each, the middle sala two to four, and the rest to the hara [@man21][@man22][@man24]. Hardy gives the order kuta, panjara, sala, panjara, kuta across a tier [@hardy]. Drawn with a plain pyramid roof.',
+    {src:['soas','man21','man22','man24','hardy'],conf:85,basis:'Text and buildings',gram:gramHead+'Corner → Kuta',
+     dims:[['Width',T,'one part of the side [@man21][@man22]'],PARTSIZE,['Height and roof',E,'estimated']]});
+  var mS=has('S')?mk('sala-'+id,label+', sala (middle pavilion)','rule',
+    'Barrel-roofed pavilion at the middle of each side, two to four parts wide [@man21][@man22][@man24].',
+    {src:['soas','man21','man22','man24','hardy'],conf:85,basis:'Text and buildings',gram:gramHead+'Middle → Sala',
+     dims:[['Width',T,'two to four parts, as many as fit [@man21][@man24]'],PARTSIZE,['Height',E,'estimated']]}):null;
+  var ms=has('s')?mk('ssala-'+id,label+', small sala','rule',
+    'Small hall between the corner and the middle. For tall buildings the Manasara gives each storey a great hall, four kutas, eight small halls and sixteen hall-windows [@man30], and it names small halls for eight-storey buildings too [@man26]. Using them on a tower of any height is an extension of that.',
+    {src:['man26','man30'],conf:65,basis:'Text',gram:gramHead+'Between → Small sala',
+     dims:[['Width',E,'one part. No ratio found'],['Height',E,'estimated']]}):null;
+  var mH=has('H')?mk('hara-'+id,label+', hara with panjara','rule',
+    'Low linking wall with an arched niche, filling the side between pavilions. The Manasara calls it the chain (hara) together with the window (panjara) and gives it the parts left over [@man22][@man24]. Hardy places a panjara between kuta and sala [@hardy].',
+    {src:['man22','man24','hardy'],conf:80,basis:'Text',gram:gramHead+'Between → Hara + Panjara',
+     dims:[['Width',T,'the parts left after kutas and salas [@man22][@man24]'],['Height and niche size',E,'estimated']]}):null;
+  var mF=(den>=0.6&&pe>0.2)?mk('fin-'+id,label+', ball finial','inv',
+    'Small ball finial added to break up kuta roofs. Decoration only.',
+    {src:[],gram:'Kuta → Finial',dims:[['Size',E,'decoration']]}):null;
+
+  var kb=0.86*pe, c=cw/2-pe/2;
+  for(var sx=-1;sx<=1;sx+=2){for(var sz=-1;sz<=1;sz+=2){
+    put(mK,box(kb,0.55*hv,kb),sx*c,y+0.275*hv,sz*c,0);
+    var cg=new THREE.ConeGeometry(kb*0.72,0.42*hv,4); cg.rotateY(Math.PI/4);
+    put(mK,cg,sx*c,y+0.76*hv,sz*c,0); mK.n++;
+    if(mF){put(mF,new THREE.SphereGeometry(pe*0.07,8,6),sx*c,y+0.97*hv+pe*0.05,sz*c,0); mF.n++;}
+  }}
+  ring4(function(t,sn,cs){
+    var cur=-cw/2+pe;
+    seq.forEach(function(e){
+      var len=e[1]*pe, u=cur+len/2, xz; cur+=len;
+      if(e[0]==='S'){
+        xz=sideXZ(cw/2-0.38*pe,u,sn,cs);
+        put(mS,salaGeom(len*0.9,0.7*pe,0.5*hv),xz[0],y,xz[1],t); mS.n++;
+      }else if(e[0]==='s'){
+        xz=sideXZ(cw/2-0.33*pe,u,sn,cs);
+        put(ms,salaGeom(len*0.86,0.6*pe,0.42*hv),xz[0],y,xz[1],t); ms.n++;
+      }else if(e[0]==='H'&&len>0.01){
+        xz=sideXZ(cw/2-0.16*pe,u,sn,cs);
+        put(mH,box(len,0.28*hv,0.26*pe),xz[0],y+0.14*hv,xz[1],t);
+        xz=sideXZ(cw/2-0.24*pe,u,sn,cs);
+        put(mH,panjaraGeom(0.5*Math.min(pe,len),0.42*pe,0.4*hv),xz[0],y,xz[1],t); mH.n++;
+      }
+    });
+  });
+  return per;
+}
+
+function build(){
+  clearBuild();
+  var W=P.base, N=P.tiers, den=P.density, tp=P.taper, hr=P.hratio;
+  var i, y=0;
+
+  /* Sub-base and base: heights as measured at Thanjavur, mouldings split by the Padabandha scheme */
+  var upH=(1.40/30.18)*W, adH=(3.60/30.18)*W, upW=1.10*W+2*upH;
+  var mu=mk('upapitha','Upapitha (sub-base)','rule',
+    'Plain sub-base under the moulded base. Balasubrahmanyam measures one 1.40 m high at Thanjavur [@bala_tanj], and the Manasara has a chapter on such pedestals [@man13]. Drawn as a plain slab.',
+    {src:['bala_tanj','man13'],conf:75,basis:'Buildings (one example) and text',gram:'Tower → Sub-base',
+     dims:[['Height',B,'1.40 m on a 30.18 m base at Thanjavur [@bala_tanj]'],['Projection',E,'set equal to its height. The rule in the text is unclear in translation [@man13]']]});
+  put(mu,box(upW,upH,upW),0,upH/2,0); mu.n++;
+
+  var MOULD=[
+    ['jagati','jagati (plinth)',1.10,8,'8 of 24 parts'],
+    ['kumuda','kumuda (rounded moulding)',1.06,7,'7 of 24 parts'],
+    ['kantha','kantha (neck)',1.00,5,'5 of 24 parts: the neck at 3 with its two fillets'],
+    ['pattika','pattika (band)',1.06,4,'4 of 24 parts: the band at 3 with its fillet']
+  ];
+  var slabs=splitY(upH,MOULD.map(function(c){return adH*c[3]/24;}));
+  MOULD.forEach(function(c,k){
+    var m=mk('base-'+c[0],'Adhisthana, '+c[1],'rule',
+      'Vimanas rise from a moulded base, the adhisthana [@soas]. The Manasara\'s Padabandha base runs plinth, kumuda, neck and band, with thin fillets between [@man14]. Hardy reports a similar sequence, ending in an eave moulding, for another text [@hardy]. Each moulding is drawn here as a plain slab, with the fillets folded into the neck and band.',
+      {src:['soas','man14','hardy','bala_tanj'],conf:75,basis:'Text and buildings',gram:'Tower → Base → Jagati | Kumuda | Kantha | Pattika',
+       dims:[['Share of base height',T,c[4]+' in the Padabandha base [@man14]'],['Base height',B,'3.60 m on a 30.18 m base at Thanjavur [@bala_tanj]'],['Projection',E,'estimated']]});
+    put(m,box(c[2]*W,slabs[k].h,c[2]*W),0,slabs[k].y+slabs[k].h/2,0); m.n++;
+  });
+  y=slabs[3].y+slabs[3].h;
+
+  /* Relief band: repeat small blocks along the neck of the base */
+  if(den>=0.2){
+    var mb=mk('band','Relief band (placeholder blocks)','inv',
+      'Placeholder blocks standing in for carved friezes. Chola bases do carry sculpted panels [@shanlax], but nothing here reconstructs an actual frieze.',
+      {src:['shanlax'],gram:'Base → Kantha → Repeat(Block)',dims:[['Size and spacing',E,'set by the ornament density slider']]});
+    var nb=Math.round(6+den*12), bs=slabs[2].h*0.8, span=W*0.46;
+    ring4(function(t,s,c){
+      for(var j=0;j<nb;j++){
+        var u=-span+j*(2*span/(nb-1));
+        var xz=sideXZ(W/2+bs*0.45,u,s,c);
+        put(mb,box(bs,slabs[2].h*(j%2?0.6:0.9),bs),xz[0],slabs[2].y+slabs[2].h*0.5,xz[1],t); mb.n++;
+      }
+    });
+  }
+
+  /* Wall: two equal storeys, total height as measured at Gangaikondacholapuram. Storey → Pada | Prastara at 2 : 1 */
+  var wallW=0.90*W, storeyH=(10.67/30.48)*W/2, padH0=storeyH*2/3, entH0=storeyH/3;
+  var WALLH=['Storey height',B,'half of a wall 10.67 m high on a 30.48 m base at Gangaikondacholapuram, where the two storeys are equal [@bala_gkc]'];
+  var wall=splitY(y,[padH0,entH0,padH0,entH0]);
+  [0,2].forEach(function(idx,s){
+    var sl=wall[idx], en=wall[idx+1];
+    var m=mk('wall-'+s,'Wall storey '+(s+1)+' of 2, pillar zone (pada)','rule',
+      'Square plan under the tower with a two-storey wall. Balasubrahmanyam describes it at Thanjavur as marked by a massive overhanging cornice [@bala_tanj][@sahapedia], and at Gangaikondacholapuram as two equal courses [@bala_gkc]. In the Manasara each storey is a pillar zone under an entablature [@man19]. Both examples are royal temples, so a two-storey wall may not be typical.',
+      {src:['bala_tanj','bala_gkc','sahapedia','man19'],conf:70,basis:'Buildings (two examples) and text',gram:'Tower → Wall → Storey('+(s+1)+') → Pada',
+       dims:[WALLH,['Share of storey',T,'two thirds, from the 2 : 1 pillar to entablature ratio [@man19][@man21]'],['Width',E,'0.9 of the base width']]});
+    put(m,box(wallW,sl.h,wallW),0,sl.y+sl.h/2,0); m.n++;
+
+    var me=mk('wall-ent-'+s,'Wall storey '+(s+1)+' of 2, entablature (prastara)','rule',
+      'Entablature over the pillar zone. The Manasara gives it half the pillar height in most of its storey schemes [@man19][@man21], though its chapter on entablatures allows much taller ones [@man16]. Applied here to the wall storeys.',
+      {src:['man16','man19','man21','bala_gkc'],conf:70,basis:'Text',gram:'Tower → Wall → Storey('+(s+1)+') → Prastara',
+       dims:[['Height',T,HALF],WALLH,['Overhang',E,'4% each side']]});
+    put(me,box(wallW*1.08,en.h,wallW*1.08),0,en.y+en.h/2,0); me.n++;
+
+    var mbh=metas.get('bhadra')||mk('bhadra','Central projection (bhadra)','inf',
+      'Projecting central bay on each face. Hardy reads such wall projections as shrine-images rising the height of the first tier [@hardy]. UNESCO notes recessed corners at one example [@unesco], and Gangaikondacholapuram has five bays a side [@bala_gkc]. The model draws three, and their width and depth are estimates.',
+      {src:['unesco','hardy','bala_gkc'],conf:60,basis:'Text and buildings, loosely',gram:'Wall → Split(face) → Corner | Bay | Corner',
+       dims:[['Width',E,'0.34 of the base width'],['Depth',E,'0.03 of the base width']]});
+    var proj=0.03*W;
+    ring4(function(t,sn,cs){
+      var xz=sideXZ(wallW/2+proj/2-0.002,0,sn,cs);
+      put(mbh,box(0.34*W,sl.h,proj),xz[0],sl.y+sl.h/2,xz[1],t); mbh.n++;
+    });
+
+    if(den>=0.3){
+      var mn=mk('niche-'+s,'Niche panel, wall storey '+(s+1),'inv',
+        'Blank panel standing in for sculpted wall niches. The generator produces no figures and no deity imagery by design.',
+        {src:[],gram:'Wall → Face → Repeat(Panel)',dims:[['Size and spacing',E,'set by the ornament density slider']]});
+      var us=den>=0.65?[-0.395,-0.28,0.28,0.395]:[-0.28,0.28];
+      ring4(function(t,sn,cs){
+        us.forEach(function(uu){
+          var pw=Math.abs(uu)>0.3?0.08:0.09;
+          var xz=sideXZ(wallW/2+0.004*W,uu*W,sn,cs);
+          put(mn,box(pw*W,sl.h*0.62,0.012*W),xz[0],sl.y+sl.h/2,xz[1],t); mn.n++;
+        });
+      });
+    }
+  });
+  y=wall[3].y+wall[3].h;
+
+  /* Tiers: repeat N times, heights stepping down evenly. Tier → Pada | Prastara, then a Hara on the ledge */
+  var w0=0.80*W, h0=0.116*W;
+  var widths=[], hs=[];
+  for(i=0;i<N;i++){
+    var f=N>1?i/(N-1):0;
+    widths.push(w0*(1-(1-tp)*f)); hs.push(h0*(1-(1-hr)*f));
+  }
+  var topW=widths[N-1];
+  var gw=0.75*topW;             /* neck width: three quarters of the storey below */
+  var mod=0.40*gw;              /* crown module: platform ½, neck 1, dome 2, finial 1 */
+  var lvlMax=den<0.15?-1:(den<0.35?0:(den<0.55?1:2));
+  var perSide=[];
+
+  /* the wall top carries the first hara */
+  hara(y,wallW*1.08,hs[0]*2/3,lvlMax,den,'Wall top','w','Wall → Hara → ');
+
+  for(var ti=0;ti<N;ti++){
+    var w=widths[ti], h=hs[ti], padH=h*2/3, entH=h/3, cw=w*1.07;
+    var hn=(ti<N-1)?hs[ti+1]*2/3:padH*0.9;
+    var label='Tier '+(ti+1)+' of '+N;
+    var mt=mk('tier-pada-'+ti,label+', pillar zone (pada)','rule',
+      'One storey of the receding stack that forms the superstructure [@soas]. Balasubrahmanyam describes thirteen storeys over the wall at Thanjavur, straight-sided [@bala_tanj]. UNESCO gives 13, 9 and 5 tiers at the three great temples [@unesco]. In the Manasara a storey is a pillar zone under an entablature half its height, and pillar heights step down storey by storey, for example 7, 6, 5 and 4.5 parts in a six-storey scheme [@man21][@man24].',
+      {src:['unesco','soas','bala_tanj','man19','man21','man24','man26'],conf:85,basis:'Buildings and text',gram:'Tower → Tier('+(ti+1)+') → Pada',
+       dims:[['Share of storey',T,'two thirds, from the 2 : 1 pillar to entablature ratio [@man19][@man21]'],
+             ['Step between tiers',T,'even steps, as in the text\'s sequences [@man24][@man26]. The slider sets how far they fall'],
+             ['Bottom tier height',E,'0.116 of the base width, chosen so 13 tiers come out near Thanjavur\'s height [@bala_tanj]'],
+             ['Width',E,'straight-line taper set by the slider']]});
+    put(mt,box(w,padH,w),0,y+padH/2,0); mt.n++;
+    y+=padH;
+    var mc=mk('tier-ent-'+ti,label+', entablature (prastara)','rule',
+      'Entablature over the pillar zone, half its height [@man19][@man21]. The pavilions of the hara stand on it.',
+      {src:['man16','man19','man21'],conf:75,basis:'Text',gram:'Tower → Tier('+(ti+1)+') → Prastara',
+       dims:[['Height',T,HALF],['Overhang',E,'7%']]});
+    put(mc,box(cw,entH,cw),0,y+entH/2,0); mc.n++;
+    y+=entH;
+    perSide.push(hara(y,cw,hn,lvlMax,den,label,String(ti),'Tier('+(ti+1)+') → Hara → '));
+  }
+
+  /* Crown: Platform | Neck | Dome | Finial at ½ : 1 : 2 : 1 */
+  var MODSIZE=['Size of one part',E,'chosen for this model. The texts tie it to total height'];
+  var vW=0.875*topW, vH=mod/2;
+  var mv=mk('vedika','Vedika (platform under the neck)','rule',
+    'Low platform between the top storey and the neck. Nearly every height scheme in the Manasara includes one, usually about half the neck [@man20][@man22], and the one-storey scheme makes it seven eighths of the building width [@man19]. Balasubrahmanyam reports a single granite block 7.77 m square at the top of the Thanjavur tower [@bala_tanj]. Which part that block forms was not clear in the excerpt read.',
+    {src:['man19','man20','man22','bala_tanj'],conf:75,basis:'Text',gram:'Tower → Crown → Platform',
+     dims:[['Height',T,'half the neck, as in most schemes [@man20][@man22]'],['Width',T,'seven eighths of the storey below, a one-storey rule extended to the top tier [@man19]'],MODSIZE]});
+  put(mv,box(vW,vH,vW),0,y+vH/2,0); mv.n++;
+  y+=vH;
+  var rn=(gw/2)/Math.cos(OCT);
+  var ng=new THREE.CylinderGeometry(rn,rn,mod,8); ng.rotateY(OCT);
+  var mg=mk('griva','Griva (neck)','rule',
+    'Neck under the dome. In several of the Manasara\'s schemes the neck is one part where the dome is two and the finial one [@man19][@man20][@man22], though others differ [@man24][@man26]. It is three quarters of the building width in the one-storey scheme [@man19], and octagonal in the class the text calls Dravida [@man18]. The width rule is applied here to the top tier, which extends it beyond what the text says.',
+    {src:['man18','man19','man20','man22','man24','man26'],conf:70,basis:'Text',gram:'Tower → Crown → Neck',
+     dims:[['Height',T,'one part where the dome is two and the finial one [@man19][@man22]'],['Plan',T,'octagonal [@man18]'],['Width',T,'three quarters of the storey below, a one-storey rule extended to the top tier [@man19]'],MODSIZE]});
+  put(mg,ng,0,y+mod/2,0); mg.n++;
+  y+=mod;
+  var R=0.72*gw, domeH=2*mod;
+  var prof=[[0.74,0],[1,0.03],[1.08,0.1],[1.06,0.24],[0.86,0.48],[0.56,0.74],[0.3,0.93],[0.14,1.0],[0,1.0]].map(function(p){return new THREE.Vector2(p[0]*R,p[1]*domeH);});
+  var dg=new THREE.LatheGeometry(prof,8); dg.rotateY(OCT);
+  var msk=mk('sikhara','Sikhara (octagonal dome)','rule',
+    'Dome over the neck. The Manasara classes a building with an octagonal or hexagonal upper part as Dravida [@man18] and in several schemes makes the dome twice the neck height [@man19][@man22]. No source in this list describes the dome shape of built Chola temples.',
+    {src:['man18','man19','man22'],conf:75,basis:'Text',gram:'Crown → Dome',
+     dims:[['Height',T,'twice the neck [@man19][@man22]'],['Plan',T,'octagonal [@man18]'],['Profile and overhang',E,'estimated']]});
+  put(msk,dg,0,y,0); msk.n++;
+  y+=domeH;
+  var kk=mod/2.7;
+  var kp=[[0,0],[0.55,0],[0.6,0.12],[1.0,0.5],[1.05,0.9],[0.75,1.3],[0.4,1.55],[0.55,1.7],[0.3,1.95],[0.12,2.4],[0,2.7]].map(function(p){return new THREE.Vector2(p[0]*kk,p[1]*kk);});
+  var mkl=mk('kalasa','Stupi and kalasa (finial)','rule',
+    'Finial over the dome, half the dome height in several of the Manasara\'s schemes [@man19][@man22]. The translation glosses the finial as a pitcher (kumbha) with a lotus and a pinnacle-staff above it [@man18][@man19], which is why it is drawn as a pot. Balasubrahmanyam gives the Thanjavur finial as 3.35 to 3.81 m, which is taller in proportion than this one [@bala_tanj].',
+    {src:['man18','man19','man22','bala_tanj'],conf:75,basis:'Text',gram:'Crown → Finial',
+     dims:[['Height',T,'half the dome [@man19][@man22]'],['Profile',E,'estimated as a pot shape']]});
+  put(mkl,new THREE.LatheGeometry(kp,24),0,y-0.02*mod,0); mkl.n++;
+  var topY=y+mod;
+  if(P.crown==='spike'){
+    var msp=mk('spike','Spike above kalasa','inf',
+      'Optional spike above the kalasa. The Manasara mentions a pinnacle-staff above the pitcher [@man18]. Its form in Chola practice is not verified.',
+      {src:['man18'],conf:40,basis:'Text, loosely',gram:'Crown → Finial → Spike',dims:[['Size',E,'estimated']]});
+    put(msp,new THREE.ConeGeometry(kk*0.07,kk*2.4,8),0,topY+kk*1.1,0); msp.n++;
+    topY+=kk*2.2;
+  }
+  H=topY;
+
+  /* Readouts */
+  $('o-ratio').textContent=(H/W).toFixed(2);
+  var runs=[], k;
+  for(k=0;k<perSide.length;k++){
+    if(runs.length&&runs[runs.length-1][0]===perSide[k]) runs[runs.length-1][2]=k+1;
+    else runs.push([perSide[k],k+1,k+1]);
+  }
+  var perTxt=lvlMax<0?'none (density too low)':runs.map(function(r){return (r[1]===r[2]?'tier '+r[1]:'tiers '+r[1]+'–'+r[2])+': '+r[0];}).join(', ');
+  $('gram').textContent=
+    'Tower → Sub-base · Base(4) · Wall storey×2 · Tier×'+N+' · Crown\n'+
+    'Storey → Pada | Prastara   (2 : 1)\n'+
+    'Tier → Storey + Hara\n'+
+    'Side → parts, each about one storey tall\n'+
+    '  10+ parts → K · H · s · H · S · H · s · H · K\n'+
+    '  6–9 parts → K · H · S · H · K\n'+
+    '  4–5 parts → K · S · K\n'+
+    'Pavilions per side → '+perTxt+'\n'+
+    'Crown → Platform | Neck | Dome | Finial   (½ : 1 : 2 : 1)'+(P.crown==='spike'?' · Spike':'')+'\n'+
+    'Width(i) = w0 · (1 − (1 − '+tp.toFixed(2)+') · i/'+Math.max(1,N-1)+')\n'+
+    'Height(i) = h0 · (1 − (1 − '+hr.toFixed(2)+') · i/'+Math.max(1,N-1)+')';
+
+  target.y=H*0.47;
+  if(!userMoved) dist=fitDist();
+  applyLight();
+  updateCam();
+  refresh();
+
+  var keep=selKey&&metas.get(selKey);
+  if(keep&&keep.parts.length&&P.vis[catOf(keep)]){select(keep);}else{select(null);}
+  dirty=true;
+}
+
+/* ---------- Selection ---------- */
+var outlineMat=new THREE.LineBasicMaterial({color:0x0bd0e0,depthTest:false,transparent:true});
+function clearOutline(){
+  if(selMeta){var mm=selMeta, mat=MAT[catOf(mm)]; mm.parts.forEach(function(p){p.material=mat;});}
+  outlines.forEach(function(l){if(l.parent)l.parent.remove(l); l.geometry.dispose();});
+  outlines=[];
+}
+function select(m){
+  clearOutline();
+  selMeta=m; selKey=m?m.key:selKey;
+  if(m){
+    var mat=MATSEL[catOf(m)];
+    m.parts.forEach(function(p){
+      p.material=mat;
+      var l=new THREE.LineSegments(new THREE.EdgesGeometry(p.geometry,25),outlineMat);
+      l.renderOrder=999; l.raycast=function(){};
+      p.add(l); outlines.push(l);
+    });
+  }
+  showMeta(m);
+  dirty=true;
+}
+function srcLinks(keys){
+  if(!keys.length) return '<span class="muted">None. No source supports this element.</span>';
+  return keys.map(function(k){
+    return '<a href="'+SRC[k].u+'" target="_blank" rel="noopener noreferrer" title="'+SRC[k].n.replace(/"/g,'&quot;')+'">['+NUM[k]+']</a>';
+  }).join(' ');
+}
+function showMeta(m){
+  var tag=$('i-tag'), dtag=$('i-dtag');
+  if(!m){
+    tag.hidden=true; dtag.hidden=true;
+    $('i-name').textContent='Select an element';
+    $('i-rule').textContent='Select any part of the tower to see the evidence for it and for its size.';
+    $('i-kv').hidden=true; return;
+  }
+  tag.hidden=false; dtag.hidden=false;
+  tag.className='chip c-'+m.tier; tag.textContent='Element: '+MODES.elem.label[m.tier];
+  dtag.className='chip c-'+m.dcat; dtag.textContent='Size: '+MODES.dim.label[m.dcat];
+  $('i-name').textContent=m.name;
+  $('i-rule').textContent=cite(m.rule);
+  $('i-kv').hidden=false;
+  $('i-basis').textContent=m.basis;
+  var ul=$('i-dims'); ul.textContent='';
+  m.dims.forEach(function(d){
+    var li=document.createElement('li'), k=document.createElement('span'), t=document.createElement('span');
+    k.className='dk '+d[1]; k.textContent=DKIND[d[1]];
+    t.textContent=d[0]+(d[2]?': '+cite(d[2]):'');
+    li.appendChild(k); li.appendChild(t); ul.appendChild(li);
+  });
+  $('i-gram').textContent=m.gram;
+  var c=$('i-conf');
+  if(m.conf==null){c.textContent='Not applicable. This element is invented.';}
+  else{c.textContent=m.conf+'%'; if(m.conf<80){var w=document.createElement('span'); w.className='warn'; w.textContent='below 80%'; c.appendChild(w);}}
+  $('i-src').innerHTML=srcLinks(m.src);
+}
+
+/* ---------- Picking ---------- */
+var ray=new THREE.Raycaster(), ndc=new THREE.Vector2();
+function pick(cx,cy){
+  var r=cv.getBoundingClientRect();
+  ndc.set((cx-r.left)/r.width*2-1,-((cy-r.top)/r.height)*2+1);
+  ray.setFromCamera(ndc,camera);
+  var hits=ray.intersectObject(ROOT,true);
+  for(var i=0;i<hits.length;i++){
+    var o=hits[i].object;
+    if(o.isMesh&&o.visible&&o.userData.meta) return o.userData.meta;
+  }
+  return null;
+}
+
+/* ---------- Orbit camera ---------- */
+var th=0.75, ph=1.2, dist=34, target=new THREE.Vector3(0,9,0);
+var DMIN=10, DMAX=170, userMoved=false;
+function updateCam(){
+  camera.position.set(
+    target.x+dist*Math.sin(ph)*Math.sin(th),
+    target.y+dist*Math.cos(ph),
+    target.z+dist*Math.sin(ph)*Math.cos(th));
+  camera.lookAt(target); dirty=true;
+}
+function fitDist(){
+  var t=Math.tan(camera.fov*Math.PI/360);
+  var narrow=view.clientWidth<520;
+  var halfH=H*0.5*(narrow?1.5:1.3), halfW=P.base*1.0;
+  return clamp(Math.max(halfH/t,halfW/(t*camera.aspect))+P.base*0.4,DMIN,DMAX);
+}
+function resetView(){userMoved=false; th=0.75; ph=1.2; dist=fitDist(); target.set(0,H*0.47,0); updateCam();}
+
+var pts=new Map(), down=null, pinch0=0, dist0=0;
+cv.addEventListener('pointerdown',function(e){
+  try{cv.setPointerCapture(e.pointerId);}catch(_){}
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pts.size===1){down={id:e.pointerId,moved:0};}
+  else{
+    down=null; var v=Array.from(pts.values());
+    pinch0=Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y); dist0=dist;
+  }
+  cv.style.cursor='grabbing';
+});
+cv.addEventListener('pointermove',function(e){
+  var p=pts.get(e.pointerId); if(!p) return;
+  var dx=e.clientX-p.x, dy=e.clientY-p.y; p.x=e.clientX; p.y=e.clientY;
+  if(pts.size===1){
+    th-=dx*0.0065; ph=clamp(ph-dy*0.0055,0.12,1.5);
+    if(down) down.moved+=Math.abs(dx)+Math.abs(dy);
+    userMoved=true;
+    updateCam();
+  }else if(pts.size===2){
+    var v=Array.from(pts.values()), d=Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y);
+    if(pinch0>0&&d>0){dist=clamp(dist0*pinch0/d,DMIN,DMAX); userMoved=true; updateCam();}
+  }
+});
+function endPtr(e){
+  var had=pts.delete(e.pointerId);
+  cv.style.cursor='grab';
+  if(had&&down&&down.id===e.pointerId&&down.moved<6&&e.type==='pointerup'){
+    var m=pick(e.clientX,e.clientY); if(m) select(m);
+  }
+  if(pts.size<2) pinch0=0;
+  if(pts.size===0) down=null;
+}
+cv.addEventListener('pointerup',endPtr);
+cv.addEventListener('pointercancel',endPtr);
+cv.addEventListener('wheel',function(e){
+  e.preventDefault(); dist=clamp(dist*Math.exp(e.deltaY*0.0012),DMIN,DMAX); userMoved=true; updateCam();
+},{passive:false});
+cv.addEventListener('keydown',function(e){
+  var used=true;
+  if(e.key==='ArrowLeft') th+=0.08; else if(e.key==='ArrowRight') th-=0.08;
+  else if(e.key==='ArrowUp') ph=clamp(ph-0.06,0.12,1.5); else if(e.key==='ArrowDown') ph=clamp(ph+0.06,0.12,1.5);
+  else if(e.key==='+'||e.key==='=') dist=clamp(dist*0.92,DMIN,DMAX);
+  else if(e.key==='-') dist=clamp(dist/0.92,DMIN,DMAX);
+  else used=false;
+  if(used){e.preventDefault(); userMoved=true; updateCam();}
+});
+
+/* ---------- Resize / render loop ---------- */
+function resize(){
+  var r=view.getBoundingClientRect(), w=Math.max(1,r.width), h=Math.max(1,r.height);
+  renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+  if(!userMoved){dist=fitDist(); updateCam();}
+  dirty=true;
+}
+if(window.ResizeObserver){new ResizeObserver(resize).observe(view);}else{window.addEventListener('resize',resize);}
+(function frame(){requestAnimationFrame(frame); if(dirty){dirty=false; renderer.render(scene,camera);}})();
+
+/* ---------- Controls ---------- */
+var pending=false;
+function schedule(){if(pending)return; pending=true; requestAnimationFrame(function(){pending=false; build();});}
+function bindRange(id,key,fmt,parse){
+  var el=$(id), out=$('o-'+id.slice(2));
+  el.addEventListener('input',function(){P[key]=parse?parse(el.value):parseFloat(el.value); out.textContent=fmt(P[key]); schedule();});
+}
+bindRange('p-tiers','tiers',function(v){return String(v);},function(v){return parseInt(v,10);});
+bindRange('p-base','base',function(v){return v.toFixed(1);});
+bindRange('p-taper','taper',function(v){return v.toFixed(2);});
+bindRange('p-hratio','hratio',function(v){return v.toFixed(2);});
+bindRange('p-density','density',function(v){return v.toFixed(2);});
+$('p-crown').addEventListener('change',function(e){P.crown=e.target.value; schedule();});
+$('tier-presets').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  var n=parseInt(b.dataset.n,10); P.tiers=n; $('p-tiers').value=n; $('o-tiers').textContent=n; schedule();
+});
+$('light-seg').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  P.light=b.dataset.l;
+  Array.from(this.children).forEach(function(c){c.setAttribute('aria-pressed',String(c===b));});
+  applyLight();
+});
+[0,1,2].forEach(function(i){
+  $('v-'+i).addEventListener('change',function(e){
+    P.vis[MODES[P.mode].keys[i]]=e.target.checked;
+    if(selMeta&&!P.vis[catOf(selMeta)]) select(null);
+    refresh();
+  });
+});
+$('mode-seg').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b||b.dataset.m===P.mode) return;
+  var keep=selMeta; select(null);
+  P.mode=b.dataset.m; applyMode();
+  if(keep&&P.vis[catOf(keep)]) select(keep);
+});
+$('reset').addEventListener('click',resetView);
+
+/* ---------- Source list ---------- */
+(function(){
+  var ol=$('src-list');
+  Object.keys(SRC).forEach(function(id){
+    if(!SRC[id].u) return;
+    var s=SRC[id], li=document.createElement('li');
+    var a=document.createElement('a'); a.href=s.u; a.target='_blank'; a.rel='noopener noreferrer'; a.textContent=s.n;
+    var i=document.createElement('span'); i.className='id'; i.textContent='['+NUM[id]+']';
+    var u=document.createElement('span'); u.className='use'; u.textContent=cite(s.use);
+    var r=document.createElement('span'); r.className='rel'; r.textContent=s.rel;
+    li.appendChild(i); li.appendChild(a); li.appendChild(u); li.appendChild(r); ol.appendChild(li);
+  });
+})();
+
+/* ---------- Start ---------- */
+if(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches){$('hint').textContent='Drag to orbit. Pinch to zoom. Tap an element.';}
+Array.prototype.forEach.call(document.querySelectorAll('a[data-cite]'),function(a){
+  var k=a.getAttribute('data-cite'); a.href=SRC[k].u; a.target='_blank'; a.rel='noopener noreferrer'; a.title=SRC[k].n; a.textContent='['+NUM[k]+']';
+});
+resize();
+build();
+applyMode();
+resetView();
+select(metas.get('tier-pada-'+Math.floor(P.tiers/2)));
+})();
+</script>
+</body>
+</html>
