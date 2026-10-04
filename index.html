@@ -188,7 +188,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
         <div class="ctl">
           <label for="p-tiers">Superstructure tiers</label><output id="o-tiers">13</output>
           <input type="range" id="p-tiers" min="3" max="14" step="1" value="13">
-          <div class="help">Recorded counts: 13 at Thanjavur, 9 at Gangaikondacholapuram, 5 at Darasuram <a data-cite="unesco"></a>. Balasubrahmanyam gives thirteen storeys over the wall at Thanjavur <a data-cite="bala_tanj"></a> but nine “including the ground tala” at Gangaikondacholapuram <a data-cite="bala_gkc"></a>. The texts count from the ground up, to a maximum of 12 <a data-cite="man11"></a>. Dagens reads a mention of sixteen storeys in the Mayamata as a later addition made for the large Chola temples <a data-cite="hardy"></a>. These ways of counting have not been reconciled here.</div>
+          <div class="help">Recorded counts of tiers above the wall: 13 at Thanjavur, 9 at Gangaikondacholapuram, 5 at Darasuram <a data-cite="unesco"></a>. With its two wall storeys, Dagens counts Thanjavur at fifteen storeys <a data-cite="maya"></a>. The Mayamata and the Manasara describe temples of up to twelve <a data-cite="maya"></a> <a data-cite="man11"></a>.</div>
         </div>
         <div class="seg" id="tier-presets" style="margin:-4px 0 14px">
           <button type="button" data-n="13">13</button>
@@ -203,16 +203,16 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
         <div class="ctl">
           <label for="p-taper">Taper ratio</label><output id="o-taper">0.36</output>
           <input type="range" id="p-taper" min="0.2" max="0.7" step="0.01" value="0.36">
-          <div class="help">Top tier width as a fraction of the bottom tier width. Estimated, no source.</div>
+          <div class="help">Top tier width as a fraction of the bottom tier width, narrowing in equal steps. In the Mayamata the top storey is 0.3 to 0.5 of the ground storey for three and four storeys <a data-cite="maya"></a>. It gives no widths for taller temples.</div>
         </div>
         <div class="ctl">
           <label for="p-hratio">Top tier height</label><output id="o-hratio">0.55</output>
           <input type="range" id="p-hratio" min="0.3" max="1" step="0.01" value="0.55">
-          <div class="help">Height of the top tier as a fraction of the bottom one, stepping down evenly. The Manasara's schemes fall between about 0.4 and 0.75 <a data-cite="man24"></a> <a data-cite="man26"></a>.</div>
+          <div class="help">Height of the top tier as a fraction of the bottom one, stepping down evenly. The Mayamata reaches 0.5 over twelve storeys <a data-cite="maya"></a>. The Manasara's schemes fall between about 0.4 and 0.75 <a data-cite="man24"></a> <a data-cite="man26"></a>.</div>
         </div>
         <div class="ctl">
           <span style="font-weight:600">Height ÷ base width</span><output id="o-ratio">0.00</output>
-          <div class="help">For comparison: the Manasara names height classes of 1¼, 1½, 1¾ and 2 times the breadth <a data-cite="man11"></a>, and the Samarangana ties height to the plan diagonal, about 1.41 <a data-cite="hardy"></a>. Measured: 2.10 at Thanjavur <a data-cite="bala_tanj"></a> and 1.60 at Gangaikondacholapuram <a data-cite="bala_gkc"></a>. This model does not enforce any of these.</div>
+          <div class="help">For comparison: the Mayamata makes a large building ten sevenths (1.43) of its width and a small one twice <a data-cite="maya"></a>. The Samarangana ties height to the plan diagonal, about 1.41 <a data-cite="hardy"></a>. Measured: 2.10 at Thanjavur <a data-cite="bala_tanj"></a> and 1.60 at Gangaikondacholapuram <a data-cite="bala_gkc"></a>. This model does not enforce any of these.</div>
         </div>
         <div class="ctl">
           <label for="p-density">Ornament density</label><output id="o-density">0.60</output>
@@ -269,15 +269,19 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
         <h3>Not verified</h3>
         <ul class="nv">
           <li>Texts and buildings are different kinds of evidence. Adam Hardy, who has tested texts by drawing them, says of text and measured building: “Often, they do correspond and often, they don't” <a data-cite="hardyint"></a>. A rule taken from a text shows a design tradition. It does not show what Chola builders did.</li>
-          <li>No element has every dimension sourced. Switch “Colour by” to Dimensions to see which sizes rest on a cited ratio or measurement and which are estimates.</li>
+          <li>Thanjavur itself breaks the text's rules. The Mayamata describes temples of up to twelve storeys and makes a large one ten sevenths as high as it is wide. Thanjavur has fifteen storeys by Dagens's count and is 2.10 times as high as its base. Dagens calls it “abnormal” against the treatise, and reads a passing mention of thirteen to sixteen storeys as a later addition <a data-cite="maya"></a> <a data-cite="bala_tanj"></a>. On overall height this model follows the building, not the text.</li>
+          <li>Only the sub-base has every dimension sourced. Switch “Colour by” to Dimensions to see which sizes rest on a cited ratio or measurement and which are estimates.</li>
           <li>The measurements come from two temples only, both royal foundations. The base heights are Thanjavur's <a data-cite="bala_tanj"></a> and the wall height is Gangaikondacholapuram's <a data-cite="bala_gkc"></a>. Mixing them into one tower is a choice made for this model.</li>
-          <li>How many pavilions a tier carries is set by how many parts fit its side, with each part about one storey tall. The Manasara gives every storey of a building the same row <a data-cite="man24"></a> <a data-cite="man30"></a>. Thinning the rows on the narrower upper tiers is an inference, not a sourced rule.</li>
-          <li>The Manasara's date is contested. According to <a href="https://en.wikipedia.org/wiki/Manasara" target="_blank" rel="noopener noreferrer">Wikipedia's summary of the scholarship</a>, P. K. Acharya put it at about the 5th to 7th century, George Michell at the 7th to 8th, and Tarapada Bhattacharyya read the surviving complete text as a South Indian recension of about the 11th century or later, built up in layers. Those three works were not read directly for this page. If Bhattacharyya is right, the text as we have it is no earlier than the great Chola temples.</li>
-          <li>The Manasara rules come from Acharya's 1933 translation <a data-cite="man19"></a> <a data-cite="man21"></a>, read as excerpts returned by a fetch tool, not as full pages. Only one complete manuscript is reported.</li>
-          <li>The Mayamata, which Hardy dates to before the end of the tenth century <a data-cite="hardy"></a>, is the closer text in time. Bruno Dagens's translation has not yet been read for this page. No Agama has been consulted.</li>
-          <li>Thanjavur is counted at 13 tiers by <a data-cite="unesco"></a> and 14 by <a data-cite="sahapedia"></a>. Its height is given as 63.41 m by Balasubrahmanyam <a data-cite="bala_tanj"></a> and as anything from about 61 m to 66 m elsewhere.</li>
-          <li>Tier heights step down evenly from bottom to top. The Manasara's sequences are close to even steps <a data-cite="man24"></a> <a data-cite="man26"></a>, while Hardy notes that those in the Samarangana follow no regular progression <a data-cite="hardy"></a>.</li>
-          <li>The dome and finial rest on the text alone. No source in this list describes their form in built temples. The one that did was an exam-prep summary and was removed.</li>
+          <li>The taper in equal steps comes from the Mayamata's three and four-storey temples. The text gives no storey widths above five storeys, so thirteen tiers is an extrapolation <a data-cite="maya"></a>.</li>
+          <li>The crown is larger than the Mayamata's ratios would make it. In the text the neck is under half the pillar height of the top storey. Applied to thirteen thin tiers that would give a very flat dome, so the crown's scale here is a choice <a data-cite="maya"></a>.</li>
+          <li>How many pavilions a tier carries is set by how many parts fit its side. The Mayamata says pavilions shrink storey by storey and may be arranged on each storey in the same way (22.76 to 78) <a data-cite="maya"></a>, and the Manasara gives every storey the same row <a data-cite="man24"></a> <a data-cite="man30"></a>. Thinning the rows on the narrower upper tiers is an inference.</li>
+          <li>The Mayamata was read directly in Bruno Dagens's edition: the introduction, chapters 11, 13 and 19 to 22, and parts of 14 and 18. Chapters 15 to 17 and 23 are unread. Volume 2, which holds the chapter on gateways, has not been consulted, and neither has any Agama. Verse numbers are given only where they could be read in the scan.</li>
+          <li>Dagens places the Mayamata between the early 9th and the late 12th century, and thinks it earlier than the great temples of the early 11th. The foreword to his edition says 11th to 12th century <a data-cite="maya"></a>. Hardy's “before the end of the tenth century” <a data-cite="hardy"></a> sits at the early end of that range.</li>
+          <li>The Manasara's date is contested. P. K. Acharya dated it very early. Tarapada Bhattacharyya argued it is a late “recension of recensions”, and Dagens agrees, treating any original as roughly contemporary with the Mayamata <a data-cite="maya"></a>. Dagens also notes that Acharya's translation renders the sub-base and base as parts of a column.</li>
+          <li>The Manasara rules come from Acharya's 1933 translation <a data-cite="man19"></a> <a data-cite="man21"></a>, read as excerpts returned by a fetch tool, not as full pages. Where the Mayamata gives the same rule, it is cited first.</li>
+          <li>One source counts 14 tiers at Thanjavur <a data-cite="sahapedia"></a>, against 13 elsewhere <a data-cite="unesco"></a>. Its height is 63.41 m in Balasubrahmanyam <a data-cite="bala_tanj"></a> and anything from about 61 m to 66 m in other sources consulted.</li>
+          <li>Tier heights step down evenly, as in the Mayamata <a data-cite="maya"></a>. Hardy notes that those in the Samarangana follow no regular progression <a data-cite="hardy"></a>.</li>
+          <li>The dome and finial rest on texts alone. No source in this list describes their form in built temples.</li>
           <li>A parametric Karnata-Dravida model exists <a data-cite="karnata"></a>. No published Chola shape grammar was found, in a search that was not exhaustive.</li>
           <li>Only Chola has been researched. Whether Pallava, Pandya, Vijayanagara and Nayak are distinct enough to be separate rule sets is unchecked.</li>
         </ul>
@@ -312,6 +316,7 @@ var SRC={
  man21:{n:'Manasara, chapter 21, The three-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421068.html',use:'Pillar heights shrink upward: 8, 6¾ and 6 parts. Corner kutas of one part each, a middle sala of two to four parts, and a hara with panjara between them (verses 55 to 63).',rel:MANREL},
  bala_tanj:{n:'S. R. Balasubrahmanyam, Middle Chola Temples (1975), Tanjavur: The Central Shrine',u:'https://www.wisdomlib.org/south-asia/book/middle-chola-temples/d/doc210432.html',use:'Measurements at Thanjavur: base 30.18 m square, sub-base 1.40 m, moulded base 3.60 m, height 63.41 m, a two-storey wall with thirteen storeys over it, straight-sided.',rel:BALREL},
  bala_gkc:{n:'S. R. Balasubrahmanyam, Middle Chola Temples (1975), Gangaikondasolapuram',u:'https://www.wisdomlib.org/south-asia/book/middle-chola-temples/d/doc211879.html',use:'Measurements at Gangaikondacholapuram: base 30.48 m, walls 10.67 m high in two equal courses, nine talas including the ground one, height 48.77 m, concave profile.',rel:BALREL},
+ maya:{n:'Mayamata, edited and translated by Bruno Dagens, volume 1 (IGNCA and Motilal Banarsidass, 1994)',u:'https://www.motilalbanarsidass.com/en-us/products/mayamatam-2-volumes',use:'Storey widths, storey heights and pavilion rows for temples of one to twelve storeys, the base and the crown. Dagens\'s introduction dates the text, compares it with the Manasara and counts Thanjavur at fifteen storeys.',rel:'Critical edition and translation, read directly from a scan: the introduction, chapters 11, 13 and 19 to 22, and parts of 14 and 18. The link goes to the publisher.'},
  man13:{n:'Manasara, chapter 13, The pedestals',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421060.html',use:'A pedestal (upapitha) under the base, sized as a fraction or multiple of the base.',rel:MANREL},
  man14:{n:'Manasara, chapter 14, The bases',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421061.html',use:'Padabandha base in 24 parts: plinth 8, kumuda 7, neck 3 and band 3, with one-part fillets between.',rel:MANREL},
  man16:{n:'Manasara, chapter 16, The entablatures',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421063.html',use:'Entablature heights from half the pillar up to twice it. Cornice projection equal to its height or less.',rel:MANREL},
@@ -333,7 +338,7 @@ var MODES={
   sw:{rule:'rule',inf:'inf',inv:'inv'}},
  dim:{keys:DKEYS,q:'Is there evidence for its size and proportions?',
   label:{src:'Sourced',part:'Partly sourced',est:'Estimated'},
-  desc:{src:'Every dimension follows a cited ratio. Shown solid.',part:'At least one ratio is cited. The rest is estimated. Shown amber.',est:'No dimension has a source. Shown hatched.'},
+  desc:{src:'Every dimension follows a cited ratio or measurement. Shown solid.',part:'At least one ratio is cited. The rest is estimated. Shown amber.',est:'No dimension has a source. Shown hatched.'},
   sw:{src:'rule',part:'part',est:'inv'}}
 };
 var DKIND={text:'Text',bldg:'Buildings',est:'Estimate'};
@@ -489,8 +494,9 @@ function applyMode(){
 
 /* ---------- Build ---------- */
 var OCT=Math.PI/8, T='text', B='bldg', E='est';
-var HALF='half the pillar zone [@man19][@man21]';
-var PARTSIZE=['Size of one part',E,'about the height of the storey behind it'];
+var HALF='about half the pillar zone [@maya][@man19]';
+var PARTSIZE=['Size of one part',E,'about the height of the storey behind, which gives 8 to 12 parts a side here. The Mayamata uses 6 to 10 parts for small temples and 16 to 24 for twelve storeys [@maya]'];
+var PAVH=['Height',T,'the pillar height of the storey behind it (Mayamata 20.10 to 12) [@maya]'];
 /* outline of a pavilion with a rounded top: half-width a, body height hb */
 function archShape(a,hb){
   var s=new THREE.Shape();
@@ -521,21 +527,21 @@ function hara(y,cw,hn,lvlMax,den,label,id,gramHead){
   var has=function(t){return seq.some(function(e){return e[0]===t;});};
 
   var mK=mk('kuta-'+id,label+', kuta (corner pavilion)','rule',
-    'Square pavilion at each corner. The Manasara divides the width of a storey into parts and gives the kutas one part each, the middle sala two to four, and the rest to the hara [@man21][@man22][@man24]. Hardy gives the order kuta, panjara, sala, panjara, kuta across a tier [@hardy]. Drawn with a plain pyramid roof.',
-    {src:['soas','man21','man22','man24','hardy'],conf:85,basis:'Text and buildings',gram:gramHead+'Corner → Kuta',
-     dims:[['Width',T,'one part of the side [@man21][@man22]'],PARTSIZE,['Height and roof',E,'estimated']]});
+    'Square pavilion at each corner. The Mayamata divides the side of a storey into parts: one for each corner pavilion, two or three for the middle one, half or one for each niche between, and the rest for the dwarf galleries that link them (chapters 20 to 22) [@maya]. It puts square pavilions at the corners, elongated ones in the middle and intermediate ones between (22.78 to 79) [@maya]. The Manasara and Hardy give the same row [@man22][@hardy]. Drawn with a pyramid roof, as Dagens describes kutas [@maya].',
+    {src:['maya','soas','man21','man22','hardy'],conf:90,basis:'Text and buildings',gram:gramHead+'Corner → Kuta',
+     dims:[['Width',T,'one part of the side [@maya][@man21]'],PAVH,PARTSIZE]});
   var mS=has('S')?mk('sala-'+id,label+', sala (middle pavilion)','rule',
-    'Barrel-roofed pavilion at the middle of each side, two to four parts wide [@man21][@man22][@man24].',
-    {src:['soas','man21','man22','man24','hardy'],conf:85,basis:'Text and buildings',gram:gramHead+'Middle → Sala',
-     dims:[['Width',T,'two to four parts, as many as fit [@man21][@man24]'],PARTSIZE,['Height',E,'estimated']]}):null;
+    'Elongated pavilion with a wagon roof at the middle of each side. The Mayamata makes it two or three parts long [@maya], the Manasara two to four [@man21][@man24].',
+    {src:['maya','soas','man21','man24','hardy'],conf:90,basis:'Text and buildings',gram:gramHead+'Middle → Sala',
+     dims:[['Width',T,'two to four parts, as many as fit [@maya][@man21]'],PAVH,PARTSIZE]}):null;
   var ms=has('s')?mk('ssala-'+id,label+', small sala','rule',
-    'Small hall between the corner and the middle. For tall buildings the Manasara gives each storey a great hall, four kutas, eight small halls and sixteen hall-windows [@man30], and it names small halls for eight-storey buildings too [@man26]. Using them on a tower of any height is an extension of that.',
-    {src:['man26','man30'],conf:65,basis:'Text',gram:gramHead+'Between → Small sala',
-     dims:[['Width',E,'one part. No ratio found'],['Height',E,'estimated']]}):null;
+    'Small hall between the corner and the middle. For tall buildings the Manasara gives each storey a great hall, four kutas, eight small halls and sixteen hall-windows [@man30], and it names small halls for eight-storey buildings too [@man26]. The Mayamata has types with two elongated pavilions on a face (chapter 21) [@maya]. Using small halls on a tower of any height is an extension of these.',
+    {src:['man26','man30','maya'],conf:65,basis:'Text',gram:gramHead+'Between → Small sala',
+     dims:[['Width',E,'one part. No ratio found'],['Height',E,'a little lower than the main pavilions']]}):null;
   var mH=has('H')?mk('hara-'+id,label+', hara with panjara','rule',
-    'Low linking wall with an arched niche, filling the side between pavilions. The Manasara calls it the chain (hara) together with the window (panjara) and gives it the parts left over [@man22][@man24]. Hardy places a panjara between kuta and sala [@hardy].',
-    {src:['man22','man24','hardy'],conf:80,basis:'Text',gram:gramHead+'Between → Hara + Panjara',
-     dims:[['Width',T,'the parts left after kutas and salas [@man22][@man24]'],['Height and niche size',E,'estimated']]}):null;
+    'Low dwarf gallery with an arched niche, filling the side between pavilions. Dagens describes the hara as a miniature gallery that runs round the building like a chain, interrupted by intermediate pavilions (panjara) seen from the front as niches [@maya]. The Mayamata gives the niche half a part or one part and the gallery the rest [@maya], and the Manasara agrees [@man22][@man24].',
+    {src:['maya','man22','man24','hardy'],conf:85,basis:'Text',gram:gramHead+'Between → Hara + Panjara',
+     dims:[['Width',T,'the parts left after kutas and salas [@maya][@man22]'],['Height and niche size',E,'estimated']]}):null;
   var mF=(den>=0.6&&pe>0.2)?mk('fin-'+id,label+', ball finial','inv',
     'Small ball finial added to break up kuta roofs. Decoration only.',
     {src:[],gram:'Kuta → Finial',dims:[['Size',E,'decoration']]}):null;
@@ -574,11 +580,11 @@ function build(){
   var i, y=0;
 
   /* Sub-base and base: heights as measured at Thanjavur, mouldings split by the Padabandha scheme */
-  var upH=(1.40/30.18)*W, adH=(3.60/30.18)*W, upW=1.10*W+2*upH;
+  var upH=(1.40/30.18)*W, adH=(3.60/30.18)*W, upW=1.10*W+upH;   /* projection of half its height on each side */
   var mu=mk('upapitha','Upapitha (sub-base)','rule',
-    'Plain sub-base under the moulded base. Balasubrahmanyam measures one 1.40 m high at Thanjavur [@bala_tanj], and the Manasara has a chapter on such pedestals [@man13]. Drawn as a plain slab.',
-    {src:['bala_tanj','man13'],conf:75,basis:'Buildings (one example) and text',gram:'Tower → Sub-base',
-     dims:[['Height',B,'1.40 m on a 30.18 m base at Thanjavur [@bala_tanj]'],['Projection',E,'set equal to its height. The rule in the text is unclear in translation [@man13]']]});
+    'Plain sub-base (socle) under the moulded base. Balasubrahmanyam measures one 1.40 m high at Thanjavur, under a base of 3.60 m [@bala_tanj]. The Mayamata lets its height be two fifths of the base, among other options, and its projection one to five tenths of its height (chapter 13) [@maya]. Drawn as a plain slab.',
+    {src:['bala_tanj','maya','man13'],conf:80,basis:'Buildings (one example) and text',gram:'Tower → Sub-base',
+     dims:[['Height',B,'1.40 m on a 30.18 m base at Thanjavur, about two fifths of the moulded base, a ratio the Mayamata lists [@bala_tanj][@maya]'],['Projection',T,'half its height, the top of the range the Mayamata gives [@maya]']]});
   put(mu,box(upW,upH,upW),0,upH/2,0); mu.n++;
 
   var MOULD=[
@@ -590,9 +596,9 @@ function build(){
   var slabs=splitY(upH,MOULD.map(function(c){return adH*c[3]/24;}));
   MOULD.forEach(function(c,k){
     var m=mk('base-'+c[0],'Adhisthana, '+c[1],'rule',
-      'Vimanas rise from a moulded base, the adhisthana [@soas]. The Manasara\'s Padabandha base runs plinth, kumuda, neck and band, with thin fillets between [@man14]. Hardy reports a similar sequence, ending in an eave moulding, for another text [@hardy]. Each moulding is drawn here as a plain slab, with the fillets folded into the neck and band.',
-      {src:['soas','man14','hardy','bala_tanj'],conf:75,basis:'Text and buildings',gram:'Tower → Base → Jagati | Kumuda | Kantha | Pattika',
-       dims:[['Share of base height',T,c[4]+' in the Padabandha base [@man14]'],['Base height',B,'3.60 m on a 30.18 m base at Thanjavur [@bala_tanj]'],['Projection',E,'estimated']]});
+      'Vimanas rise from a moulded base, the adhisthana [@soas]. The Padabandha base runs plinth, torus (kumuda), neck and band, with thin fillets between. The Mayamata and the Manasara give it the same proportions [@maya][@man14]. Hardy reports a similar sequence, ending in an eave moulding, for another text [@hardy]. Each moulding is drawn here as a plain slab, with the fillets folded into the neck and band.',
+      {src:['soas','maya','man14','hardy','bala_tanj'],conf:85,basis:'Text and buildings',gram:'Tower → Base → Jagati | Kumuda | Kantha | Pattika',
+       dims:[['Share of base height',T,c[4]+' in the Padabandha base [@maya][@man14]'],['Base height',B,'3.60 m on a 30.18 m base at Thanjavur [@bala_tanj]'],['Projection',E,'estimated']]});
     put(m,box(c[2]*W,slabs[k].h,c[2]*W),0,slabs[k].y+slabs[k].h/2,0); m.n++;
   });
   y=slabs[3].y+slabs[3].h;
@@ -619,14 +625,14 @@ function build(){
   [0,2].forEach(function(idx,s){
     var sl=wall[idx], en=wall[idx+1];
     var m=mk('wall-'+s,'Wall storey '+(s+1)+' of 2, pillar zone (pada)','rule',
-      'Square plan under the tower with a two-storey wall. Balasubrahmanyam describes it at Thanjavur as marked by a massive overhanging cornice [@bala_tanj][@sahapedia], and at Gangaikondacholapuram as two equal courses [@bala_gkc]. In the Manasara each storey is a pillar zone under an entablature [@man19]. Both examples are royal temples, so a two-storey wall may not be typical.',
-      {src:['bala_tanj','bala_gkc','sahapedia','man19'],conf:70,basis:'Buildings (two examples) and text',gram:'Tower → Wall → Storey('+(s+1)+') → Pada',
-       dims:[WALLH,['Share of storey',T,'two thirds, from the 2 : 1 pillar to entablature ratio [@man19][@man21]'],['Width',E,'0.9 of the base width']]});
+      'Square plan under the tower with a two-storey wall. Balasubrahmanyam describes it at Thanjavur as marked by a massive overhanging cornice [@bala_tanj][@sahapedia], and at Gangaikondacholapuram as two equal courses [@bala_gkc]. The Mayamata has a temple type whose first two storeys are the same width, and Dagens notes that this is the case at Thanjavur (chapter 22) [@maya]. It is one type among several in the text, not a general rule. These two storeys count as storeys one and two of the tower.',
+      {src:['bala_tanj','bala_gkc','sahapedia','maya','man19'],conf:80,basis:'Text and buildings (two examples)',gram:'Tower → Wall → Storey('+(s+1)+') → Pada',
+       dims:[WALLH,['Share of storey',T,'two thirds, from the 2 : 1 pillar to entablature ratio [@maya][@man19]'],['Width',E,'0.9 of the base width']]});
     put(m,box(wallW,sl.h,wallW),0,sl.y+sl.h/2,0); m.n++;
 
     var me=mk('wall-ent-'+s,'Wall storey '+(s+1)+' of 2, entablature (prastara)','rule',
-      'Entablature over the pillar zone. The Manasara gives it half the pillar height in most of its storey schemes [@man19][@man21], though its chapter on entablatures allows much taller ones [@man16]. Applied here to the wall storeys.',
-      {src:['man16','man19','man21','bala_gkc'],conf:70,basis:'Text',gram:'Tower → Wall → Storey('+(s+1)+') → Prastara',
+      'Entablature over the pillar zone. The Mayamata gives it about half the pillar height: 3 parts to 6 on the ground floor of a two-storey temple, 2½ to 5 in a four-storey one [@maya]. The Manasara mostly agrees [@man19][@man21], though its chapter on entablatures allows much taller ones [@man16].',
+      {src:['maya','man16','man19','man21','bala_gkc'],conf:80,basis:'Text',gram:'Tower → Wall → Storey('+(s+1)+') → Prastara',
        dims:[['Height',T,HALF],WALLH,['Overhang',E,'4% each side']]});
     put(me,box(wallW*1.08,en.h,wallW*1.08),0,en.y+en.h/2,0); me.n++;
 
@@ -677,17 +683,18 @@ function build(){
     var hn=(ti<N-1)?hs[ti+1]*2/3:padH*0.9;
     var label='Tier '+(ti+1)+' of '+N;
     var mt=mk('tier-pada-'+ti,label+', pillar zone (pada)','rule',
-      'One storey of the receding stack that forms the superstructure [@soas]. Balasubrahmanyam describes thirteen storeys over the wall at Thanjavur, straight-sided [@bala_tanj]. UNESCO gives 13, 9 and 5 tiers at the three great temples [@unesco]. In the Manasara a storey is a pillar zone under an entablature half its height, and pillar heights step down storey by storey, for example 7, 6, 5 and 4.5 parts in a six-storey scheme [@man21][@man24].',
-      {src:['unesco','soas','bala_tanj','man19','man21','man24','man26'],conf:85,basis:'Buildings and text',gram:'Tower → Tier('+(ti+1)+') → Pada',
-       dims:[['Share of storey',T,'two thirds, from the 2 : 1 pillar to entablature ratio [@man19][@man21]'],
-             ['Step between tiers',T,'even steps, as in the text\'s sequences [@man24][@man26]. The slider sets how far they fall'],
+      'One storey of the receding stack that forms the superstructure [@soas]. Balasubrahmanyam describes thirteen storeys over the wall at Thanjavur, straight-sided [@bala_tanj], and UNESCO gives 13, 9 and 5 tiers at the three great temples [@unesco]. Counting the two wall storeys, Dagens makes Thanjavur fifteen storeys [@maya]. In the Mayamata a storey is a level of pillars under an entablature about half its height, and pillar heights fall in even steps: 5½, 5¼, 5, 4¾ and 4½ parts for five storeys, then half a part more for each storey added below, up to 9 for twelve (chapter 22) [@maya]. The Manasara has similar sequences [@man24].',
+      {src:['unesco','soas','bala_tanj','maya','man19','man24','man26'],conf:90,basis:'Buildings and text',gram:'Tower → Tier('+(ti+1)+') → Pada',
+       dims:[['Share of storey',T,'two thirds, from the 2 : 1 pillar to entablature ratio [@maya][@man19]'],
+             ['Step between tiers',T,'even steps, as in the Mayamata (chapter 22) [@maya][@man24]. The slider sets how far they fall. The text reaches one half over twelve storeys'],
              ['Bottom tier height',E,'0.116 of the base width, chosen so 13 tiers come out near Thanjavur\'s height [@bala_tanj]'],
-             ['Width',E,'straight-line taper set by the slider']]});
+             ['Taper',T,'equal steps storey by storey, with the top storey 0.3 to 0.5 of the ground storey in three and four-storey temples (Mayamata 21 and 22) [@maya]. The slider sets the ratio'],
+             ['Extension to this many tiers',E,'the text gives no storey widths above five storeys']]});
     put(mt,box(w,padH,w),0,y+padH/2,0); mt.n++;
     y+=padH;
     var mc=mk('tier-ent-'+ti,label+', entablature (prastara)','rule',
-      'Entablature over the pillar zone, half its height [@man19][@man21]. The pavilions of the hara stand on it.',
-      {src:['man16','man19','man21'],conf:75,basis:'Text',gram:'Tower → Tier('+(ti+1)+') → Prastara',
+      'Entablature over the pillar zone, about half its height [@maya][@man19]. The pavilions of the hara stand on it.',
+      {src:['maya','man16','man19','man21'],conf:85,basis:'Text',gram:'Tower → Tier('+(ti+1)+') → Prastara',
        dims:[['Height',T,HALF],['Overhang',E,'7%']]});
     put(mc,box(cw,entH,cw),0,y+entH/2,0); mc.n++;
     y+=entH;
@@ -695,37 +702,37 @@ function build(){
   }
 
   /* Crown: Platform | Neck | Dome | Finial at ½ : 1 : 2 : 1 */
-  var MODSIZE=['Size of one part',E,'chosen for this model. The texts tie it to total height'];
+  var MODSIZE=['Size of one part',E,'chosen for this model. In the Mayamata the neck is under half the pillar height of the top storey, which would make this crown far smaller [@maya]'];
   var vW=0.875*topW, vH=mod/2;
   var mv=mk('vedika','Vedika (platform under the neck)','rule',
-    'Low platform between the top storey and the neck. Nearly every height scheme in the Manasara includes one, usually about half the neck [@man20][@man22], and the one-storey scheme makes it seven eighths of the building width [@man19]. Balasubrahmanyam reports a single granite block 7.77 m square at the top of the Thanjavur tower [@bala_tanj]. Which part that block forms was not clear in the excerpt read.',
-    {src:['man19','man20','man22','bala_tanj'],conf:75,basis:'Text',gram:'Tower → Crown → Platform',
-     dims:[['Height',T,'half the neck, as in most schemes [@man20][@man22]'],['Width',T,'seven eighths of the storey below, a one-storey rule extended to the top tier [@man19]'],MODSIZE]});
+    'Low platform (stereobate) between the top storey and the neck. The Mayamata makes the neck twice as high as it in most schemes, though one passage says three times (chapters 18 to 22) [@maya]. The Manasara agrees [@man20][@man22], and its one-storey scheme makes the platform seven eighths of the building width [@man19]. Balasubrahmanyam reports a single granite block 7.77 m square at the top of the Thanjavur tower [@bala_tanj]. Which part that block forms was not clear in the excerpt read.',
+    {src:['maya','man19','man20','man22','bala_tanj'],conf:85,basis:'Text',gram:'Tower → Crown → Platform',
+     dims:[['Height',T,'half the neck, as in most schemes [@maya][@man20]'],['Width',T,'seven eighths of the storey below, a one-storey rule extended to the top tier [@man19]'],MODSIZE]});
   put(mv,box(vW,vH,vW),0,y+vH/2,0); mv.n++;
   y+=vH;
   var rn=(gw/2)/Math.cos(OCT);
   var ng=new THREE.CylinderGeometry(rn,rn,mod,8); ng.rotateY(OCT);
   var mg=mk('griva','Griva (neck)','rule',
-    'Neck under the dome. In several of the Manasara\'s schemes the neck is one part where the dome is two and the finial one [@man19][@man20][@man22], though others differ [@man24][@man26]. It is three quarters of the building width in the one-storey scheme [@man19], and octagonal in the class the text calls Dravida [@man18]. The width rule is applied here to the top tier, which extends it beyond what the text says.',
-    {src:['man18','man19','man20','man22','man24','man26'],conf:70,basis:'Text',gram:'Tower → Crown → Neck',
-     dims:[['Height',T,'one part where the dome is two and the finial one [@man19][@man22]'],['Plan',T,'octagonal [@man18]'],['Width',T,'three quarters of the storey below, a one-storey rule extended to the top tier [@man19]'],MODSIZE]});
+    'Neck (attic) under the dome. The Mayamata gives neck 2, dome 4¼ to 4½ and finial 1½ to 2 parts (chapters 20 and 22) [@maya], close to the 1 : 2 : 1 of several Manasara schemes [@man19][@man22]. A building that is octagonal from the attic up is the class both texts call dravida (Mayamata 19.35 to 38) [@maya][@man18], which Dagens reads as a classifying term, not a regional one. The Manasara makes the neck three quarters of the building width in its one-storey scheme [@man19]. The width rule is applied here to the top tier, which extends it beyond what the text says.',
+    {src:['maya','man18','man19','man22'],conf:80,basis:'Text',gram:'Tower → Crown → Neck',
+     dims:[['Height',T,'one part where the dome is about two and the finial one [@maya][@man19]'],['Plan',T,'octagonal [@maya][@man18]'],['Width',T,'three quarters of the storey below, a one-storey rule extended to the top tier [@man19]'],MODSIZE]});
   put(mg,ng,0,y+mod/2,0); mg.n++;
   y+=mod;
   var R=0.72*gw, domeH=2*mod;
   var prof=[[0.74,0],[1,0.03],[1.08,0.1],[1.06,0.24],[0.86,0.48],[0.56,0.74],[0.3,0.93],[0.14,1.0],[0,1.0]].map(function(p){return new THREE.Vector2(p[0]*R,p[1]*domeH);});
   var dg=new THREE.LatheGeometry(prof,8); dg.rotateY(OCT);
   var msk=mk('sikhara','Sikhara (octagonal dome)','rule',
-    'Dome over the neck. The Manasara classes a building with an octagonal or hexagonal upper part as Dravida [@man18] and in several schemes makes the dome twice the neck height [@man19][@man22]. No source in this list describes the dome shape of built Chola temples.',
-    {src:['man18','man19','man22'],conf:75,basis:'Text',gram:'Crown → Dome',
-     dims:[['Height',T,'twice the neck [@man19][@man22]'],['Plan',T,'octagonal [@man18]'],['Profile and overhang',E,'estimated']]});
+    'Dome (roof) over the neck. The Mayamata makes the roof double or triple the height of the attic, and a little over double in its storey schemes [@maya]. A roof that is octagonal from the attic up marks the class called dravida [@maya][@man18]. No source in this list describes the dome shape of built Chola temples.',
+    {src:['maya','man18','man19','man22'],conf:80,basis:'Text',gram:'Crown → Dome',
+     dims:[['Height',T,'twice the neck [@maya][@man19]'],['Plan',T,'octagonal [@maya][@man18]'],['Profile and overhang',E,'estimated']]});
   put(msk,dg,0,y,0); msk.n++;
   y+=domeH;
   var kk=mod/2.7;
   var kp=[[0,0],[0.55,0],[0.6,0.12],[1.0,0.5],[1.05,0.9],[0.75,1.3],[0.4,1.55],[0.55,1.7],[0.3,1.95],[0.12,2.4],[0,2.7]].map(function(p){return new THREE.Vector2(p[0]*kk,p[1]*kk);});
   var mkl=mk('kalasa','Stupi and kalasa (finial)','rule',
-    'Finial over the dome, half the dome height in several of the Manasara\'s schemes [@man19][@man22]. The translation glosses the finial as a pitcher (kumbha) with a lotus and a pinnacle-staff above it [@man18][@man19], which is why it is drawn as a pot. Balasubrahmanyam gives the Thanjavur finial as 3.35 to 3.81 m, which is taller in proportion than this one [@bala_tanj].',
-    {src:['man18','man19','man22','bala_tanj'],conf:75,basis:'Text',gram:'Crown → Finial',
-     dims:[['Height',T,'half the dome [@man19][@man22]'],['Profile',E,'estimated as a pot shape']]});
+    'Finial over the dome, about as tall as the neck and half the dome in the Mayamata and in several Manasara schemes [@maya][@man19][@man22]. The translation glosses the finial as a pitcher (kumbha) with a lotus and a pinnacle-staff above it [@man18][@man19], which is why it is drawn as a pot. Balasubrahmanyam gives the Thanjavur finial as 3.35 to 3.81 m, which is taller in proportion than this one [@bala_tanj].',
+    {src:['maya','man18','man19','man22','bala_tanj'],conf:80,basis:'Text',gram:'Crown → Finial',
+     dims:[['Height',T,'half the dome [@maya][@man19]'],['Profile',E,'estimated as a pot shape']]});
   put(mkl,new THREE.LatheGeometry(kp,24),0,y-0.02*mod,0); mkl.n++;
   var topY=y+mod;
   if(P.crown==='spike'){
