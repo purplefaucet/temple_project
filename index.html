@@ -51,6 +51,15 @@ a{color:var(--accent)}
 .hint{background:var(--surface);color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:4px 10px;font:12px/1.4 var(--font-mono);opacity:.92;min-width:0}
 .btn{font:500 13px/1 var(--font-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:9px 12px;cursor:pointer;pointer-events:auto}
 .btn:hover{border-color:var(--accent)}
+.foot-btns{display:flex;gap:8px;flex-shrink:0}
+/* on-screen walk controls: forward on top, turn left / back / turn right below */
+.pad{position:absolute;right:12px;bottom:58px;display:grid;grid-template-columns:repeat(3,44px);grid-auto-rows:44px;gap:6px}
+.pad button{font:500 18px/1 var(--font-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:4px;opacity:.92;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.pad button:hover{border-color:var(--accent)}
+.pad [data-k="f"]{grid-area:1/2}
+.pad [data-k="l"]{grid-area:2/1}
+.pad [data-k="b"]{grid-area:2/2}
+.pad [data-k="r"]{grid-area:2/3}
 .fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--fg);background:var(--surface)}
 .panel{display:flex;flex-direction:column;gap:12px;min-width:0}
 .blk{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;min-width:0}
@@ -134,9 +143,18 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
         <h1>Vimana Grammar</h1>
         <p>An idealized Chola-style tower built from stacked rules. Exterior only.</p>
       </div>
+      <div class="pad" id="pad" role="group" aria-label="Walk controls" hidden>
+        <button type="button" data-k="f" aria-label="Walk forward">▲</button>
+        <button type="button" data-k="l" aria-label="Turn left">↺</button>
+        <button type="button" data-k="b" aria-label="Walk back">▼</button>
+        <button type="button" data-k="r" aria-label="Turn right">↻</button>
+      </div>
       <div class="stage-foot">
         <div class="hint" id="hint">Drag to orbit. Scroll or pinch to zoom. Click an element.</div>
-        <button class="btn" id="reset" type="button">Reset view</button>
+        <div class="foot-btns">
+          <button class="btn" id="walk" type="button">Walk</button>
+          <button class="btn" id="reset" type="button">Reset view</button>
+        </div>
       </div>
     </main>
 
@@ -253,6 +271,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <button type="button" disabled title="Not built yet">Gopuram</button>
         </div>
         <p class="muted" style="margin-top:10px">Idealized composite, not a model of any specific temple. No sanctum interior and no deity imagery. Dashed buttons are not built yet.</p>
+        <p class="muted">Walk puts the camera at eye height, 1.6 m, taking the base as 30.18 m wide, the Thanjavur figure the model's base heights are scaled from <a data-cite="bala_tanj"></a>. The paving pattern is there to show movement and has no source. Up close, the mouldings and pavilions are plain blocks.</p>
       </section>
 
       <section class="blk">
@@ -436,6 +455,37 @@ var ROOT=new THREE.Group(); tower.add(ROOT);
 var ground=new THREE.Mesh(new THREE.CircleGeometry(140,96),new THREE.MeshStandardMaterial({color:0x5d655f,roughness:1}));
 ground.material.color.convertSRGBToLinear();
 ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; scene.add(ground);
+/* Paving drawn on a canvas, shown only in walk mode so the ground visibly moves. Rows are 0.6 m, so one tile is 4.8 m. */
+var PAVE_M=4.8;
+var paving=(function(){
+  var c=document.createElement('canvas'); c.width=c.height=512;
+  var g=c.getContext('2d'), seed=7;
+  function rnd(){seed=(seed*16807)%2147483647; return seed/2147483647;}
+  g.fillStyle='#4f4c45'; g.fillRect(0,0,512,512);
+  for(var row=0;row<8;row++){
+    var y=row*64, off=Math.floor(rnd()*512), x=0;
+    while(x<512){
+      var w=Math.min(512-x,64+Math.floor(rnd()*4)*32);
+      if(512-x-w<64) w=512-x;
+      var l=Math.round(98+rnd()*22);
+      g.fillStyle='rgb('+l+','+(l-3)+','+(l-10)+')';
+      g.fillRect(x+off+2,y+2,w-4,60); g.fillRect(x+off-510,y+2,w-4,60);
+      x+=w;
+    }
+  }
+  var im=g.getImageData(0,0,512,512), d=im.data;
+  for(var i=0;i<d.length;i+=4){var n=(rnd()-0.5)*14; d[i]+=n; d[i+1]+=n; d[i+2]+=n;}
+  g.putImageData(im,0,0);
+  var t=new THREE.CanvasTexture(c);
+  t.wrapS=t.wrapT=THREE.RepeatWrapping; t.encoding=THREE.sRGBEncoding;
+  t.anisotropy=renderer.capabilities.getMaxAnisotropy();
+  return t;
+})();
+
+/* ---------- Walk mode state: distances in metres, with the base taken as 30.18 m as at Thanjavur ---------- */
+var BASE_M=30.18, EYE_M=1.6, BODY_M=0.4, START_M=45, ROAM_M=150;
+var walk=false, wk={x:0,z:0,yaw:0,pitch:0.3}, held={}, padHeld={}, footM=17.3;
+function upm(){return P.base/BASE_M;}   /* model units per metre */
 
 /* ---------- Grammar helpers ---------- */
 function box(w,h,d){return new THREE.BoxGeometry(w,h,d);}
@@ -586,6 +636,7 @@ function build(){
     {src:['bala_tanj','maya','man13'],conf:80,basis:'Buildings (one example) and text',gram:'Tower → Sub-base',
      dims:[['Height',B,'1.40 m on a 30.18 m base at Thanjavur, about two fifths of the moulded base, a ratio the Mayamata lists [@bala_tanj][@maya]'],['Projection',T,'half its height, the top of the range the Mayamata gives [@maya]']]});
   put(mu,box(upW,upH,upW),0,upH/2,0); mu.n++;
+  footM=upW/2/upm();
 
   var MOULD=[
     ['jagati','jagati (plinth)',1.10,8,'8 of 24 parts'],
@@ -766,7 +817,9 @@ function build(){
     'Height(i) = h0 · (1 − (1 − '+hr.toFixed(2)+') · i/'+Math.max(1,N-1)+')';
 
   target.y=H*0.47;
-  if(!userMoved) dist=fitDist();
+  var pr=280/(PAVE_M*upm()); paving.repeat.set(pr,pr);
+  if(walk){camera.near=0.25*upm(); camera.updateProjectionMatrix(); collide();}
+  else if(!userMoved) dist=fitDist();
   applyLight();
   updateCam();
   refresh();
@@ -851,6 +904,12 @@ function pick(cx,cy){
 var th=0.75, ph=1.2, dist=34, target=new THREE.Vector3(0,9,0);
 var DMIN=10, DMAX=170, userMoved=false;
 function updateCam(){
+  if(walk){
+    var s=upm(), cp=Math.cos(wk.pitch), x=wk.x*s, y=EYE_M*s, z=wk.z*s;
+    camera.position.set(x,y,z);
+    camera.lookAt(x-Math.sin(wk.yaw)*cp,y+Math.sin(wk.pitch),z-Math.cos(wk.yaw)*cp);
+    dirty=true; return;
+  }
   camera.position.set(
     target.x+dist*Math.sin(ph)*Math.sin(th),
     target.y+dist*Math.cos(ph),
@@ -863,7 +922,58 @@ function fitDist(){
   var halfH=H*0.5*(narrow?1.5:1.3), halfW=P.base*1.0;
   return clamp(Math.max(halfH/t,halfW/(t*camera.aspect))+P.base*0.4,DMIN,DMAX);
 }
-function resetView(){userMoved=false; th=0.75; ph=1.2; dist=fitDist(); target.set(0,H*0.47,0); updateCam();}
+function resetView(){
+  if(walk){walkStart(); updateCam(); return;}
+  userMoved=false; th=0.75; ph=1.2; dist=fitDist(); target.set(0,H*0.47,0); updateCam();
+}
+
+/* ---------- Walk camera ---------- */
+/* start on the side the orbit camera was viewing from, facing the tower */
+function walkStart(){wk.x=Math.sin(th)*START_M; wk.z=Math.cos(th)*START_M; wk.yaw=th; wk.pitch=0.3;}
+/* keep the walker off the sub-base and inside the ground */
+function collide(){
+  var h=footM+BODY_M, ax=Math.abs(wk.x), az=Math.abs(wk.z);
+  if(ax<h&&az<h){if(ax>az) wk.x=wk.x<0?-h:h; else wk.z=wk.z<0?-h:h;}
+  var d=Math.hypot(wk.x,wk.z); if(d>ROAM_M){wk.x*=ROAM_M/d; wk.z*=ROAM_M/d;}
+}
+/* fw metres forward, rt metres to the right */
+function moveBy(fw,rt){
+  var sy=Math.sin(wk.yaw), cy=Math.cos(wk.yaw);
+  wk.x+=-sy*fw+cy*rt; wk.z+=-cy*fw-sy*rt;
+  collide(); updateCam();
+}
+var MOVE={KeyW:1,KeyA:1,KeyS:1,KeyD:1,ArrowUp:1,ArrowDown:1,ArrowLeft:1,ArrowRight:1};
+function stepWalk(dt){
+  var f=(held.KeyW||held.ArrowUp||padHeld.f?1:0)-(held.KeyS||held.ArrowDown||padHeld.b?1:0);
+  var sd=(held.KeyD?1:0)-(held.KeyA?1:0);
+  var tn=(held.ArrowLeft||padHeld.l?1:0)-(held.ArrowRight||padHeld.r?1:0);
+  if(!f&&!sd&&!tn) return;
+  wk.yaw+=tn*1.5*dt;
+  var sp=(held.shift?7:2.5)*dt/(f&&sd?Math.SQRT2:1);   /* metres per second: walking, or running with Shift */
+  moveBy(f*sp,sd*sp);
+}
+var coarse=!!(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches);
+function setHint(){
+  $('hint').textContent=walk
+    ?(coarse?'Hold the arrows to walk. Drag to look. Tap an element.':'WASD or arrow keys to walk, Shift to run. Drag to look. Esc to leave.')
+    :(coarse?'Drag to orbit. Pinch to zoom. Tap an element.':'Drag to orbit. Scroll or pinch to zoom. Click an element.');
+}
+function setWalk(on){
+  walk=on; held={}; padHeld={};
+  if(on) walkStart();
+  camera.fov=on?65:38; camera.near=on?0.25*upm():0.5; camera.updateProjectionMatrix();
+  var gm=ground.material; gm.map=on?paving:null;
+  gm.color.setHex(on?0xffffff:0x5d655f).convertSRGBToLinear(); gm.needsUpdate=true;
+  $('pad').hidden=!on;
+  $('walk').textContent=on?'Orbit':'Walk';
+  cv.setAttribute('aria-label',on
+    ?'3D view at eye level. W A S D or arrow keys walk, Shift runs, Escape returns to orbit.'
+    :'3D view of the generated tower. Arrow keys orbit, plus and minus zoom.');
+  setHint();
+  if(!on&&!userMoved) dist=fitDist();
+  updateCam();
+  if(on) cv.focus({preventScroll:true});
+}
 
 var pts=new Map(), down=null, pinch0=0, dist0=0;
 cv.addEventListener('pointerdown',function(e){
@@ -880,11 +990,11 @@ cv.addEventListener('pointermove',function(e){
   var p=pts.get(e.pointerId); if(!p) return;
   var dx=e.clientX-p.x, dy=e.clientY-p.y; p.x=e.clientX; p.y=e.clientY;
   if(pts.size===1){
-    th-=dx*0.0065; ph=clamp(ph-dy*0.0055,0.12,1.5);
+    if(walk){wk.yaw+=dx*0.0045; wk.pitch=clamp(wk.pitch+dy*0.0045,-1.2,1.5);}
+    else{th-=dx*0.0065; ph=clamp(ph-dy*0.0055,0.12,1.5); userMoved=true;}
     if(down) down.moved+=Math.abs(dx)+Math.abs(dy);
-    userMoved=true;
     updateCam();
-  }else if(pts.size===2){
+  }else if(pts.size===2&&!walk){
     var v=Array.from(pts.values()), d=Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y);
     if(pinch0>0&&d>0){dist=clamp(dist0*pinch0/d,DMIN,DMAX); userMoved=true; updateCam();}
   }
@@ -901,9 +1011,17 @@ function endPtr(e){
 cv.addEventListener('pointerup',endPtr);
 cv.addEventListener('pointercancel',endPtr);
 cv.addEventListener('wheel',function(e){
-  e.preventDefault(); dist=clamp(dist*Math.exp(e.deltaY*0.0012),DMIN,DMAX); userMoved=true; updateCam();
+  e.preventDefault();
+  if(walk){moveBy(clamp(-e.deltaY*(e.deltaMode===1?16:1)*0.02,-3,3),0); return;}
+  dist=clamp(dist*Math.exp(e.deltaY*0.0012),DMIN,DMAX); userMoved=true; updateCam();
 },{passive:false});
 cv.addEventListener('keydown',function(e){
+  if(walk){
+    held.shift=e.shiftKey;
+    if(e.key==='Escape'){setWalk(false); return;}
+    if(MOVE[e.code]){held[e.code]=true; e.preventDefault();}
+    return;
+  }
   var used=true;
   if(e.key==='ArrowLeft') th+=0.08; else if(e.key==='ArrowRight') th-=0.08;
   else if(e.key==='ArrowUp') ph=clamp(ph-0.06,0.12,1.5); else if(e.key==='ArrowDown') ph=clamp(ph+0.06,0.12,1.5);
@@ -912,16 +1030,24 @@ cv.addEventListener('keydown',function(e){
   else used=false;
   if(used){e.preventDefault(); userMoved=true; updateCam();}
 });
+cv.addEventListener('keyup',function(e){held[e.code]=false; held.shift=e.shiftKey;});
+cv.addEventListener('blur',function(){held={};});
 
 /* ---------- Resize / render loop ---------- */
 function resize(){
   var r=view.getBoundingClientRect(), w=Math.max(1,r.width), h=Math.max(1,r.height);
   renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
-  if(!userMoved){dist=fitDist(); updateCam();}
+  if(!userMoved&&!walk){dist=fitDist(); updateCam();}
   dirty=true;
 }
 if(window.ResizeObserver){new ResizeObserver(resize).observe(view);}else{window.addEventListener('resize',resize);}
-(function frame(){requestAnimationFrame(frame); if(dirty){dirty=false; renderer.render(scene,camera);}})();
+var last=0;
+(function frame(now){
+  requestAnimationFrame(frame);
+  var dt=last?Math.min(0.05,(now-last)/1000):0; last=now;
+  if(walk) stepWalk(dt);
+  if(dirty){dirty=false; renderer.render(scene,camera);}
+})(0);
 
 /* ---------- Controls ---------- */
 var pending=false;
@@ -960,6 +1086,15 @@ $('mode-seg').addEventListener('click',function(e){
   if(keep&&P.vis[catOf(keep)]) select(keep);
 });
 $('reset').addEventListener('click',resetView);
+$('walk').addEventListener('click',function(){setWalk(!walk);});
+/* hold a pad button to keep moving; preventDefault keeps keyboard focus on the canvas */
+Array.prototype.forEach.call($('pad').children,function(b){
+  var k=b.dataset.k, up=function(){padHeld[k]=false;};
+  b.addEventListener('pointerdown',function(e){e.preventDefault(); try{b.setPointerCapture(e.pointerId);}catch(_){} padHeld[k]=true;});
+  b.addEventListener('pointerup',up); b.addEventListener('pointercancel',up); b.addEventListener('lostpointercapture',up);
+  b.addEventListener('click',function(e){if(e.detail===0){padHeld[k]=true; setTimeout(up,250);}});   /* keyboard activation */
+  b.addEventListener('contextmenu',function(e){e.preventDefault();});
+});
 
 /* ---------- Source list ---------- */
 (function(){
@@ -976,7 +1111,7 @@ $('reset').addEventListener('click',resetView);
 })();
 
 /* ---------- Start ---------- */
-if(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches){$('hint').textContent='Drag to orbit. Pinch to zoom. Tap an element.';}
+setHint();
 Array.prototype.forEach.call(document.querySelectorAll('a[data-cite]'),function(a){
   var k=a.getAttribute('data-cite'); a.href=SRC[k].u; a.target='_blank'; a.rel='noopener noreferrer'; a.title=SRC[k].n; a.textContent='['+NUM[k]+']';
 });
