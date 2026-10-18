@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="A browser-based 3D generator for an idealized Chola-style temple tower, with every element and dimension tagged by the evidence behind it.">
+<meta name="description" content="A browser-based 3D generator for an idealized Chola-style temple tower and its front halls, with every element and dimension tagged by the evidence behind it.">
 <style>
 /* base reset the page relies on */
 html{-webkit-text-size-adjust:100%}
@@ -141,7 +141,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
       <div id="view"></div>
       <div class="title-card">
         <h1>Vimana Grammar</h1>
-        <p>An idealized Chola-style tower built from stacked rules. Exterior only.</p>
+        <p>An idealized Chola-style tower and front halls built from stacked rules. No sanctum interior.</p>
       </div>
       <div class="pad" id="pad" role="group" aria-label="Walk controls" hidden>
         <button type="button" data-k="f" aria-label="Walk forward">▲</button>
@@ -247,6 +247,31 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
       </section>
 
       <section class="blk">
+        <h3>Front halls</h3>
+        <div class="ctl">
+          <label for="p-halls">Show the halls</label><input type="checkbox" id="p-halls" checked>
+          <div class="help">Three halls in front of the tower on one shared base, as at Gangaikondacholapuram <a data-cite="bala_gkc"></a> and Thanjavur <a data-cite="bala_ardha"></a> <a data-cite="bala_maha"></a>. In walk mode you can climb the stairs and go in, as far as the closed sanctum door.</div>
+        </div>
+        <div class="ctl">
+          <label for="p-maha">Great hall plan</label><span></span>
+          <select id="p-maha">
+            <option value="long">Long, as measured at Gangaikondacholapuram</option>
+            <option value="square">Square, as reported at Thanjavur</option>
+          </select>
+          <div class="help">At Gangaikondacholapuram the great hall is 1.75 times as long as the sanctum is wide <a data-cite="bala_gkc"></a>, but its walls, pillars and roof were rebuilt. Thanjavur's is called square in plan <a data-cite="wiki"></a>, and no measurements of it were found.</div>
+        </div>
+        <div class="ctl" style="margin-bottom:0">
+          <label for="p-mukha">Front hall width</label><span></span>
+          <select id="p-mukha">
+            <option value="1">The full width of the tower</option>
+            <option value="0.75">Three quarters</option>
+            <option value="0.5">Half</option>
+          </select>
+          <div class="help">The Mayamata makes the hall in front of the shrine as wide as it, or three quarters or half of it (19.4b to 5) <a data-cite="maya"></a>.</div>
+        </div>
+      </section>
+
+      <section class="blk">
         <h3>Light</h3>
         <div class="seg" id="light-seg" role="group" aria-label="Lighting">
           <button type="button" data-l="morning" aria-pressed="false">Morning</button>
@@ -270,7 +295,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <button type="button" aria-pressed="true">Vimana</button>
           <button type="button" disabled title="Not built yet">Gopuram</button>
         </div>
-        <p class="muted" style="margin-top:10px">Idealized composite, not a model of any specific temple. No sanctum interior and no deity imagery. Dashed buttons are not built yet.</p>
+        <p class="muted" style="margin-top:10px">Idealized composite, not a model of any specific temple. No sanctum interior and no deity imagery. In walk mode the front halls can be entered, and the walk stops at the closed sanctum door. Dashed buttons are not built yet.</p>
         <p class="muted">Walk puts the camera at eye height, 1.6 m, taking the base as 30.18 m wide, the Thanjavur figure the model's base heights are scaled from <a data-cite="bala_tanj"></a>. The paving pattern is there to show movement and has no source. Up close, the mouldings and pavilions are plain blocks.</p>
       </section>
 
@@ -301,6 +326,12 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <li>One source counts 14 tiers at Thanjavur <a data-cite="sahapedia"></a>, against 13 elsewhere <a data-cite="unesco"></a>. Its height is 63.41 m in Balasubrahmanyam <a data-cite="bala_tanj"></a> and anything from about 61 m to 66 m in other sources consulted.</li>
           <li>Tier heights step down evenly, as in the Mayamata <a data-cite="maya"></a>. Hardy notes that those in the Samarangana follow no regular progression <a data-cite="hardy"></a>.</li>
           <li>The dome and finial rest on texts alone. No source in this list describes their form in built temples.</li>
+          <li>The hall plan comes mostly from Gangaikondacholapuram, where the great hall's side walls, pillars and roof were rebuilt, and Balasubrahmanyam thinks the original was twice the present height <a data-cite="bala_gkc"></a>. No measurements of Thanjavur's halls were found. Pichard's architectural study of Thanjavur (1995) probably has them and has not been read.</li>
+          <li>Balasubrahmanyam's ardhamandapa and Wikipedia's “antrala” are read as the same space, the hall with the north and south gateways <a data-cite="bala_ardha"></a> <a data-cite="wiki"></a>. That reading is about 75% certain. The Mayamata's covered passage in that position is only about two modules long <a data-cite="maya"></a>, against a hall about 20 m long at Gangaikondacholapuram <a data-cite="bala_gkc"></a>. The model follows the building.</li>
+          <li>No source read gives the height of the halls. Their pillar zone is set equal to the tower's first wall storey. Hall widths of pillars, walls and doors, the number of pillars outside the great hall, and the front hall's length are estimates.</li>
+          <li>Balasubrahmanyam puts Thanjavur's sanctum and ardhamandapa floors about 6.1 m above the courtyard <a data-cite="bala_ardha"></a>. The measured sub-base and base add up to 5.0 m <a data-cite="bala_tanj"></a>, and the model uses 5.0 m. The difference is unexplained.</li>
+          <li>The hall roofs are drawn flat, with no pavilions on them. The Mayamata allows either <a data-cite="maya"></a>, and which one Thanjavur has was not checked. Its chapter on halls and pavilions (25, in volume 2) is known only from Dagens's summary in volume 1.</li>
+          <li>The halls leave out the guardian figures at the doors and the Nandi pavilion. The guardians are figure sculpture, which this page does not draw. Wikipedia dates the Nandi shrine to the Nayaka period <a data-cite="wiki"></a>, so it belongs to a later phase of the site.</li>
           <li>A parametric Karnata-Dravida model exists <a data-cite="karnata"></a>. No published Chola shape grammar was found, in a search that was not exhaustive.</li>
           <li>Only Chola has been researched. Whether Pallava, Pandya, Vijayanagara and Nayak are distinct enough to be separate rule sets is unchecked.</li>
         </ul>
@@ -334,8 +365,8 @@ var SRC={
  man19:{n:'Manasara, chapter 19, The one-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421066.html',use:'Height in 8 parts: plinth 1, pillar 2, entablature 1, neck 1, dome 2, finial 1 (lines 21 to 24). Neck width three quarters of the building (lines 25 to 26).',rel:MANREL},
  man21:{n:'Manasara, chapter 21, The three-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421068.html',use:'Pillar heights shrink upward: 8, 6¾ and 6 parts. Corner kutas of one part each, a middle sala of two to four parts, and a hara with panjara between them (verses 55 to 63).',rel:MANREL},
  bala_tanj:{n:'S. R. Balasubrahmanyam, Middle Chola Temples (1975), Tanjavur: The Central Shrine',u:'https://www.wisdomlib.org/south-asia/book/middle-chola-temples/d/doc210432.html',use:'Measurements at Thanjavur: base 30.18 m square, sub-base 1.40 m, moulded base 3.60 m, height 63.41 m, a two-storey wall with thirteen storeys over it, straight-sided.',rel:BALREL},
- bala_gkc:{n:'S. R. Balasubrahmanyam, Middle Chola Temples (1975), Gangaikondasolapuram',u:'https://www.wisdomlib.org/south-asia/book/middle-chola-temples/d/doc211879.html',use:'Measurements at Gangaikondacholapuram: base 30.48 m, walls 10.67 m high in two equal courses, nine talas including the ground one, height 48.77 m, concave profile.',rel:BALREL},
- maya:{n:'Mayamata, edited and translated by Bruno Dagens, volume 1 (IGNCA and Motilal Banarsidass, 1994)',u:'https://www.motilalbanarsidass.com/en-us/products/mayamatam-2-volumes',use:'Storey widths, storey heights and pavilion rows for temples of one to twelve storeys, the base and the crown. Dagens\'s introduction dates the text, compares it with the Manasara and counts Thanjavur at fifteen storeys.',rel:'Critical edition and translation, read directly from a scan: the introduction, chapters 11, 13 and 19 to 22, and parts of 14 and 18. The link goes to the publisher.'},
+ bala_gkc:{n:'S. R. Balasubrahmanyam, Middle Chola Temples (1975), Gangaikondasolapuram',u:'https://www.wisdomlib.org/south-asia/book/middle-chola-temples/d/doc211879.html',use:'Measurements at Gangaikondacholapuram: base 30.48 m, walls 10.67 m high in two equal courses, nine talas including the ground one, height 48.77 m, concave profile. One sub-base 103.63 m long and 30.48 m wide under the sanctum (30.48 m), the ardhamandapa (19.81 m) and the mahamandapa (53.34 m). Plain, square, heavy pillars in the ardhamandapa. The mahamandapa\'s side walls, pillars and roof are rebuilt.',rel:BALREL},
+ maya:{n:'Mayamata, edited and translated by Bruno Dagens, volume 1 (IGNCA and Motilal Banarsidass, 1994)',u:'https://www.motilalbanarsidass.com/en-us/products/mayamatam-2-volumes',use:'Storey widths, storey heights and pavilion rows for temples of one to twelve storeys, the base and the crown. The width, elevation and stairs of the halls in front of the shrine (chapters 19 and 21). Dagens\'s introduction dates the text, compares it with the Manasara and counts Thanjavur at fifteen storeys.',rel:'Critical edition and translation, read directly from a scan: the introduction, chapters 11, 13 and 19 to 22, and parts of 14 and 18. The link goes to the publisher.'},
  man13:{n:'Manasara, chapter 13, The pedestals',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421060.html',use:'A pedestal (upapitha) under the base, sized as a fraction or multiple of the base.',rel:MANREL},
  man14:{n:'Manasara, chapter 14, The bases',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421061.html',use:'Padabandha base in 24 parts: plinth 8, kumuda 7, neck 3 and band 3, with one-part fillets between.',rel:MANREL},
  man16:{n:'Manasara, chapter 16, The entablatures',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421063.html',use:'Entablature heights from half the pillar up to twice it. Cornice projection equal to its height or less.',rel:MANREL},
@@ -345,7 +376,11 @@ var SRC={
  man26:{n:'Manasara, chapter 26, The eight-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421073.html',use:'Pillars of 4, 3.5, 3, 2.75, 2.5, 2 and 1.5 parts. Small halls beside the main ones.',rel:MANREL},
  man30:{n:'Manasara, chapter 30, The twelve-storeyed buildings',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421077.html',use:'Each storey has a great hall, four kutas, eight small halls and sixteen hall-windows.',rel:MANREL},
  hardy:{n:'Adam Hardy, Dravida Temples in the Samaranganasutradhara, South Asian Studies 25',u:'https://www.cardiff.ac.uk/__data/assets/pdf_file/0006/1344345/Dravida-Temples-in-the-Samaranganasutradhara-by-Adam-Hardy.pdf',use:'Order of kuta, panjara, sala, panjara, kuta across a tier. Base moulding sequence. Height tied to the plan diagonal. Dates the Mayamata to before the end of the tenth century and reports Dagens on its sixteen-storey passage.',rel:'Peer-reviewed. Read as tool-returned excerpts. Its subject is an 11th-century text from central India.'},
- hardyint:{n:'K. T. Ravindran in conversation with Adam Hardy (Sahapedia)',u:'http://www.sahapedia.org/kt-ravindran-conversation-adam-hardy-correlating-text-and-form-temple-architecture',use:'On how far texts and built temples agree.',rel:'Interview with a specialist.'}
+ hardyint:{n:'K. T. Ravindran in conversation with Adam Hardy (Sahapedia)',u:'http://www.sahapedia.org/kt-ravindran-conversation-adam-hardy-correlating-text-and-form-temple-architecture',use:'On how far texts and built temples agree.',rel:'Interview with a specialist.'},
+ bala_ardha:{n:'S. R. Balasubrahmanyam, Middle Chola Temples (1975), Tanjavur: Ardhamandapa and Side Gateways',u:'https://www.wisdomlib.org/south-asia/book/middle-chola-temples/d/doc210433.html',use:'Gateways on the north and south of the ardhamandapa, each reached by a two-stage stair: courtyard to the top of the sub-base, a landing, then a flight to the threshold, with massive balustrades. Sanctum and ardhamandapa floors about 6.1 m above the courtyard.',rel:BALREL},
+ bala_maha:{n:'S. R. Balasubrahmanyam, Middle Chola Temples (1975), Tanjavur: Mahamandapa and Mukhamandapa',u:'https://www.wisdomlib.org/south-asia/book/middle-chola-temples/d/doc210434.html',use:'Mahamandapa with rows of six pillars east to west and north to south. Mukhamandapa reached by a broad flight of steps. Free-standing Nandi pavilion on the axis.',rel:BALREL},
+ man34:{n:'Manasara, chapter 34, The pavilions',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421082.html',use:'Pavilions have base, pillar and entablature, with entablatures ornamented like the main building. A pavilion not symmetrical to the main building is inauspicious. Many may stand in front of temples.',rel:MANREL},
+ wiki:{n:'Wikipedia, Brihadisvara Temple, Thanjavur',u:'https://en.wikipedia.org/wiki/Brihadisvara_Temple,_Thanjavur',use:'Names five sections from the Nandi hall to the sanctum, including an antrala, and calls the mukha- and mahamandapa square in plan, citing Balasubrahmanyam. Dates the Nandi shrine to the Nayaka period, citing Michell.',rel:'Tertiary source, used only to reconcile names and for the square plan.'}
 };
 var NUM={}; Object.keys(SRC).forEach(function(k,i){NUM[k]=i+1;});
 function cite(t){return t.replace(/\[@(\w+)\]/g,function(_,k){return '['+NUM[k]+']';});}
@@ -363,7 +398,7 @@ var MODES={
 var DKIND={text:'Text',bldg:'Buildings',est:'Estimate'};
 
 /* ---------- State ---------- */
-var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',light:'noon',mode:'elem',
+var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',light:'noon',mode:'elem',halls:true,maha:'long',mukha:1,
   vis:{rule:true,inf:true,inv:true,src:true,part:true,est:true}};
 var metas=new Map();
 var selKey=null, selMeta=null, outlines=[];
@@ -398,6 +433,8 @@ var camera=new THREE.PerspectiveCamera(38,1,0.5,400);
 
 /* ---------- Lights ---------- */
 var hemi=new THREE.HemisphereLight(0xffffff,0x888888,0.7); scene.add(hemi);
+/* soft light carried by the walker, switched up only under a hall roof so the interiors read. Always in the scene, to avoid recompiling shaders. */
+var lantern=new THREE.PointLight(0xfff0dc,0,1,1.5); scene.add(lantern);
 var sun=new THREE.DirectionalLight(0xffffff,2); sun.castShadow=true;
 sun.shadow.mapSize.set(2048,2048);
 sun.shadow.camera.near=1; sun.shadow.camera.far=160;
@@ -415,9 +452,9 @@ function applyLight(){
   var L=LIGHTS[P.light];
   var d=new THREE.Vector3(L.dir[0],L.dir[1],L.dir[2]).normalize();
   sun.color.setHex(L.sun).convertSRGBToLinear(); sun.intensity=L.si;
-  sun.position.set(d.x*60,H*0.4+d.y*60,d.z*60);
-  sun.target.position.set(0,H*0.4,0);
-  var ext=Math.max(30,H*0.75+P.base);
+  sun.position.set(d.x*60,H*0.4+d.y*60,CXT.zc+d.z*60);
+  sun.target.position.set(0,H*0.4,CXT.zc);
+  var ext=Math.max(30,H*0.75+P.base,CXT.half*1.15);
   sun.shadow.camera.left=sun.shadow.camera.bottom=-ext; sun.shadow.camera.right=sun.shadow.camera.top=ext;
   sun.shadow.camera.updateProjectionMatrix();
   hemi.color.setHex(L.sky).convertSRGBToLinear(); hemi.groundColor.setHex(L.gnd).convertSRGBToLinear(); hemi.intensity=L.hi;
@@ -483,9 +520,13 @@ var paving=(function(){
 })();
 
 /* ---------- Walk mode state: distances in metres, with the base taken as 30.18 m as at Thanjavur ---------- */
-var BASE_M=30.18, EYE_M=1.6, BODY_M=0.4, START_M=45, ROAM_M=150;
-var walk=false, wk={x:0,z:0,yaw:0,pitch:0.3}, held={}, padHeld={}, footM=17.3;
+var BASE_M=30.18, EYE_M=1.6, BODY_M=0.4, STEP_M=0.6, START_M=45, ROAM_M=220;
+var walk=false, wk={x:0,z:0,lv:0,yaw:0,pitch:0.3}, held={}, padHeld={};
 function upm(){return P.base/BASE_M;}   /* model units per metre */
+/* Walkable surfaces, rebuilt with the model, in model units: raised floors, stair ramps and solid footprints */
+var WK={plats:[],ramps:[],obs:[],roofs:[]};
+/* extent of the whole complex along z, for lighting and the orbit camera */
+var CXT={zc:0,half:10,front:0};
 
 /* ---------- Grammar helpers ---------- */
 function box(w,h,d){return new THREE.BoxGeometry(w,h,d);}
@@ -624,6 +665,174 @@ function hara(y,cw,hn,lvlMax,den,label,id,gramHead){
   return per;
 }
 
+/* ---------- Front halls ----------
+   Along +z from the tower's east wall: ardhamandapa, mahamandapa, mukhamandapa, on one sub-base.
+   Each hall is Base | Pada | Prastara like a wall storey of the tower, with walls hollow so it can be walked into. */
+var HALLROWS=6;
+function buildHalls(W,upH,adH,upW,MOULD,slabs,padH,entH){
+  var s=upm(), bt=upH+adH, t=0.045*W, dw=0.08*W, dh=0.65*padH, ps=0.035*W;
+  var LA=0.65*W, LM=P.maha==='long'?1.75*W:W, LK=0.5*W, k=P.mukha;
+  var zA=0.45*W, zM=zA+LA, zK=zM+LM, zE=zK+LK;
+  var wxA=0.45*0.65*W, wxM=0.45*W, wxK=0.45*k*W;          /* half-widths of the walls: 0.9 of each hall's width, as on the tower */
+  var pr=0.1*W+upH/2;                                     /* how far the sub-base runs past the hall walls */
+  var WALLHT=['Pillar-zone height',E,'equal to the tower\'s first wall storey. No source read gives the height of the halls'];
+  var WALLT=['Wall thickness',E,'0.045 of the base width. The Mayamata ties it to the sanctum wall (19.8), which is not in this model [@maya]'];
+  var DOOR=['Doorways',E,'size and placement estimated'];
+
+  /* shared sub-base, and the front hall's own if it is narrower */
+  var msb=mk('hall-upapitha','Shared sub-base under the halls','rule',
+    'One sub-base runs under the sanctum and the halls. At Gangaikondacholapuram Balasubrahmanyam gives it as 103.63 m long and 30.48 m wide, under the sanctum, the ardhamandapa and the mahamandapa [@bala_gkc]. At Thanjavur the side stairs rise first to the top of the sub-base [@bala_ardha]. Running it under the front hall too is an assumption.',
+    {src:['bala_gkc','bala_ardha','bala_tanj'],conf:80,basis:'Buildings',gram:'Halls → Sub-base',
+     dims:[['Length',B,'under the sanctum and both inner halls, 3.40 times the base width at Gangaikondacholapuram [@bala_gkc]'],['Height',B,'the tower\'s sub-base, 1.40 m at Thanjavur [@bala_tanj]'],['Under the front hall',E,'assumed']]});
+  put(msb,box(upW,upH,zK+pr),0,upH/2,(zK+pr)/2); msb.n++;
+  WK.plats.push({x0:-upW/2,x1:upW/2,z0:0,z1:zK+pr,h:upH});
+  put(msb,box(k*upW,upH,zE+pr-zK),0,upH/2,(zK+zE+pr)/2);
+  WK.plats.push({x0:-k*upW/2,x1:k*upW/2,z0:zK,z1:zE+pr,h:upH});
+
+  /* moulded base of each hall: the tower's four mouldings, scaled to each hall's width */
+  var mhb=mk('hall-base','Hall base (adhisthana)','rule',
+    'The Mayamata says the hall in front of the shrine “comprises all the prescribed elements”, which Dagens glosses as a base, a level of pillars and an entablature like the temple\'s own (19.5) [@maya]. The Manasara gives pavilions the same three members [@man34]. The base is drawn with the tower\'s four mouldings at the tower\'s height, so the hall floors are level with the sanctum floor, as Balasubrahmanyam describes for the ardhamandapa at Thanjavur [@bala_ardha].',
+    {src:['maya','man34','bala_ardha','bala_tanj','man14'],conf:80,basis:'Text and buildings',gram:'Halls → Hall → Base',
+     dims:[['Height',B,'the tower\'s base, 3.60 m at Thanjavur [@bala_tanj]'],['Mouldings',T,'the Padabandha base, as on the tower [@maya][@man14]'],['Projection',E,'as on the tower, estimated']]});
+  var HB=[[wxA/0.45,zA,zM,0],[wxM/0.45,zM,zK,0],[wxK/0.45,zK,zE,1]];
+  HB.forEach(function(hb){
+    MOULD.forEach(function(c,i){
+      var f=c[2], front=hb[3]?(f-0.9)/2*W:0, len=hb[2]-hb[1]+front;
+      put(mhb,box(f*hb[0],slabs[i].h,len),0,slabs[i].y+slabs[i].h/2,hb[1]+len/2);
+    });
+    mhb.n++;
+    WK.plats.push({x0:-0.53*hb[0],x1:0.53*hb[0],z0:hb[1],z1:hb[2]+(hb[3]?0.08*W:0),h:bt});
+  });
+
+  /* walls with doorways; each solid piece is also an obstacle for walking */
+  function seg(m,x0,x1,z0,z1){
+    if(x1-x0<1e-4||z1-z0<1e-4) return;
+    put(m,box(x1-x0,padH,z1-z0),(x0+x1)/2,bt+padH/2,(z0+z1)/2);
+    WK.obs.push({x0:x0,x1:x1,z0:z0,z1:z1});
+  }
+  function lintel(m,x0,x1,z0,z1){put(m,box(x1-x0,padH-dh,z1-z0),(x0+x1)/2,bt+dh+(padH-dh)/2,(z0+z1)/2);}
+  /* wall across the axis, spanning x from -wx to wx */
+  function xWall(m,wx,z0,z1,door){
+    if(door){seg(m,-wx,-dw/2,z0,z1); seg(m,dw/2,wx,z0,z1); lintel(m,-dw/2,dw/2,z0,z1);}
+    else seg(m,-wx,wx,z0,z1);
+  }
+  /* side wall, running along the axis from z0 to z1 */
+  function zWall(m,x0,x1,z0,z1,door){
+    var zc=(z0+z1)/2;
+    if(door){seg(m,x0,x1,z0,zc-dw/2); seg(m,x0,x1,zc+dw/2,z1); lintel(m,x0,x1,zc-dw/2,zc+dw/2);}
+    else seg(m,x0,x1,z0,z1);
+  }
+  function sides(m,wx,z0,z1,door){zWall(m,wx-t,wx,z0,z1,door); zWall(m,-wx,-wx+t,z0,z1,door); m.n+=2;}
+  /* square pillars in an nx by nz grid filling the interior */
+  function grid(m,wi,z0,z1,nx,nz){
+    for(var i=0;i<nx;i++){for(var j=0;j<nz;j++){
+      var x=-wi+(i+0.5)*2*wi/nx, z=z0+(j+0.5)*(z1-z0)/nz;
+      put(m,box(ps,padH,ps),x,bt+padH/2,z); m.n++;
+      WK.obs.push({x0:x-ps/2,x1:x+ps/2,z0:z-ps/2,z1:z+ps/2});
+    }}
+  }
+  var PILLAR=['Section',B,'plain and square, as in the ardhamandapa at Gangaikondacholapuram [@bala_gkc]'];
+  var PSIZE=['Size',E,'0.035 of the base width'];
+
+  /* Ardhamandapa */
+  var ma=mk('ardha-pada','Ardhamandapa, walls (pada)','rule',
+    'The hall directly in front of the sanctum. Balasubrahmanyam calls it the ardhamandapa and describes gateways on its north and south sides [@bala_ardha]. At Gangaikondacholapuram it is a “constricted square neck” 19.81 m on a side between the sanctum and the great hall [@bala_gkc]. Wikipedia calls the same space the antrala [@wiki]. Reading the two as one space is about 75% certain. The Mayamata\'s covered passage in this position is only about two modules long (19.6 to 7) [@maya]. The model follows the buildings.',
+    {src:['bala_ardha','bala_gkc','wiki','maya'],conf:75,basis:'Buildings (two examples) and text',gram:'Halls → Ardhamandapa → Pada',
+     dims:[['Length',B,'0.65 of the base width, from 19.81 m on a 30.48 m sub-base at Gangaikondacholapuram [@bala_gkc]'],
+           ['Width',E,'also 0.65. The source calls it a square of that side, but the sentence is garbled in the scan [@bala_gkc]'],WALLHT,WALLT,DOOR]});
+  sides(ma,wxA,zA,zM,true);
+  var mpa=mk('ardha-pillars','Ardhamandapa, pillars','rule',
+    'At Gangaikondacholapuram the ardhamandapa is “supported by plain, square and heavy pillars” [@bala_gkc]. Their number and spacing were not found, so four are drawn, clear of the axis and the side doors.',
+    {src:['bala_gkc'],conf:70,basis:'Buildings (one example)',gram:'Ardhamandapa → Pillars',dims:[PILLAR,['Number and spacing',E,'four, estimated'],PSIZE]});
+  grid(mpa,wxA-t,zA,zM,2,2);
+  var mdoor=mk('sanctum-door','Sanctum doorway (closed)','rule',
+    'The ardhamandapa ends at the sanctum door. Following the scope of this page, the door is drawn closed and the walk stops here. Nothing of the sanctum is modelled.',
+    {src:['bala_ardha'],conf:90,basis:'Buildings',gram:'Ardhamandapa → Sanctum door',dims:[['Size',E,'estimated']]});
+  put(mdoor,box(dw,dh,0.012*W),0,bt+dh/2,zA+0.006*W); mdoor.n++;
+  WK.obs.push({x0:-dw/2,x1:dw/2,z0:zA,z1:zA+0.012*W});
+
+  /* Mahamandapa */
+  var mm=mk('maha-pada','Mahamandapa, walls (pada)','rule',
+    'The great hall. At Gangaikondacholapuram it is 53.34 m long and as wide as the sanctum [@bala_gkc]. Only its plinth and the west end of its walls are original there. The side walls, pillars and roof were rebuilt, and Balasubrahmanyam thinks the original was twice the present height [@bala_gkc]. Wikipedia, citing him, calls Thanjavur\'s halls square in plan [@wiki]. The “Great hall plan” control switches between the two. The Mayamata allows a hall as wide as the shrine, or three quarters or half of it (19.4b to 5) [@maya].',
+    {src:['bala_gkc','wiki','maya','bala_maha'],conf:80,basis:'Buildings and text',gram:'Halls → Mahamandapa → Pada',
+     dims:[['Width',T,'the full width of the tower, as at Gangaikondacholapuram and allowed by the Mayamata [@bala_gkc][@maya]'],
+           P.maha==='long'?['Length',B,'1.75 times the base width: 53.34 m on a 30.48 m sub-base at Gangaikondacholapuram [@bala_gkc]']:['Length',B,'equal to the width, from the square plan reported at Thanjavur [@wiki]'],
+           WALLHT,WALLT,DOOR]});
+  xWall(mm,wxM,zM,zM+t,true); xWall(mm,wxM,zK-t,zK,true); mm.n+=2;
+  sides(mm,wxM,zM,zK,false);
+  var wi=wxM-t, sp=2*wi/6;
+  HALLROWS=P.maha==='long'?Math.max(2,Math.round((LM-2*t)/sp)):6;
+  var mpm=mk('maha-pillars','Mahamandapa, pillars','rule',
+    'Thanjavur\'s great hall has “rows of six pillars both east to west and north to south” [@bala_maha], 36 in all. The Mayamata asks for an even number of pillars, arranged symmetrically (19.5) [@maya].'+(P.maha==='long'?' In the long plan the six across are kept and the rows are carried on down the hall at the same spacing, which is an extension.':''),
+    {src:['bala_maha','maya','bala_gkc'],conf:P.maha==='long'?65:80,basis:'Buildings and text',gram:'Mahamandapa → Pillars(6 × '+HALLROWS+')',
+     dims:[P.maha==='long'?['Grid',E,'six across as at Thanjavur [@bala_maha], with '+HALLROWS+' rows to fill the long hall']:['Grid',B,'six by six, as at Thanjavur [@bala_maha]'],PILLAR,PSIZE]});
+  grid(mpm,wi,zM+t,zK-t,6,HALLROWS);
+
+  /* Mukhamandapa */
+  var mk2=mk('mukha-pada','Mukhamandapa, walls (pada)','rule',
+    'The front hall or porch, entered from a broad flight of steps at Thanjavur [@bala_maha]. Dagens calls it “a kind of nave” where rites are held that the sanctum cannot hold (19 n. 6) [@maya]. Its width follows the “Front hall width” control, using the Mayamata\'s three options (19.4b to 5) [@maya].',
+    {src:['bala_maha','maya'],conf:70,basis:'Buildings and text',gram:'Halls → Mukhamandapa → Pada',
+     dims:[['Width',T,(k===1?'the full width':(k===0.75?'three quarters':'half'))+' of the tower, one of the Mayamata\'s three options [@maya]'],['Length',E,'half the base width. No measurement found'],WALLHT,WALLT,DOOR]});
+  xWall(mk2,wxK,zE-t,zE,true); mk2.n++;
+  sides(mk2,wxK,zK,zE,false);
+  var mpk=mk('mukha-pillars','Mukhamandapa, pillars','inf',
+    'Four pillars inside the front hall. Halls in front of the shrine have pillars in the texts [@maya][@man34], but no source read describes the front hall\'s.',
+    {src:['maya','man34'],conf:50,basis:'Text, loosely',gram:'Mukhamandapa → Pillars',dims:[['Number and spacing',E,'four, estimated'],PSIZE]});
+  grid(mpk,wxK-t,zK,zE-t,2,2);
+
+  /* flat roofs: an entablature over each hall */
+  var mr=mk('hall-prastara','Hall entablature and roof (prastara)','rule',
+    'Entablature over the hall walls, about half the pillar zone, as on the tower [@maya][@man19]. The roof is drawn flat, as Dagens summarises the Mayamata\'s pavilions (chapter 25, not read directly) [@maya]. The text also allows corner and elongated pavilions on a hall\'s entablature (21.19 to 20) [@maya]. Whether Thanjavur\'s halls carry them was not checked, so none are drawn.',
+    {src:['maya','man19','man34'],conf:75,basis:'Text',gram:'Halls → Hall → Prastara',
+     dims:[['Height',T,HALF],['Flat roof',T,'usual for pavilions in Dagens\'s summary [@maya]'],['Overhang',E,'4% each side']]});
+  [[wxA,zA,zM,0],[wxM,zM,zK,0],[wxK,zK,zE,1]].forEach(function(h){
+    var len=h[2]-h[1]+(h[3]?0.04*h[0]:0);
+    put(mr,box(2*h[0]*1.08,entH,len),0,bt+padH+entH/2,h[1]+len/2); mr.n++;
+    WK.roofs.push({x0:-h[0],x1:h[0],z0:h[1],z1:h[1]+len,y:bt+padH});
+  });
+
+  /* Stairs: steps drawn as blocks; for walking, each flight is a ramp */
+  var mss=mk('side-stairs','Side gateway stairs','rule',
+    'Each side gateway of the ardhamandapa is reached by a two-stage stair: from the courtyard to the top of the sub-base, a landing, then a second flight to the threshold [@bala_ardha]. Gangaikondacholapuram has the same arrangement [@bala_gkc]. The Mayamata puts a stair at the side of the porch (19.6 to 7) [@maya].',
+    {src:['bala_ardha','bala_gkc','maya','bala_tanj'],conf:80,basis:'Buildings and text',gram:'Ardhamandapa → Side gate → Stair | Landing | Stair',
+     dims:[['Arrangement',B,'two flights with a landing on the sub-base [@bala_ardha][@bala_gkc]'],['Rise',B,'the two base heights at Thanjavur, 1.40 m and 3.60 m [@bala_tanj]'],['Width and slope',E,'estimated']]});
+  var mfs=mk('front-stair','Front stair','rule',
+    'A broad flight of steps up to the front hall, as at Thanjavur [@bala_maha].',
+    {src:['bala_maha','bala_tanj'],conf:75,basis:'Buildings (one example)',gram:'Mukhamandapa → Front stair',
+     dims:[['Rise',B,'the sub-base and base, 5.0 m at Thanjavur [@bala_tanj]'],['Width and slope',E,'estimated']]});
+  var mbl=mk('balustrade','Stair balustrades (plain)','rule',
+    'Balustrades along the stairs. Balasubrahmanyam describes “massive sinuous and ornamental balustrades” at the side gateways [@bala_ardha], and the Mayamata a handrail shaped like an elephant\'s trunk (19.6 to 7) [@maya]. They are drawn here as plain slabs.',
+    {src:['bala_ardha','maya'],conf:70,basis:'Buildings and text',gram:'Stair → Balustrade',
+     dims:[['Form',E,'drawn plain. The sources describe curving, ornamented ones'],['Size',E,'estimated']]});
+  /* one flight along axis ax ('x' or 'z'), rising toward a from a+d*run; c is its centre across, w its width */
+  function flight(m,ax,d,a,run,htop,hbot,c,w){
+    var rise=htop-hbot, n=Math.max(3,Math.round(rise/(0.2*s))), bw=0.35*s, bh=0.9*s, i;
+    for(i=0;i<n;i++){
+      var u=a+d*run*(n-0.5-i)/n, h=(i+1)*rise/n, len=run/n;
+      if(ax==='z') put(m,box(w,h,len),c,hbot+h/2,u); else put(m,box(len,h,w),u,hbot+h/2,c);
+    }
+    m.n++;
+    var L=Math.hypot(run,rise), ang=ax==='z'?(d>0?0:Math.PI):(d>0?Math.PI/2:-Math.PI/2);
+    [-1,1].forEach(function(sd){
+      var g=box(bw,bh,L); g.rotateX(Math.atan2(rise,run)); g.rotateY(ang);
+      var u=a+d*run/2, v=c+sd*(w/2+bw/2), y=hbot+rise/2+bh/2;
+      if(ax==='z') put(mbl,g,v,y,u); else put(mbl,g,u,y,v);
+      mbl.n++;
+    });
+    WK.ramps.push({ax:ax,a:a,b:a+d*run,c0:c-w/2,c1:c+w/2,htop:htop,hbot:hbot});
+  }
+  var zc=(zA+zM)/2, sw=0.12*W, topA=0.53*wxA/0.45;
+  [-1,1].forEach(function(d){
+    flight(mss,'x',d,d*topA,adH*1.5,bt,upH,zc,sw);          /* upper flight, from the landing to the threshold */
+    flight(mss,'x',d,d*upW/2,upH*1.5,upH,0,zc,sw);          /* lower flight, from the courtyard to the sub-base */
+  });
+  var zf=zE+0.08*W;
+  flight(mfs,'z',1,zf,bt*1.5,bt,0,0,1.2*wxK);
+
+  var zEnd=zf+bt*1.5;
+  CXT={zc:(zEnd-upW/2)/2,half:(zEnd+upW/2)/2,front:zEnd};
+}
+
 function build(){
   clearBuild();
   var W=P.base, N=P.tiers, den=P.density, tp=P.taper, hr=P.hratio;
@@ -636,7 +845,10 @@ function build(){
     {src:['bala_tanj','maya','man13'],conf:80,basis:'Buildings (one example) and text',gram:'Tower → Sub-base',
      dims:[['Height',B,'1.40 m on a 30.18 m base at Thanjavur, about two fifths of the moulded base, a ratio the Mayamata lists [@bala_tanj][@maya]'],['Projection',T,'half its height, the top of the range the Mayamata gives [@maya]']]});
   put(mu,box(upW,upH,upW),0,upH/2,0); mu.n++;
-  footM=upW/2/upm();
+  WK={plats:[],ramps:[],obs:[],roofs:[]};
+  WK.plats.push({x0:-upW/2,x1:upW/2,z0:-upW/2,z1:upW/2,h:upH});
+  WK.plats.push({x0:-0.53*W,x1:0.53*W,z0:-0.53*W,z1:0.53*W,h:upH+adH});
+  WK.obs.push({x0:-0.45*W,x1:0.45*W,z0:-0.45*W,z1:0.45*W});
 
   var MOULD=[
     ['jagati','jagati (plinth)',1.10,8,'8 of 24 parts'],
@@ -693,8 +905,11 @@ function build(){
        dims:[['Width',E,'0.34 of the base width'],['Depth',E,'0.03 of the base width']]});
     var proj=0.03*W;
     ring4(function(t,sn,cs){
+      if(s===0&&P.halls&&t===0) return;      /* the east face of the lower storey is inside the ardhamandapa */
       var xz=sideXZ(wallW/2+proj/2-0.002,0,sn,cs);
       put(mbh,box(0.34*W,sl.h,proj),xz[0],sl.y+sl.h/2,xz[1],t); mbh.n++;
+      if(s===0){var hx=Math.abs(sn)<0.5?0.17*W:proj/2, hz=Math.abs(sn)<0.5?proj/2:0.17*W;
+        WK.obs.push({x0:xz[0]-hx,x1:xz[0]+hx,z0:xz[1]-hz,z1:xz[1]+hz});}
     });
 
     if(den>=0.3){
@@ -704,6 +919,7 @@ function build(){
       var us=den>=0.65?[-0.395,-0.28,0.28,0.395]:[-0.28,0.28];
       ring4(function(t,sn,cs){
         us.forEach(function(uu){
+          if(s===0&&P.halls&&t===0&&Math.abs(uu)<0.3) return;
           var pw=Math.abs(uu)>0.3?0.08:0.09;
           var xz=sideXZ(wallW/2+0.004*W,uu*W,sn,cs);
           put(mn,box(pw*W,sl.h*0.62,0.012*W),xz[0],sl.y+sl.h/2,xz[1],t); mn.n++;
@@ -712,6 +928,9 @@ function build(){
     }
   });
   y=wall[3].y+wall[3].h;
+
+  if(P.halls) buildHalls(W,upH,adH,upW,MOULD,slabs,padH0,entH0);
+  else CXT={zc:0,half:upW/2,front:upW/2};
 
   /* Tiers: repeat N times, heights stepping down evenly. Tier → Pada | Prastara, then a Hara on the ledge */
   var w0=0.80*W, h0=0.116*W;
@@ -814,11 +1033,18 @@ function build(){
     'Pavilions per side → '+perTxt+'\n'+
     'Crown → Platform | Neck | Dome | Finial   (½ : 1 : 2 : 1)'+(P.crown==='spike'?' · Spike':'')+'\n'+
     'Width(i) = w0 · (1 − (1 − '+tp.toFixed(2)+') · i/'+Math.max(1,N-1)+')\n'+
-    'Height(i) = h0 · (1 − (1 − '+hr.toFixed(2)+') · i/'+Math.max(1,N-1)+')';
+    'Height(i) = h0 · (1 − (1 − '+hr.toFixed(2)+') · i/'+Math.max(1,N-1)+')'+
+    (P.halls?'\nHalls → Sub-base · Ardhamandapa + side stairs · Mahamandapa · Mukhamandapa + front stair\n'+
+      'Hall → Base | Pada | Prastara\n'+
+      'Mahamandapa pillars → 6 × '+HALLROWS:'');
 
-  target.y=H*0.47;
+  orbitTarget();
   var pr=280/(PAVE_M*upm()); paving.repeat.set(pr,pr);
-  if(walk){camera.near=0.25*upm(); camera.updateProjectionMatrix(); collide();}
+  if(walk){
+    camera.near=0.25*upm(); camera.updateProjectionMatrix();
+    var s=upm(), lv=levelAt(wk.x*s,wk.z*s)/s;
+    if(Math.abs(lv-wk.lv)>STEP_M||hitObs(wk.x*s,wk.z*s,BODY_M*s)) walkStart(); else wk.lv=lv;
+  }
   else if(!userMoved) dist=fitDist();
   applyLight();
   updateCam();
@@ -905,9 +1131,11 @@ var th=0.75, ph=1.2, dist=34, target=new THREE.Vector3(0,9,0);
 var DMIN=10, DMAX=170, userMoved=false;
 function updateCam(){
   if(walk){
-    var s=upm(), cp=Math.cos(wk.pitch), x=wk.x*s, y=EYE_M*s, z=wk.z*s;
+    var s=upm(), cp=Math.cos(wk.pitch), x=wk.x*s, y=(wk.lv+EYE_M)*s, z=wk.z*s;
     camera.position.set(x,y,z);
     camera.lookAt(x-Math.sin(wk.yaw)*cp,y+Math.sin(wk.pitch),z-Math.cos(wk.yaw)*cp);
+    var indoors=WK.roofs.some(function(r){return x>r.x0&&x<r.x1&&z>r.z0&&z<r.z1&&y<r.y;});
+    lantern.position.set(x,y,z); lantern.distance=30*s; lantern.intensity=indoors?1.1:0;
     dirty=true; return;
   }
   camera.position.set(
@@ -916,31 +1144,67 @@ function updateCam(){
     target.z+dist*Math.sin(ph)*Math.cos(th));
   camera.lookAt(target); dirty=true;
 }
+function orbitTarget(){target.set(0,H*(P.halls?0.35:0.47),CXT.zc);}
 function fitDist(){
   var t=Math.tan(camera.fov*Math.PI/360);
+  if(P.halls){var r=Math.hypot(CXT.half,H*0.5); return clamp(0.85*r/Math.sin(Math.atan(Math.min(t,t*camera.aspect))),DMIN,DMAX);}
   var narrow=view.clientWidth<520;
-  var halfH=H*0.5*(narrow?1.5:1.3), halfW=P.base*1.0;
+  var halfH=H*0.5*(narrow?1.5:1.3), halfW=Math.max(P.base,CXT.half*0.85);
   return clamp(Math.max(halfH/t,halfW/(t*camera.aspect))+P.base*0.4,DMIN,DMAX);
 }
 function resetView(){
   if(walk){walkStart(); updateCam(); return;}
-  userMoved=false; th=0.75; ph=1.2; dist=fitDist(); target.set(0,H*0.47,0); updateCam();
+  userMoved=false; th=0.75; ph=1.2; dist=fitDist(); orbitTarget(); updateCam();
 }
 
 /* ---------- Walk camera ---------- */
-/* start on the side the orbit camera was viewing from, facing the tower */
-function walkStart(){wk.x=Math.sin(th)*START_M; wk.z=Math.cos(th)*START_M; wk.yaw=th; wk.pitch=0.3;}
-/* keep the walker off the sub-base and inside the ground */
-function collide(){
-  var h=footM+BODY_M, ax=Math.abs(wk.x), az=Math.abs(wk.z);
-  if(ax<h&&az<h){if(ax>az) wk.x=wk.x<0?-h:h; else wk.z=wk.z<0?-h:h;}
-  var d=Math.hypot(wk.x,wk.z); if(d>ROAM_M){wk.x*=ROAM_M/d; wk.z*=ROAM_M/d;}
+/* With the halls: in front of the front stair, facing the tower down the axis.
+   Without: on the side the orbit camera was viewing from, facing the tower. */
+function walkStart(){
+  var s=upm();
+  if(P.halls){wk.x=0; wk.z=CXT.front/s+20; wk.yaw=0; wk.pitch=0.12;}
+  else{wk.x=Math.sin(th)*START_M; wk.z=Math.cos(th)*START_M; wk.yaw=th; wk.pitch=0.3;}
+  wk.lv=levelAt(wk.x*s,wk.z*s)/s;
 }
-/* fw metres forward, rt metres to the right */
+/* floor height at a point, in model units: a stair ramp if on one, else the highest floor underneath */
+function levelAt(x,z){
+  var i, h=0;
+  for(i=0;i<WK.ramps.length;i++){
+    var r=WK.ramps[i], u=r.ax==='z'?z:x, v=r.ax==='z'?x:z;
+    if(v>=r.c0&&v<=r.c1&&u>=Math.min(r.a,r.b)&&u<=Math.max(r.a,r.b)) return r.htop+(r.hbot-r.htop)*(u-r.a)/(r.b-r.a);
+  }
+  for(i=0;i<WK.plats.length;i++){
+    var p=WK.plats[i];
+    if(x>=p.x0&&x<=p.x1&&z>=p.z0&&z<=p.z1&&p.h>h) h=p.h;
+  }
+  return h;
+}
+function hitObs(x,z,r){
+  for(var i=0;i<WK.obs.length;i++){
+    var o=WK.obs[i];
+    if(x+r>o.x0&&x-r<o.x1&&z+r>o.z0&&z-r<o.z1) return true;
+  }
+  return false;
+}
+/* a walker may stand here if no wall is in the way and the floor under the whole body is within a step of its current floor */
+function canStand(x,z){
+  var s=upm(), r=BODY_M*s, st=STEP_M*s, l0=levelAt(x,z);
+  if(Math.abs(l0-wk.lv*s)>st||hitObs(x,z,r)) return false;
+  for(var i=0;i<4;i++){if(Math.abs(levelAt(x+(i&1?r:-r),z+(i&2?r:-r))-l0)>st) return false;}
+  return true;
+}
+/* fw metres forward, rt metres to the right, in short sub-steps so walls and stairs are never skipped */
 function moveBy(fw,rt){
-  var sy=Math.sin(wk.yaw), cy=Math.cos(wk.yaw);
-  wk.x+=-sy*fw+cy*rt; wk.z+=-cy*fw-sy*rt;
-  collide(); updateCam();
+  var sy=Math.sin(wk.yaw), cy=Math.cos(wk.yaw), s=upm();
+  var dx=-sy*fw+cy*rt, dz=-cy*fw-sy*rt, n=Math.max(1,Math.ceil(Math.hypot(dx,dz)/0.25));
+  dx/=n; dz/=n;
+  for(var i=0;i<n;i++){
+    if(canStand((wk.x+dx)*s,wk.z*s)) wk.x+=dx;
+    if(canStand(wk.x*s,(wk.z+dz)*s)) wk.z+=dz;
+    wk.lv=levelAt(wk.x*s,wk.z*s)/s;
+  }
+  var d=Math.hypot(wk.x,wk.z); if(d>ROAM_M){wk.x*=ROAM_M/d; wk.z*=ROAM_M/d;}
+  updateCam();
 }
 var MOVE={KeyW:1,KeyA:1,KeyS:1,KeyD:1,ArrowUp:1,ArrowDown:1,ArrowLeft:1,ArrowRight:1};
 function stepWalk(dt){
@@ -970,7 +1234,7 @@ function setWalk(on){
     ?'3D view at eye level. W A S D or arrow keys walk, Shift runs, Escape returns to orbit.'
     :'3D view of the generated tower. Arrow keys orbit, plus and minus zoom.');
   setHint();
-  if(!on&&!userMoved) dist=fitDist();
+  if(!on){lantern.intensity=0; if(!userMoved) dist=fitDist();}
   updateCam();
   if(on) cv.focus({preventScroll:true});
 }
@@ -1062,6 +1326,9 @@ bindRange('p-taper','taper',function(v){return v.toFixed(2);});
 bindRange('p-hratio','hratio',function(v){return v.toFixed(2);});
 bindRange('p-density','density',function(v){return v.toFixed(2);});
 $('p-crown').addEventListener('change',function(e){P.crown=e.target.value; schedule();});
+$('p-halls').addEventListener('change',function(e){P.halls=e.target.checked; $('p-maha').disabled=$('p-mukha').disabled=!P.halls; schedule();});
+$('p-maha').addEventListener('change',function(e){P.maha=e.target.value; schedule();});
+$('p-mukha').addEventListener('change',function(e){P.mukha=parseFloat(e.target.value); schedule();});
 $('tier-presets').addEventListener('click',function(e){
   var b=e.target.closest('button'); if(!b) return;
   var n=parseInt(b.dataset.n,10); P.tiers=n; $('p-tiers').value=n; $('o-tiers').textContent=n; schedule();
