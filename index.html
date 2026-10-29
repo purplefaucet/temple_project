@@ -465,7 +465,9 @@ try{
   view.innerHTML='<div class="fallback"><p>This browser could not start 3D graphics, so the tower cannot be drawn here. Try another browser or device.</p></div>';
   return;
 }
-renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+/* touch screens get a slightly lower resolution: on phones, filling pixels is the main cost */
+var touchDevice=!!(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,touchDevice?1.5:2));
 renderer.shadowMap.enabled=true;
 renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 renderer.outputEncoding=THREE.sRGBEncoding;
@@ -1388,6 +1390,7 @@ function build(){
     if(Math.abs(lv-wk.lv)>STEP_M||hitObs(wk.x*s,wk.z*s,BODY_M*s)) walkStart(); else wk.lv=lv;
   }
   else if(!userMoved) dist=fitDist();
+  mergeParts();
   applyLight();
   updateCam();
   refresh();
@@ -1395,6 +1398,18 @@ function build(){
   var keep=selKey&&metas.get(selKey);
   if(keep&&keep.parts.length&&P.vis[catOf(keep)]){select(keep);}else{select(null);}
   dirty=true;
+}
+
+/* Join each element's parts into one mesh, so the scene draws in about one call per element
+   instead of one per block. Selection, picking and colouring all work per element, so nothing else changes. */
+function mergeParts(){
+  metas.forEach(function(m){
+    if(m.parts.length<2) return;
+    var geoms=m.parts.map(function(p){p.updateMatrix(); var g=p.geometry.clone(); g.applyMatrix4(p.matrix); return g;});
+    m.parts.forEach(function(p){ROOT.remove(p); p.geometry.dispose();});
+    m.parts=[];
+    put(m,mergeGeoms(geoms),0,0,0);
+  });
 }
 
 /* ---------- Selection ---------- */
