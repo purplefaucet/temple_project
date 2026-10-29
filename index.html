@@ -255,10 +255,11 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
         <div class="ctl">
           <label for="p-maha">Great hall plan</label><span></span>
           <select id="p-maha">
+            <option value="mapped">As mapped at Thanjavur</option>
             <option value="long">Long, as measured at Gangaikondacholapuram</option>
             <option value="square">Square, as reported at Thanjavur</option>
           </select>
-          <div class="help">At Gangaikondacholapuram the great hall is 1.75 times as long as the sanctum is wide <a data-cite="bala_gkc"></a>, but its walls, pillars and roof were rebuilt. Thanjavur's is called square in plan <a data-cite="wiki"></a>, and no measurements of it were found.</div>
+          <div class="help">Thanjavur's halls, measured from map outlines, end 67.2 m from the tower's centre with a porch in front <a data-cite="osm"></a>. At Gangaikondacholapuram the great hall is 1.75 times as long as the sanctum is wide <a data-cite="bala_gkc"></a>, but its walls, pillars and roof were rebuilt. Thanjavur's is also called square in plan <a data-cite="wiki"></a>.</div>
         </div>
         <div class="ctl" style="margin-bottom:0">
           <label for="p-mukha">Front hall width</label><span></span>
@@ -267,7 +268,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
             <option value="0.75">Three quarters</option>
             <option value="0.5">Half</option>
           </select>
-          <div class="help">The Mayamata makes the hall in front of the shrine as wide as it, or three quarters or half of it (19.4b to 5) <a data-cite="maya"></a>.</div>
+          <div class="help">The Mayamata makes the hall in front of the shrine as wide as it, or three quarters or half of it (19.4b to 5) <a data-cite="maya"></a>. In the mapped plan the front hall is the measured porch, so this control is off.</div>
         </div>
       </section>
 
@@ -275,7 +276,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
         <h3>The court</h3>
         <div class="ctl">
           <label for="p-court">Show the court</label><input type="checkbox" id="p-court" checked>
-          <div class="help">The cloistered court of Thanjavur, about 240 by 120 m <a data-cite="asi"></a> <a data-cite="unesco"></a>, with its two Chola gateways on the east <a data-cite="bala_complex"></a>, the Chandesvara shrine and the cloister shrines.</div>
+          <div class="help">The cloistered court of Thanjavur, 241 by 121 m outside, as measured from map outlines <a data-cite="osm"></a> and given by the Archaeological Survey of India <a data-cite="asi"></a>. With its two Chola gateways on the east <a data-cite="bala_complex"></a>, the Chandesvara shrine and the cloister shrines.</div>
         </div>
         <div class="ctl">
           <label for="p-period">Period</label><span></span>
@@ -283,7 +284,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
             <option value="chola">Chola, about 1010</option>
             <option value="later">With later additions</option>
           </select>
-          <div class="help">Later additions are the Nayak Nandi pavilion and two later shrines. Where those shrines stand was not found, so their positions are invented.</div>
+          <div class="help">Later additions are the Nayak Nandi pavilion and five later shrines and halls, placed where map outlines show them <a data-cite="osm"></a>. Their forms are not described in the sources read and are drawn as plain massing.</div>
         </div>
         <div class="ctl" style="margin-bottom:0">
           <label for="p-shrines">Cloister shrines</label><span></span>
@@ -356,13 +357,16 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <li>Balasubrahmanyam puts Thanjavur's sanctum and ardhamandapa floors about 6.1 m above the courtyard <a data-cite="bala_ardha"></a>. The measured sub-base and base add up to 5.0 m <a data-cite="bala_tanj"></a>, and the model uses 5.0 m. The difference is unexplained.</li>
           <li>The hall roofs are drawn flat, with no pavilions on them. The Mayamata allows either <a data-cite="maya"></a>, and which one Thanjavur has was not checked. Its chapter on halls and pavilions (25, in volume 2) is known only from Dagens's summary in volume 1.</li>
           <li>The halls leave out the guardian figures at the doors and the Nandi pavilion. The guardians are figure sculpture, which this page does not draw. Wikipedia dates the Nandi shrine to the Nayaka period <a data-cite="wiki"></a>, so it belongs to a later phase of the site.</li>
-          <li>The court is drawn 240 by 120 m, the size given by the Archaeological Survey of India, ICOMOS and others <a data-cite="asi"></a> <a data-cite="unesco"></a>. Balasubrahmanyam gives the cloister as 152.40 by 77.20 m <a data-cite="bala_complex"></a>, which conflicts with every other source. The larger figure is about 85% likely to be right. A satellite measurement would settle it.</li>
-          <li>Where the tower stands in the court is inferred from Sahapedia's description of a 60 by 60 square layout grid <a data-cite="sp_notes"></a>, read as covering the western half of the court. That reading puts the tower 2 base widths from the west wall and is about 65% certain.</li>
-          <li>The outer gateway is placed about 100 m east of the inner one, from Balasubrahmanyam <a data-cite="bala_complex"></a>. That cannot be squared with ICOMOS's 270 m outer wall around a 240 m court <a data-cite="ic87"></a>. The outer wall drawn here encloses only a front court, which is a guess.</li>
-          <li>Wall height and thickness, cloister depth, pillar spacing and the gateways' plans are estimates. The wall's height follows the Mayamata's rule tying it to the cloister <a data-cite="maya"></a>. The cloister is drawn whole, but its upper storey has almost disappeared today <a data-cite="sp_notes"></a>.</li>
-          <li>The inner gateway's three storeys are unverified, and its plan comes from a travel write-up that does not say what was measured <a data-cite="es"></a>. The outer gateway is drawn 27.4 m high, within reported heights of 25 to 30 m <a data-cite="th2010"></a> <a data-cite="ic87"></a>. Its plan and number of finials are estimates.</li>
-          <li>ASI counts three side entrances to the court besides the gateway <a data-cite="asi"></a>, and Balasubrahmanyam three entrances in all <a data-cite="bala_composite"></a>. Three side openings are drawn, at estimated positions.</li>
-          <li>The positions of the cloister shrines, the Amman shrine and the Subrahmanya shrine are invented. The Nandi pavilion's size and distance from the halls were not found. Most sources date the present Nandi to the Nayak period <a data-cite="wiki"></a> <a data-cite="es"></a>, and an earlier Chola Nandi is unverified.</li>
+          <li>The court, gateways, Nandi pavilion and court shrines are placed from OpenStreetMap outlines, measured for this project and checked against satellite imagery, to within about 1.5 to 4 m <a data-cite="osm"></a>. That is not a published survey. The open court's inner edge is the least certain figure, at about 4 m.</li>
+          <li>The measured cloister, 241 by 121 m outside, matches the Archaeological Survey of India's 240.9 by 122 m <a data-cite="asi"></a>, so that figure describes the outside of the walls. Balasubrahmanyam's 152.40 by 77.20 m <a data-cite="bala_complex"></a> matches nothing on the site. His “almost a hundred metres” between the gateways also disagrees with the measured 71.9 m. It fits if counted from the later outermost gate, which is a guess.</li>
+          <li>No Chola wall round the outer gateway was found. The only outer wall is the later fort's, which runs through the gateway <a data-cite="osm"></a>, so the gateway is drawn standing alone. ICOMOS's 270 by 140 m outer boundary <a data-cite="ic87"></a> matches nothing mapped.</li>
+          <li>The real complex faces about 20° north of east. The model uses its own axis, so the light presets do not show the real sun angles.</li>
+          <li>The halls follow the mapped outline by default: their main east face is 67.2 m from the tower's centre, with a porch 10.5 m wide in front <a data-cite="osm"></a>. Reading that porch as the mukhamandapa is an inference. How the length divides between the ardhamandapa and the great hall is estimated.</li>
+          <li>The map labels the small shrine north of the tower “Perumal temple”. It stands where the Chandesvara shrine should be, so it is drawn as that shrine, which is about 70% certain. The later shrines' names are also the map's own and unverified.</li>
+          <li>Wall height and thickness, pillar spacing and all building heights are estimates. The wall's height follows the Mayamata's rule tying it to the cloister <a data-cite="maya"></a>. The cloister is drawn whole, but its upper storey has almost disappeared today <a data-cite="sp_notes"></a>.</li>
+          <li>The inner gateway's three storeys are unverified. The outer gateway is drawn 27.4 m high, within reported heights of 25 to 30 m <a data-cite="th2010"></a> <a data-cite="ic87"></a>. Its number of finials is an estimate.</li>
+          <li>ASI counts three side entrances to the court besides the gateway <a data-cite="asi"></a>, and Balasubrahmanyam three entrances in all <a data-cite="bala_composite"></a>. Three side openings are drawn, at estimated positions. The cloister shrines' positions are invented.</li>
+          <li>Most sources date the present Nandi to the Nayak period <a data-cite="wiki"></a> <a data-cite="es"></a>, and an earlier Chola Nandi is unverified.</li>
           <li>The fort walls, the moat and the Maratha-period outer gate are left out. They are later than the temple <a data-cite="wiki"></a> <a data-cite="fh"></a>.</li>
           <li>A parametric Karnata-Dravida model exists <a data-cite="karnata"></a>. No published Chola shape grammar was found, in a search that was not exhaustive.</li>
           <li>Only Chola has been researched. Whether Pallava, Pandya, Vijayanagara and Nayak are distinct enough to be separate rule sets is unchecked.</li>
@@ -422,6 +426,7 @@ var SRC={
  es:{n:'S. Nayyar, Brihadisvara Temple Thanjavur (eSamskriti, 2016)',u:'https://www.esamskriti.com/a/TamilNadu/Brihadisvara-Temple-Thanjavur.aspx',use:'Five storeys for the outer gateway. 27 by 17.25 m for the inner gateway, without saying what is measured. Dates of later shrines.',rel:'Travel write-up drawing on site boards and an ASI booklet. Low confidence, used only where nothing better was found.'},
  th2010:{n:'G. Srinivasan, The Hindu, 29 November 2010, on lightning damage to the Rajarajan gopuram (forum repost)',u:'https://ponniyinselvan.in/forum/discussion/comment/43908',use:'Five finials on the inner gateway\'s wagon roof, and a brick and lime superstructure. The outer gateway about 25 m high and taller than the inner one.',rel:'Newspaper report, read secondhand through a repost.'},
  man31:{n:'Manasara, chapter 31, The courts',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421078.html',use:'Galleries along the court wall with base, pillar and entablature. Attendant shrines in the courts.',rel:MANREL},
+ osm:{n:'OpenStreetMap outlines of the Thanjavur temple, measured for this project',u:'https://github.com/purplefaucet/temple_project/blob/main/research/measurements.md',use:'Cloister 241 by 121 m outside and 228 by 109 m inside. Tower centred in the western half, 2.0 base widths from the west wall. Gateways 71.9 m apart, bases 25.6 by 16.7 m and 29.4 by 17.6 m. Halls ending 67.2 m from the tower\'s centre, with a porch. Positions and footprints of the Nandi pavilion and the shrines in the court.',rel:'OpenStreetMap data of 29 October 2026, way numbers listed in the linked notes, checked against Google satellite imagery. Errors of about 1.5 to 4 m. Measured by Claude for this project, not a published survey. Building names are OpenStreetMap\'s own.'},
  man32:{n:'Manasara, chapter 32, The attendant deities',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421079.html',use:'The bull\'s shrine in the east, made like a pavilion. The bali altar toward the gateway.',rel:MANREL},
  man33:{n:'Manasara, chapter 33, The gate-houses',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421080.html',use:'More storeys for gateways further out. Length 1¼ to 2 times the width.',rel:MANREL}
 };
@@ -441,7 +446,7 @@ var MODES={
 var DKIND={text:'Text',bldg:'Buildings',est:'Estimate'};
 
 /* ---------- State ---------- */
-var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',light:'noon',mode:'elem',halls:true,maha:'long',mukha:1,court:true,period:'chola',shrines:16,
+var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',light:'noon',mode:'elem',halls:true,maha:'mapped',mukha:1,court:true,period:'chola',shrines:16,
   vis:{rule:true,inf:true,inv:true,src:true,part:true,est:true}};
 var metas=new Map();
 var selKey=null, selMeta=null, outlines=[];
@@ -714,7 +719,9 @@ function hara(y,cw,hn,lvlMax,den,label,id,gramHead){
 var HALLROWS=6;
 function buildHalls(W,upH,adH,upW,MOULD,slabs,padH,entH){
   var s=upm(), bt=upH+adH, t=0.045*W, dw=0.08*W, dh=0.65*padH, ps=0.035*W;
-  var LA=0.65*W, LM=P.maha==='long'?1.75*W:W, LK=0.5*W, k=P.mukha;
+  /* 'mapped': Thanjavur's mapped outline, the halls' main east face 67.2 m from the tower's centre and a porch 10.5 m wide and 6.5 m deep (research/measurements.md) */
+  var mapped=P.maha==='mapped', LA=0.65*W;
+  var LM=mapped?Math.max(0.5*W,67.2*s-0.45*W-LA):(P.maha==='long'?1.75*W:W), LK=mapped?6.5*s:0.5*W, k=mapped?10.5/(0.9*BASE_M):P.mukha;
   var zA=0.45*W, zM=zA+LA, zK=zM+LM, zE=zK+LK;
   var wxA=0.45*0.65*W, wxM=0.45*W, wxK=0.45*k*W;          /* half-widths of the walls: 0.9 of each hall's width, as on the tower */
   var pr=0.1*W+upH/2;                                     /* how far the sub-base runs past the hall walls */
@@ -796,15 +803,16 @@ function buildHalls(W,upH,adH,upW,MOULD,slabs,padH,entH){
 
   /* Mahamandapa */
   var mm=mk('maha-pada','Mahamandapa, walls (pada)','rule',
-    'The great hall. At Gangaikondacholapuram it is 53.34 m long and as wide as the sanctum [@bala_gkc]. Only its plinth and the west end of its walls are original there. The side walls, pillars and roof were rebuilt, and Balasubrahmanyam thinks the original was twice the present height [@bala_gkc]. Wikipedia, citing him, calls Thanjavur\'s halls square in plan [@wiki]. The “Great hall plan” control switches between the two. The Mayamata allows a hall as wide as the shrine, or three quarters or half of it (19.4b to 5) [@maya].',
-    {src:['bala_gkc','wiki','maya','bala_maha'],conf:80,basis:'Buildings and text',gram:'Halls → Mahamandapa → Pada',
+    'The great hall. In the mapped outline of Thanjavur the halls run from the tower to a main east face 67.2 m from the tower\'s centre [@osm]. At Gangaikondacholapuram the great hall is 53.34 m long and as wide as the sanctum [@bala_gkc]. Only its plinth and the west end of its walls are original there. The side walls, pillars and roof were rebuilt, and Balasubrahmanyam thinks the original was twice the present height [@bala_gkc]. Wikipedia, citing him, calls Thanjavur\'s halls square in plan [@wiki]. The “Great hall plan” control switches between these. The Mayamata allows a hall as wide as the shrine, or three quarters or half of it (19.4b to 5) [@maya].',
+    {src:['osm','bala_gkc','wiki','maya','bala_maha'],conf:80,basis:'Buildings and text',gram:'Halls → Mahamandapa → Pada',
      dims:[['Width',T,'the full width of the tower, as at Gangaikondacholapuram and allowed by the Mayamata [@bala_gkc][@maya]'],
+           mapped?['Length',B,'the halls end 67.2 m from the tower\'s centre in mapped outlines [@osm]. How that length divides between the ardhamandapa and the great hall is estimated']:
            P.maha==='long'?['Length',B,'1.75 times the base width: 53.34 m on a 30.48 m sub-base at Gangaikondacholapuram [@bala_gkc]']:['Length',B,'equal to the width, from the square plan reported at Thanjavur [@wiki]'],
            WALLHT,WALLT,DOOR]});
   xWall(mm,wxM,zM,zM+t,true); xWall(mm,wxM,zK-t,zK,true); mm.n+=2;
   sides(mm,wxM,zM,zK,false);
   var wi=wxM-t, sp=2*wi/6;
-  HALLROWS=P.maha==='long'?Math.max(2,Math.round((LM-2*t)/sp)):6;
+  HALLROWS=P.maha==='long'?Math.max(2,Math.round((LM-2*t)/sp)):6;   /* six by six at Thanjavur */
   var mpm=mk('maha-pillars','Mahamandapa, pillars','rule',
     'Thanjavur\'s great hall has “rows of six pillars both east to west and north to south” [@bala_maha], 36 in all. The Mayamata asks for an even number of pillars, arranged symmetrically (19.5) [@maya].'+(P.maha==='long'?' In the long plan the six across are kept and the rows are carried on down the hall at the same spacing, which is an extension.':''),
     {src:['bala_maha','maya','bala_gkc'],conf:P.maha==='long'?65:80,basis:'Buildings and text',gram:'Mahamandapa → Pillars(6 × '+HALLROWS+')',
@@ -813,9 +821,10 @@ function buildHalls(W,upH,adH,upW,MOULD,slabs,padH,entH){
 
   /* Mukhamandapa */
   var mk2=mk('mukha-pada','Mukhamandapa, walls (pada)','rule',
-    'The front hall or porch, entered from a broad flight of steps at Thanjavur [@bala_maha]. Dagens calls it “a kind of nave” where rites are held that the sanctum cannot hold (19 n. 6) [@maya]. Its width follows the “Front hall width” control, using the Mayamata\'s three options (19.4b to 5) [@maya].',
-    {src:['bala_maha','maya'],conf:70,basis:'Buildings and text',gram:'Halls → Mukhamandapa → Pada',
-     dims:[['Width',T,(k===1?'the full width':(k===0.75?'three quarters':'half'))+' of the tower, one of the Mayamata\'s three options [@maya]'],['Length',E,'half the base width. No measurement found'],WALLHT,WALLT,DOOR]});
+    'The front hall or porch, entered from a broad flight of steps at Thanjavur [@bala_maha]. Dagens calls it “a kind of nave” where rites are held that the sanctum cannot hold (19 n. 6) [@maya]. '+(mapped?'In the plan mapped at Thanjavur it is read as the porch projecting from the halls\' east face, 10.5 m wide and 6.5 m deep [@osm]. That reading is an inference.':'Its width follows the “Front hall width” control, using the Mayamata\'s three options (19.4b to 5) [@maya].'),
+    {src:['bala_maha','maya','osm'],conf:70,basis:'Buildings and text',gram:'Halls → Mukhamandapa → Pada',
+     dims:mapped?[['Width',B,'10.5 m, the porch on the halls\' east face in mapped outlines [@osm]'],['Length',B,'6.5 m, the porch\'s depth [@osm]'],['Reading the porch as this hall',E,'an inference'],WALLHT,WALLT,DOOR]
+       :[['Width',T,(k===1?'the full width':(k===0.75?'three quarters':'half'))+' of the tower, one of the Mayamata\'s three options [@maya]'],['Length',E,'half the base width. No measurement found'],WALLHT,WALLT,DOOR]});
   xWall(mk2,wxK,zE-t,zE,true); mk2.n++;
   sides(mk2,wxK,zK,zE,false);
   var mpk=mk('mukha-pillars','Mukhamandapa, pillars','inf',
@@ -841,8 +850,8 @@ function buildHalls(W,upH,adH,upW,MOULD,slabs,padH,entH){
      dims:[['Arrangement',B,'two flights with a landing on the sub-base [@bala_ardha][@bala_gkc]'],['Rise',B,'the two base heights at Thanjavur, 1.40 m and 3.60 m [@bala_tanj]'],['Width and slope',E,'estimated']]});
   var mfs=mk('front-stair','Front stair','rule',
     'A broad flight of steps up to the front hall, as at Thanjavur [@bala_maha].',
-    {src:['bala_maha','bala_tanj'],conf:75,basis:'Buildings (one example)',gram:'Mukhamandapa → Front stair',
-     dims:[['Rise',B,'the sub-base and base, 5.0 m at Thanjavur [@bala_tanj]'],['Width and slope',E,'estimated']]});
+    {src:['bala_maha','bala_tanj','osm'],conf:75,basis:'Buildings (one example)',gram:'Mukhamandapa → Front stair',
+     dims:[['Rise',B,'the sub-base and base, 5.0 m at Thanjavur [@bala_tanj]'],mapped?['Run',B,'10.7 m from the porch to the foot of the steps in mapped outlines [@osm]']:['Run',E,'estimated'],['Width',E,'estimated']]});
   var mbl=mk('balustrade','Stair balustrades (plain)','rule',
     'Balustrades along the stairs. Balasubrahmanyam describes “massive sinuous and ornamental balustrades” at the side gateways [@bala_ardha], and the Mayamata a handrail shaped like an elephant\'s trunk (19.6 to 7) [@maya]. They are drawn here as plain slabs.',
     {src:['bala_ardha','maya'],conf:70,basis:'Buildings and text',gram:'Stair → Balustrade',
@@ -869,10 +878,10 @@ function buildHalls(W,upH,adH,upW,MOULD,slabs,padH,entH){
     flight(mss,'x',d,d*topA,adH*1.5,bt,upH,zc,sw);          /* upper flight, from the landing to the threshold */
     flight(mss,'x',d,d*upW/2,upH*1.5,upH,0,zc,sw);          /* lower flight, from the courtyard to the sub-base */
   });
-  var zf=zE+0.08*W;
-  flight(mfs,'z',1,zf,bt*1.5,bt,0,0,1.2*wxK);
+  var zf=mapped?zE:zE+0.08*W, run=mapped?10.7*s:bt*1.5;   /* mapped: 10.7 m from the porch face to the foot of the steps */
+  flight(mfs,'z',1,zf,run,bt,0,0,1.2*wxK);
 
-  var zEnd=zf+bt*1.5;
+  var zEnd=zf+run;
   CXT={zc:(zEnd-upW/2)/2,half:(zEnd+upW/2)/2,front:zEnd};
 }
 
@@ -918,19 +927,22 @@ function spread(iv,k){
   return pts;
 }
 var DOMEPROF=[[0.74,0],[1,0.03],[1.08,0.1],[1.06,0.24],[0.86,0.48],[0.56,0.74],[0.3,0.93],[0.14,1.0],[0,1.0]];
-/* a small square shrine: base, wall, entablature, optional tiers, octagonal neck and dome, finial, and a door frame facing (fx,fz) */
-function shrineGeoms(x,z,w,tiers,fx,fz){
-  var g=[], y=0, hb=0.2*w, hw=0.55*w, he=0.14*w, i;
-  g.push(bx(w*1.12,hb,w*1.12,x,hb/2,z)); y=hb;
-  g.push(bx(w,hw,w,x,y+hw/2,z));
-  var dw=0.28*w, dd=0.06*w, dh=0.42*w;
-  g.push(fx?bx(dd,dh,dw,x+fx*(w/2+dd/2),y+dh/2,z):bx(dw,dh,dd,x,y+dh/2,z+fz*(w/2+dd/2)));
-  y+=hw; g.push(bx(w*1.12,he,w*1.12,x,y+he/2,z)); y+=he;
+/* a small shrine, w across x and d along z (square if d is left out): base, wall, entablature, optional tiers,
+   octagonal neck and dome, finial, and a door frame facing (fx,fz) */
+function shrineGeoms(x,z,w,tiers,fx,fz,d){
+  d=d||w;
+  var g=[], y=0, m=Math.min(w,d), hb=0.2*m, hw=0.55*m, he=0.14*m, i;
+  g.push(bx(w*1.12,hb,d*1.12,x,hb/2,z)); y=hb;
+  g.push(bx(w,hw,d,x,y+hw/2,z));
+  var dw=0.28*m, dd=0.06*m, dh=0.42*m;
+  g.push(fx?bx(dd,dh,dw,x+fx*(w/2+dd/2),y+dh/2,z):bx(dw,dh,dd,x,y+dh/2,z+fz*(d/2+dd/2)));
+  y+=hw; g.push(bx(w*1.12,he,d*1.12,x,y+he/2,z)); y+=he;
   for(i=0;i<tiers;i++){
-    var tw=w*(0.74-0.12*i), th=0.3*w;
-    g.push(bx(tw,th,tw,x,y+th/2,z)); y+=th;
-    g.push(bx(tw*1.12,he*0.7,tw*1.12,x,y+he*0.35,z)); y+=he*0.7;
+    var f=0.74-0.12*i, th=0.3*m;
+    g.push(bx(w*f,th,d*f,x,y+th/2,z)); y+=th;
+    g.push(bx(w*f*1.12,he*0.7,d*f*1.12,x,y+he*0.35,z)); y+=he*0.7;
   }
+  w=m;
   var r=0.3*w, nh=0.14*w, nk=new THREE.CylinderGeometry(r/Math.cos(OCT),r/Math.cos(OCT),nh,8);
   nk.rotateY(OCT); nk.translate(x,y+nh/2,z); g.push(nk); y+=nh;
   var R=0.43*w, dh2=0.36*w;
@@ -981,18 +993,20 @@ function gopuramGeoms(W,cz,w,d,H,nT,nFin){
 function buildCourt(W,upH,adH,padH){
   var s=upm(), bag={}, i;
   function add(m,geoms){(bag[m.key]=bag[m.key]||{m:m,g:[]}).g=bag[m.key].g.concat(geoms);}
-  var x0=2*W, zW=-2*W, zE=6*W, tw=0.05*W, gd=0.15*W, ps=0.03*W, ge=0.06*W;
+  /* measured (research/measurements.md): cloister 241 by 121 m outside, tower centre 60.8 m from the outer west face, band about 6.2 m deep */
+  var tw=1.5*s, xo=60.5*s, x0=xo-tw, zW=-60.8*s+tw, zE=180.2*s-tw, gd=6.2*s-tw, ps=0.03*W, ge=0.06*W, zMid=(zW+zE)/2;
   /* cloister heights: Mayamata 23.61b–67a, base 2/7 and pillars 5/7 of the tower's base top to its first architrave; entablature a quarter less than the base; upper storey 3/4 of the ground floor */
   var cb=2/7*padH, cp=5/7*padH, ce=0.75*cb, G=cb+cp+ce, U=0.75*G, ce2=0.75*ce, cp2=U-ce2, wallH=G+U;
-  var RR={w:0.89*W,d:0.57*W,H:0.6*W,n:3,f:5}, KK={w:1.0*W,d:0.62*W,H:0.91*W,n:5,f:5}, zK=zE+3.3*W;
+  var RR={w:25.6*s,d:16.7*s,H:0.6*W,n:3,f:5}, KK={w:29.4*s,d:17.6*s,H:0.91*W,n:5,f:5};
+  var zR=zE+tw-5.15*s, zK=zR+71.9*s;   /* Rajarajan straddles the east range; the Keralantakan 71.9 m further on */
   var dWall=['Height',T,'as high as the cloister, which the Mayamata allows (23.26 to 28a) [@maya]. It comes out about 7.5 m, below the tower\'s first architrave, as the text requires (23.20b to 21)'];
 
   /* enclosure wall, with gaps for the gateway and three side entrances */
   var mw=mk('court-wall','Enclosure wall (prakara)','rule',
-    'The wall of the inner court, which encloses about 240 by 120 m: 240.9 by 122 m in the Archaeological Survey of India\'s figures [@asi], about 240 by 120 m for ICOMOS [@unesco]. That is 8 by 4 base widths, and 4 base widths is one of the Mayamata\'s enclosure lengths (23.6 to 7) [@maya]. Balasubrahmanyam gives the cloister as 152.40 by 77.20 m [@bala_complex], which conflicts with every other source. The wall\'s outer face is left plain, as the Mayamata allows for a cloistered wall (23.26 to 28a) [@maya].',
-    {src:['asi','unesco','bala_complex','maya'],conf:80,basis:'Buildings and text',gram:'Court → Wall',
-     dims:[['Court size',B,'240 by 120 m [@asi][@unesco]'],dWall,['Thickness',E,'1.5 m. No figure found']]});
-  var gx=[[2*W,ge]], WALLS=[
+    'The wall of the court. Measured from map outlines, the cloister is about 241 by 121 m outside and the open court 228 by 109 m inside [@osm]. The outside matches the Archaeological Survey of India\'s 240.9 by 122 m [@asi] and ICOMOS\'s 240 by 120 m [@unesco], so those figures describe the outside of the walls. That is 8 by 4 base widths, and 4 base widths is one of the Mayamata\'s enclosure lengths (23.6 to 7) [@maya]. Balasubrahmanyam\'s 152.40 by 77.20 m [@bala_complex] matches nothing on the site. The wall\'s outer face is left plain, as the Mayamata allows for a cloistered wall (23.26 to 28a) [@maya].',
+    {src:['osm','asi','unesco','bala_complex','maya'],conf:85,basis:'Buildings and text',gram:'Court → Wall',
+     dims:[['Size',B,'241 by 121 m outside, 228 by 109 m inside [@osm][@asi]'],dWall,['Thickness',E,'1.5 m. No figure found']]});
+  var gx=[[zMid,ge]], WALLS=[
     {ax:'x',a:-x0-tw,b:x0+tw,c0:zW-tw,c1:zW,gaps:[[0,ge]]},
     {ax:'x',a:-x0-tw,b:x0+tw,c0:zE,c1:zE+tw,gaps:[[0,RR.w/2]]},
     {ax:'z',a:zW,b:zE,c0:x0,c1:x0+tw,gaps:gx},
@@ -1019,7 +1033,7 @@ function buildCourt(W,upH,adH,padH){
     'Plain openings in the north, south and west walls. The Archaeological Survey of India describes three torana entrances on the sides and rear besides the gateway [@asi]. Balasubrahmanyam counts three entrances in all, two now closed, and thinks the northern one, nearest the palace, was used by royalty [@bala_composite]. Their positions and size were not found.',
     {src:['asi','bala_composite'],conf:55,basis:'Buildings, loosely',gram:'Wall → Gap → Torana',dims:[['Count',B,'three [@asi]'],['Position and size',E,'estimated']]});
   var eh=0.12*W;
-  [[0,zW-tw/2,'x'],[x0+tw/2,2*W,'z'],[-x0-tw/2,2*W,'z']].forEach(function(e){
+  [[0,zW-tw/2,'x'],[x0+tw/2,zMid,'z'],[-x0-tw/2,zMid,'z']].forEach(function(e){
     var fw=0.025*W, fd=tw*1.6;
     if(e[2]==='x'){add(mse,[bx(2*ge,wallH-eh,tw,0,eh+(wallH-eh)/2,e[1]),bx(fw,wallH,fd,-ge-fw/2,wallH/2,e[1]),bx(fw,wallH,fd,ge+fw/2,wallH/2,e[1])]);}
     else{add(mse,[bx(tw,wallH-eh,2*ge,e[0],eh+(wallH-eh)/2,e[1]),bx(fd,wallH,fw,e[0],wallH/2,e[1]-ge-fw/2),bx(fd,wallH,fw,e[0],wallH/2,e[1]+ge+fw/2)]);}
@@ -1029,8 +1043,8 @@ function buildCourt(W,upH,adH,padH){
   /* cloister: a two-storey gallery against the inside of the wall */
   var mcl=mk('cloister','Cloister (two-storey gallery)','rule',
     'A two-storeyed pillared gallery runs round the inside of the wall. Sahapedia says Rajaraja\'s commander Krishnan Raman built it by about 1010, and that its upper storey has almost disappeared [@sp_notes]. The Archaeological Survey of India and ICOMOS also describe it as two-storeyed [@asi][@unesco]. Its proportions follow the Mayamata: the ground floor\'s base is 2 parts and its pillars 5 of the height from the tower\'s base top to its first architrave (23.61b to 67a), the entablature a quarter less than the base (23.67b to 69), and the upper storey three quarters of the ground floor (23.26 to 28a) [@maya]. It is drawn whole, as built.',
-    {src:['sp_notes','asi','unesco','maya','man31'],conf:75,basis:'Buildings and text',gram:'Court → Wall + Cloister(2 storeys)',
-     dims:[['Storeys',B,'two [@asi][@sp_notes]'],['Heights',T,'base 2 : pillars 5, from the tower\'s base top to its architrave; upper storey ¾ [@maya]'],['Depth and bays',E,'4.5 m deep, pillars about 4 m apart']]});
+    {src:['sp_notes','asi','unesco','maya','man31','osm'],conf:75,basis:'Buildings and text',gram:'Court → Wall + Cloister(2 storeys)',
+     dims:[['Storeys',B,'two [@asi][@sp_notes]'],['Heights',T,'base 2 : pillars 5, from the tower\'s base top to its architrave; upper storey ¾ [@maya]'],['Depth with the wall',B,'about 6.2 m, from the wall\'s outer face to the court [@osm]'],['Pillar spacing',E,'about 4 m']]});
   var mcp=mk('cloister-pillars','Cloister pillars','rule',
     'Pillars along the front of both storeys of the cloister. The Mayamata wants pillar over pillar from storey to storey, never wall over pillar (23.59b to 60a), and a pillar as thick as the wall [@maya]. Their spacing and size were not found.',
     {src:['maya','asi'],conf:70,basis:'Text and buildings',gram:'Cloister → Pillars',dims:[['Height',T,'5/7 of the tower\'s base top to architrave [@maya]'],['Spacing and size',E,'estimated']]});
@@ -1069,7 +1083,7 @@ function buildCourt(W,upH,adH,padH){
     {src:['bala_composite','sp_notes','maya','wiki'],conf:50,basis:'Buildings, loosely',gram:'Cloister → Shrine×'+nS,
      dims:[['Count',B,nS===16?'eight and eight [@bala_composite]':'36 [@sp_notes]'],['Form',B,'square with an octagonal top'+(nS===36?', and 9 oblong ones':'')+' [@sp_notes]'],['Positions and size',E,'invented']]});
   var sw=0.1*W, off=gd+sw*0.75, per=[nS/3,nS/3,nS/6,nS/6].map(Math.round), placed=0, oblong=nS===36?9:0;
-  var avoid=[[2*W,ge+sw]];
+  var avoid=[[zMid,ge+sw],[-18*s,23*s],[150*s,10*s]];   /* the side entrance, and where the mapped Subrahmanya shrine and Nataraja hall stand */
   SIDES.forEach(function(sd,si){
     var c=sd.back+sd.dir*off, gaps=si<2?avoid:(si===2?[[0,ge+sw]]:[[0,RR.w/2+sw]]);
     spread(spans(sd.a+sw,sd.b-sw,gaps),per[si]).forEach(function(u,k){
@@ -1083,80 +1097,78 @@ function buildCourt(W,upH,adH,padH){
   /* inner gateway */
   var mr=mk('gopuram-rajarajan','Rajarajan gateway (inner gopuram)','rule',
     'The inner gateway, the Rajarajan tiruvasal, stands on the axis in the east wall of the court [@bala_complex][@sp_notes], built under Rajaraja I [@fh]. It is lower than the outer gateway, with a brick and lime superstructure and five finials on its wagon roof [@th2010]. Dagens says gateways are almost always rectangular with a wagon roof [@maya]. Balasubrahmanyam notes attractive panels on its base [@bala_complex], which are not drawn. Its three storeys are unverified.',
-    {src:['bala_complex','sp_notes','fh','th2010','maya','es'],conf:65,basis:'Buildings and text',gram:'Wall(east) → Gopuram → Base | Passage | Tiers×3 | Wagon roof + Finials×5',
-     dims:[['Finials',B,'five [@th2010]'],['Plan',E,'27 by 17.25 m from a travel write-up that does not say what was measured [@es]'],['Height',E,'18 m, below the outer gateway [@th2010]'],['Storeys',E,'three, unverified']]});
-  var gr=gopuramGeoms(W,zE+tw/2,RR.w,RR.d,RR.H,RR.n,RR.f);
+    {src:['bala_complex','sp_notes','fh','th2010','maya','es','osm'],conf:70,basis:'Buildings and text',gram:'Wall(east) → Gopuram → Base | Passage | Tiers×3 | Wagon roof + Finials×5',
+     dims:[['Finials',B,'five [@th2010]'],['Plan',B,'25.6 by 16.7 m in mapped outlines [@osm], close to a travel write-up\'s 27 by 17.25 m [@es]'],['Position',B,'straddling the cloister\'s east range [@osm]'],['Height',E,'18 m, below the outer gateway [@th2010]'],['Storeys',E,'three, unverified']]});
+  var gr=gopuramGeoms(W,zR,RR.w,RR.d,RR.H,RR.n,RR.f);
   add(mr,gr.g.concat(gr.roof)); mr.n++; gr.obs.forEach(function(o){WK.obs.push(o);});
 
-  /* outer court and outer gateway */
-  var mo=mk('outer-wall','Outer court wall','inf',
-    'A wall enclosing a front court before the outer gateway. Balasubrahmanyam puts the outer gateway almost a hundred metres east of the inner one [@bala_complex], but ICOMOS gives the outer wall as 270 by 140 m [@ic87], which would leave only about 15 m at each end of the court. The two cannot both be right. Drawing a front court only is a guess.',
-    {src:['bala_complex','ic87'],conf:40,basis:'Buildings, loosely',gram:'Outer court → Wall',dims:[['Width',B,'140 m, from ICOMOS\'s outer wall [@ic87]'],['Depth',B,'from the gateways\' spacing [@bala_complex], doubtful'],['Height',E,'estimated']]});
-  var ox=2.32*W, oh=0.15*W;
-  [[ox,1],[-ox,-1]].forEach(function(q){
-    var xo=q[0]+q[1]*tw/2;
-    add(mo,[bx(tw,oh,zK-zE-tw,xo,oh/2,(zE+tw+zK)/2),bx(Math.abs(xo)-x0-tw,oh,tw,q[1]*(x0+tw+Math.abs(xo))/2,oh/2,zE+tw/2)]);
-    WK.obs.push({x0:Math.min(xo-tw/2,xo+tw/2),x1:Math.max(xo-tw/2,xo+tw/2),z0:zE,z1:zK});
-    mo.n++;
-  });
-  spans(-ox-tw,ox+tw,[[0,KK.w/2]]).forEach(function(sp){
-    add(mo,[bx(sp[1]-sp[0],oh,tw,(sp[0]+sp[1])/2,oh/2,zK)]); WK.obs.push({x0:sp[0],x1:sp[1],z0:zK-tw/2,z1:zK+tw/2});
-  });
+  /* outer gateway: no Chola wall round it was found; the later fort wall now runs through it */
   var mk2=mk('gopuram-keralantakan','Keralantakan gateway (outer gopuram)','rule',
-    'The outer gateway, the Keralantakan tiruvasal, on the axis in the outer wall [@bala_complex]. It is named after a surname of Rajaraja I [@wiki] and was built under him [@fh]. It is the taller of the two, with five storeys [@es], granite below and stucco above, and a superstructure Balasubrahmanyam calls stocky and short [@bala_complex]. The Mayamata and the Manasara both make gateways larger the further out they stand [@maya][@man33]. Reported heights are 25 to 30 m [@th2010][@ic87].',
-    {src:['bala_complex','wiki','fh','es','maya','man33','th2010','ic87'],conf:70,basis:'Buildings and text',gram:'Outer wall → Gopuram → Base | Passage | Tiers×5 | Wagon roof',
-     dims:[['Storeys',B,'five [@es]'],['Height',B,'27.4 m, within reported heights of 25 to 30 m [@th2010][@ic87]'],['Distance from the inner gateway',B,'almost a hundred metres [@bala_complex], doubtful'],['Plan and finials',E,'estimated']]});
+    'The outer gateway, the Keralantakan tiruvasal, on the axis 71.9 m beyond the inner one in mapped outlines [@osm]. Balasubrahmanyam puts it in the outer wall [@bala_complex], but no Chola wall round it was found: the later fort wall now runs through it [@osm], so it is drawn standing alone. It is named after a surname of Rajaraja I [@wiki] and was built under him [@fh]. It is the taller of the two, with five storeys [@es], granite below and stucco above, and a superstructure Balasubrahmanyam calls stocky and short [@bala_complex]. The Mayamata and the Manasara both make gateways larger the further out they stand [@maya][@man33]. Reported heights are 25 to 30 m [@th2010][@ic87].',
+    {src:['osm','bala_complex','wiki','fh','es','maya','man33','th2010','ic87'],conf:75,basis:'Buildings and text',gram:'Axis → Gopuram → Base | Passage | Tiers×5 | Wagon roof',
+     dims:[['Storeys',B,'five [@es]'],['Height',B,'27.4 m, within reported heights of 25 to 30 m [@th2010][@ic87]'],['Distance from the inner gateway',B,'71.9 m, centre to centre [@osm]'],['Plan',B,'29.4 by 17.6 m [@osm]'],['Finials',E,'estimated']]});
   var gk=gopuramGeoms(W,zK,KK.w,KK.d,KK.H,KK.n,KK.f);
   add(mk2,gk.g.concat(gk.roof)); mk2.n++; gk.obs.forEach(function(o){WK.obs.push(o);});
 
   /* Chandesvara shrine, north of the tower, facing south */
-  var cw=W/3, cxp=1.15*W;
+  var cw=10.2*s, cd=6.3*s, cxp=27.8*s, czp=9.4*s;   /* mapped footprint and position */
   var mc=mk('chandesvara','Chandesvara shrine','rule',
-    'The shrine of Chandesvara, part of the original master plan [@bala_composite], stands north of the tower [@sp_notes]. Dagens notes that Candesa\'s chapel is always north of the sanctum, and the verse has it face south (23.56b to 57a) [@maya]. Sahapedia describes it with three storeys including an octagonal top [@sp_notes]. Its size was not found. The Mayamata makes an attendant\'s shrine a third to three quarters of the main temple\'s width (23.35 to 36a) [@maya], and the smallest is used here.',
-    {src:['bala_composite','sp_notes','maya'],conf:75,basis:'Buildings and text',gram:'Court → Chandesvara(north, facing south)',
-     dims:[['Position',B,'north of the tower [@sp_notes]'],['Width',T,'a third of the tower\'s, the smallest the Mayamata allows [@maya]'],['Form',B,'three storeys with an octagonal top [@sp_notes]'],['Distance from the tower',E,'estimated']]});
-  add(mc,shrineGeoms(cxp,0,cw,1,-1,0).g); mc.n++;
-  WK.obs.push({x0:cxp-0.56*cw,x1:cxp+0.56*cw,z0:-0.56*cw,z1:0.56*cw});
+    'The shrine of Chandesvara, part of the original master plan [@bala_composite], stands north of the tower [@sp_notes]. Dagens notes that Candesa\'s chapel is always north of the sanctum, and the verse has it face south (23.56b to 57a) [@maya]. Sahapedia describes it with three storeys including an octagonal top [@sp_notes]. Its position and footprint are a small shrine\'s in map outlines, 27.8 m north of the tower\'s centre [@osm]. The map labels that shrine “Perumal temple”, so identifying it as the Chandesvara shrine is about 70% certain. Its 10.2 m width is a third of the tower\'s, the smallest the Mayamata allows (23.35 to 36a) [@maya], which is a coincidence rather than evidence.',
+    {src:['bala_composite','sp_notes','maya','osm'],conf:70,basis:'Buildings and text',gram:'Court → Chandesvara(north, facing south)',
+     dims:[['Position',B,'27.8 m north and 9.4 m east of the tower\'s centre [@osm]'],['Footprint',B,'10.2 by 6.3 m [@osm]'],['Form',B,'three storeys with an octagonal top [@sp_notes]'],['Heights',E,'estimated']]});
+  add(mc,shrineGeoms(cxp,czp,cw,1,-1,0,cd).g); mc.n++;
+  WK.obs.push({x0:cxp-0.56*cw,x1:cxp+0.56*cw,z0:czp-0.56*cd,z1:czp+0.56*cd});
 
   /* bali altar on the axis inside the gateway */
   var ma=mk('bali-altar','Bali altar','rule',
     'An altar on the axis between the gateway and the temple. The Mayamata places one there and makes it as high as it is wide (23.74 to 76) [@maya], and the Manasara puts the bali altar toward the gateway (32.101 to 102) [@man32]. No position or size was found for Thanjavur\'s.',
     {src:['maya','man32'],conf:55,basis:'Text',gram:'Court → Axis → Altar',dims:[['Proportions',T,'as high as it is wide [@maya]'],['Size and position',E,'estimated']]});
-  var as=0.08*W, az=zE-RR.d/2-0.35*W;
+  var as=0.08*W, az=zR-RR.d/2-0.35*W;
   CXT.walkZ=az-12*s;
   add(ma,[bx(as*1.3,as*0.25,as*1.3,0,as*0.125,az),bx(as,as*0.75,as,0,as*0.25+as*0.375,az)]); ma.n++;
   WK.obs.push({x0:-as*0.65,x1:as*0.65,z0:az-as*0.65,z1:az+as*0.65});
 
-  /* later additions */
+  /* later additions, at their positions in mapped outlines */
   if(P.period==='later'){
-    var zn=(P.halls?CXT.front:0.6*W)+0.4*W, pv=0.4*W, pph=0.15*W, plh=0.5*s;
+    var zn=119.2*s, pv=12.4*s, pl=17.5*s, pph=0.15*W, plh=0.5*s;
     var mnp=mk('nandi-pavilion','Nandi pavilion (Nayak)','inf',
-      'The pavilion of the Nandi stands on the axis in front of the halls [@bala_maha][@wiki]. The present pavilion and bull are Nayak work of the 16th or 17th century [@wiki][@es]. Its size and distance from the halls were not found, so it is drawn as a plain four-pillared pavilion with a flat roof, the form the Manasara gives a bull\'s shrine (32.118 to 119) [@man32].',
-      {src:['bala_maha','wiki','es','man32'],conf:50,basis:'Buildings, loosely',gram:'Court → Axis → Nandi pavilion',dims:[['Date',B,'Nayak, 16th to 17th century [@wiki][@es]'],['Size and position',E,'estimated']]});
-    var pg=[bx(pv,plh,pv,0,plh/2,zn),bx(pv*1.05,0.03*W,pv*1.05,0,plh+pph+0.015*W,zn)];
+      'The pavilion of the Nandi stands on the axis in front of the halls [@bala_maha][@wiki]. The present pavilion and bull are Nayak work of the 16th or 17th century [@wiki][@es]. In map outlines it is 12.4 m square, centred 119.2 m east of the tower\'s centre, on a raised platform about 17 to 18 m across [@osm]. It is drawn as a plain four-pillared pavilion with a flat roof, the form the Manasara gives a bull\'s shrine (32.118 to 119) [@man32].',
+      {src:['bala_maha','wiki','es','man32','osm'],conf:65,basis:'Buildings',gram:'Court → Axis → Nandi pavilion',
+       dims:[['Date',B,'Nayak, 16th to 17th century [@wiki][@es]'],['Position and size',B,'12.4 m square, 119.2 m from the tower\'s centre [@osm]'],['Platform',B,'about 17.5 m across, read roughly from imagery [@osm]'],['Height and pillars',E,'estimated']]});
+    var pg=[bx(pl,plh,pl,0,plh/2,zn),bx(pv*1.05,0.03*W,pv*1.05,0,plh+pph+0.015*W,zn)];
     [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(function(c){
       var px=c[0]*(pv/2-0.03*W), pz=zn+c[1]*(pv/2-0.03*W);
       pg.push(bx(0.04*W,pph,0.04*W,px,plh+pph/2,pz)); WK.obs.push({x0:px-0.02*W,x1:px+0.02*W,z0:pz-0.02*W,z1:pz+0.02*W});
     });
-    add(mnp,pg); mnp.n++; WK.plats.push({x0:-pv/2,x1:pv/2,z0:zn-pv/2,z1:zn+pv/2,h:plh});
+    add(mnp,pg); mnp.n++; WK.plats.push({x0:-pl/2,x1:pl/2,z0:zn-pl/2,z1:zn+pl/2,h:plh});
     var mnb=mk('nandi','Nandi bull (blank block)','inf',
       'The monolithic bull, 3.65 m high, 5.94 m long and 2.59 m broad according to Balasubrahmanyam as cited by Wikipedia [@wiki]. It faces the sanctum. It is figure sculpture, so it is drawn as a blank block of its size. Most sources date it to the Nayak period [@wiki][@es].',
       {src:['wiki','es'],conf:60,basis:'Buildings',gram:'Nandi pavilion → Bull',dims:[['Size',B,'3.65 by 5.94 by 2.59 m [@wiki]']]});
     var bL=5.94*s, bH=3.65*s, bB=2.59*s;
     add(mnb,[bx(bB,bH,bL,0,plh+bH/2,zn)]); mnb.n++;
     WK.obs.push({x0:-bB/2,x1:bB/2,z0:zn-bL/2,z1:zn+bL/2});
-    [['amman','Amman shrine (later, position invented)',1.15*W,2.6*W,'The shrine of the goddess, Brihannayaki. Balasubrahmanyam and ICOMOS date it to the Pandya period, 13th century [@ic87], and Sahapedia to about 1400 [@sp_notes]. Where it stands in the court was not found, so its position and form are invented.'],
-     ['subrahmanya','Subrahmanya shrine (later, position invented)',1.15*W,-1.2*W,'The shrine of Subrahmanya, a Nayak addition of the 16th or 17th century [@wiki][@ic87]. Where it stands in the court was not found, so its position and form are invented.']].forEach(function(L){
-      var lw=0.35*W, ml=mk(L[0],L[1],'inv',L[4],{src:['wiki','ic87','sp_notes'],gram:'Court → Later shrine',dims:[['Date',B,'later than the temple [@wiki][@ic87]'],['Position, size and form',E,'invented']]});
-      add(ml,shrineGeoms(L[2],L[3],lw,1,-1,0).g); ml.n++;
-      WK.obs.push({x0:L[2]-0.56*lw,x1:L[2]+0.56*lw,z0:L[3]-0.56*lw,z1:L[3]+0.56*lw});
+    /* key, name, metres east of the tower's centre, metres north, length along the axis, width across, hall or shrine, date and sources */
+    [['amman','Amman shrine',102,27,17.3,37.1,0,'The shrine of the goddess, Brihannayaki, dated to the Pandya period, 13th century, by Balasubrahmanyam and ICOMOS [@ic87], and to about 1400 by Sahapedia [@sp_notes].','Amman Sannithi'],
+     ['subrahmanya','Subrahmanya (Murugan) shrine',-18,45,41.6,14.3,0,'The shrine of Subrahmanya, a Nayak addition of the 16th or 17th century [@wiki][@ic87].','Murugan Sannithi'],
+     ['nataraja','Nataraja hall (Sabhapati mandapa)',150,42,10.6,16.5,1,'A hall Balasubrahmanyam places east of the Amman shrine, and ICOMOS lists among the later additions [@ic87].','Natarajar Mandapam'],
+     ['karuvur','Karuvur Devar shrine',-36,16,7.1,8.6,0,'A small Maratha shrine of the 19th century [@es].','Karuvarur Sannithi'],
+     ['ganesha','Ganesha (Pillaiyar) shrine',-37,-24,14.1,8.6,0,'A shrine rebuilt by the Maratha ruler Serfoji II in the late 18th century [@es].','Pillayar Sannithi']].forEach(function(L){
+      var cx=L[3]*s, cz=L[2]*s, dz=L[4]*s, dx=L[5]*s, g;
+      var ml=mk(L[0],L[1]+' (later)','inf',
+        L[7]+' Its position and footprint come from map outlines, which name it “'+L[8]+'” [@osm]. The names are the map\'s own and unverified. Its form is not described in any source read, so it is drawn as plain massing.',
+        {src:['osm','wiki','ic87','sp_notes','es'],conf:45,basis:'Buildings, loosely',gram:'Court → Later '+(L[6]?'hall':'shrine'),
+         dims:[['Position and footprint',B,'from map outlines [@osm]'],['Form and height',E,'invented']]});
+      if(L[6]){var hh=0.15*W; g=[bx(dx,0.03*W,dz,cx,0.015*W,cz),bx(dx*0.94,hh,dz*0.94,cx,0.03*W+hh/2,cz),bx(dx,0.025*W,dz,cx,0.03*W+hh+0.0125*W,cz)];}
+      else g=shrineGeoms(cx,cz,dx,1,-1,0,dz).g;
+      add(ml,g); ml.n++;
+      WK.obs.push({x0:cx-0.56*dx,x1:cx+0.56*dx,z0:cz-0.56*dz,z1:cz+0.56*dz});
     });
   }
 
   Object.keys(bag).forEach(function(k){var b=bag[k]; put(b.m,mergeGeoms(b.g),0,0,0);});
   var z0=zW-tw, z1=zK+KK.d/2;
-  CXT.sz=(z0+z1)/2; CXT.sh=Math.max((z1-z0)/2,ox+tw); CXT.ground=Math.max(Math.abs(z0),z1)+0.5*W;
-  CXT.courtLine='Court(8 W × 4 W) → Wall + Cloister(2 storeys) · Gopuram(east, 3 tiers) · Side entrances×3 · Chandesvara · Shrines×'+nS+' · Altar\nOuter court → Wall · Gopuram(5 tiers)'+(P.period==='later'?'\nLater → Nandi pavilion · Amman · Subrahmanya':'');
+  CXT.sz=(z0+z1)/2; CXT.sh=Math.max((z1-z0)/2,xo); CXT.ground=Math.max(Math.abs(z0),z1)+0.5*W;
+  CXT.courtLine='Court(241 × 121 m outside) → Wall + Cloister(2 storeys) · Gopuram(east, 3 tiers) · Side entrances×3 · Chandesvara · Shrines×'+nS+' · Altar\nAxis → Gopuram(5 tiers), 71.9 m east'+(P.period==='later'?'\nLater → Nandi pavilion · Amman · Subrahmanya · Nataraja hall · Karuvur Devar · Ganesha':'');
 }
 
 function build(){
@@ -1659,8 +1671,8 @@ bindRange('p-taper','taper',function(v){return v.toFixed(2);});
 bindRange('p-hratio','hratio',function(v){return v.toFixed(2);});
 bindRange('p-density','density',function(v){return v.toFixed(2);});
 $('p-crown').addEventListener('change',function(e){P.crown=e.target.value; schedule();});
-$('p-halls').addEventListener('change',function(e){P.halls=e.target.checked; $('p-maha').disabled=$('p-mukha').disabled=!P.halls; schedule();});
-$('p-maha').addEventListener('change',function(e){P.maha=e.target.value; schedule();});
+$('p-halls').addEventListener('change',function(e){P.halls=e.target.checked; $('p-maha').disabled=!P.halls; $('p-mukha').disabled=!P.halls||P.maha==='mapped'; schedule();});
+$('p-maha').addEventListener('change',function(e){P.maha=e.target.value; $('p-mukha').disabled=P.maha==='mapped'||!P.halls; schedule();});
 $('p-mukha').addEventListener('change',function(e){P.mukha=parseFloat(e.target.value); schedule();});
 $('p-court').addEventListener('change',function(e){P.court=e.target.checked; $('p-period').disabled=$('p-shrines').disabled=!P.court; schedule();});
 $('p-period').addEventListener('change',function(e){P.period=e.target.value; schedule();});
@@ -1715,6 +1727,7 @@ Array.prototype.forEach.call($('pad').children,function(b){
 
 /* ---------- Start ---------- */
 setHint();
+$('p-mukha').disabled=P.maha==='mapped';
 Array.prototype.forEach.call(document.querySelectorAll('a[data-cite]'),function(a){
   var k=a.getAttribute('data-cite'); a.href=SRC[k].u; a.target='_blank'; a.rel='noopener noreferrer'; a.title=SRC[k].n; a.textContent='['+NUM[k]+']';
 });
