@@ -159,6 +159,17 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
     </main>
 
     <aside class="panel" aria-label="Controls and evidence">
+      <section class="blk">
+        <h3>Go to</h3>
+        <div class="seg" id="view-seg" role="group" aria-label="Move the view to a part of the temple">
+          <button type="button" data-v="tower">Tower</button>
+          <button type="button" data-v="halls">Halls</button>
+          <button type="button" data-v="court">Court</button>
+          <button type="button" data-v="gates">Gateways</button>
+        </div>
+        <p class="muted" style="margin:8px 0 0">Moves the view, or in walk mode moves you, to look at that part.</p>
+      </section>
+
       <section class="blk" id="inspector" aria-live="polite">
         <h2>Selected element</h2>
         <div class="insp-head"><span class="chip c-rule" id="i-tag">Rule-derived</span><span class="chip" id="i-dtag"></span></div>
@@ -1311,7 +1322,7 @@ function buildCourt(W,upH,adH,padH){
     'An altar on the axis between the gateway and the temple. The Mayamata places one there and makes it as high as it is wide (23.74 to 76) [@maya], and the Manasara puts the bali altar toward the gateway (32.101 to 102) [@man32]. No position or size was found for Thanjavur\'s.',
     {src:['maya','man32'],conf:55,basis:'Text',gram:'Court → Axis → Altar',dims:[['Proportions',T,'as high as it is wide [@maya]'],['Size and position',E,'estimated']]});
   var as=0.08*W, az=zR-RR.d/2-0.35*W;
-  CXT.walkZ=az-12*s;
+  CXT.walkZ=az-12*s; CXT.zR=zR; CXT.zK=zK; CXT.zMid=zMid;
   add(ma,[bx(as*1.3,as*0.25,as*1.3,0,as*0.125,az),bx(as,as*0.75,as,0,as*0.25+as*0.375,az)]); ma.n++;
   WK.obs.push({x0:-as*0.65,x1:as*0.65,z0:az-as*0.65,z1:az+as*0.65});
 
@@ -1580,6 +1591,7 @@ function build(){
   updateCam();
   refresh();
 
+  updateViewButtons();
   var keep=selKey&&metas.get(selKey);
   if(keep&&keep.parts.length&&P.vis[catOf(keep)]){select(keep);}else{select(null);}
   dirty=true;
@@ -1700,16 +1712,47 @@ function resetView(){
 }
 
 /* ---------- Walk camera ---------- */
-/* With the halls: in front of the front stair, facing the tower down the axis.
-   Without: on the side the orbit camera was viewing from, facing the tower. */
+/* With the court: just inside the inner gateway, facing the tower down the axis. With only the halls: in front
+   of the front stair. Without either: on the side the orbit camera was viewing from, facing the tower. */
 function walkStart(){
   var s=upm();
   if(CXT.walkZ!=null){wk.x=0; wk.z=CXT.walkZ/s; wk.yaw=0; wk.pitch=0.12;}
   else if(P.halls){wk.x=0; wk.z=CXT.front/s+20; wk.yaw=0; wk.pitch=0.12;}
   else{wk.x=Math.sin(th)*START_M; wk.z=Math.cos(th)*START_M; wk.yaw=th; wk.pitch=0.3;}
-  /* if something stands there, step back until clear */
+  settleWalker();
+}
+/* if something stands where the walker was put, step back until clear, then find the floor */
+function settleWalker(){
+  var s=upm();
   for(var i=0;i<80&&hitObs(wk.x*s,wk.z*s,BODY_M*s);i++){wk.x+=Math.sin(wk.yaw); wk.z+=Math.cos(wk.yaw);}
   wk.lv=levelAt(wk.x*s,wk.z*s)/s;
+}
+
+/* ---------- Viewpoints ----------
+   Each part of the temple has an orbit framing (target, radius to fit, angles) and a standing point for walk mode
+   (metres, facing a point). Parts that are switched off cannot be chosen. */
+function viewSpec(v){
+  var s=upm(), W=P.base, z0=0.45*W, fr=CXT.front||0;
+  if(v==='halls') return {t:[0,H*0.12,(z0+fr)/2],r:(fr-z0)*0.62,th:1.05,ph:1.08,walk:[0,fr/s+20,0,fr/s,0.12]};
+  if(v==='court') return {t:[0,H*0.15,CXT.zMid],r:125*s,th:0.75,ph:0.9,walk:[0,CXT.walkZ/s,0,0,0.12]};
+  if(v==='gates') return {t:[0,10*s,(CXT.zR+CXT.zK)/2],r:58*s,th:0.62,ph:1.15,walk:[0,CXT.zR/s+25,0,CXT.zR/s,0.42]};
+  return {t:[0,H*0.47,0],r:Math.hypot(H*0.5,P.base*0.75),th:0.75,ph:1.2,walk:[-45,5,0,0,0.35]};
+}
+function goView(v){
+  var V=viewSpec(v), s=upm();
+  if(walk){
+    wk.x=V.walk[0]; wk.z=V.walk[1]; wk.yaw=Math.atan2(wk.x-V.walk[2],wk.z-V.walk[3]); wk.pitch=V.walk[4];
+    settleWalker(); updateCam(); cv.focus({preventScroll:true}); return;
+  }
+  var t=Math.tan(camera.fov*Math.PI/360);
+  target.set(V.t[0],V.t[1],V.t[2]); th=V.th; ph=V.ph;
+  dist=clamp(V.r/Math.sin(Math.atan(Math.min(t,t*camera.aspect))),DMIN,DMAX);
+  userMoved=true; updateCam();
+}
+function updateViewButtons(){
+  Array.prototype.forEach.call($('view-seg').children,function(b){
+    var v=b.dataset.v; b.disabled=(v==='halls'&&!P.halls)||((v==='court'||v==='gates')&&!P.court);
+  });
 }
 /* floor height at a point, in model units: a stair ramp if on one, else the highest floor underneath */
 function levelAt(x,z){
@@ -1901,6 +1944,7 @@ $('mode-seg').addEventListener('click',function(e){
   if(keep&&P.vis[catOf(keep)]) select(keep);
 });
 $('reset').addEventListener('click',resetView);
+$('view-seg').addEventListener('click',function(e){var b=e.target.closest('button'); if(b&&!b.disabled) goView(b.dataset.v);});
 $('walk').addEventListener('click',function(){setWalk(!walk);});
 /* hold a pad button to keep moving; preventDefault keeps keyboard focus on the canvas */
 Array.prototype.forEach.call($('pad').children,function(b){
