@@ -166,6 +166,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <button type="button" data-v="halls">Halls</button>
           <button type="button" data-v="court">Court</button>
           <button type="button" data-v="gates">Gateways</button>
+          <button type="button" data-v="outer">Outer gateway</button>
         </div>
         <p class="muted" style="margin:8px 0 0">Moves the view, or in walk mode moves you, to look at that part.</p>
       </section>
@@ -1487,7 +1488,7 @@ function buildCourt(W,upH,adH,padH){
 
   Object.keys(bag).forEach(function(k){var b=bag[k]; put(b.m,mergeGeoms(b.g),0,0,0);});
   var z0=zW-tw, z1=zK+KK.d/2;
-  CXT.sz=(z0+z1)/2; CXT.sh=Math.max((z1-z0)/2,xo); CXT.ground=Math.max(Math.abs(z0),z1)+0.5*W;
+  CXT.sz=(z0+z1)/2; CXT.sh=Math.max((z1-z0)/2,xo); CXT.ground=Math.max(Math.abs(z0),z1)+60*s;   /* room to stand well outside the outer gateway */
   CXT.courtLine='Court(241 × 121 m outside) → Wall + Cloister(2 storeys) · Gopuram(east: stone storey + 2 tiers + wagon roof, finials×5) · Side entrances×3 · Chandesvara · Shrines×'+nS+' · Altar\nAxis → Gopuram(stone storey + 4 tiers + wagon roof, finials×7), 71.9 m east'+(P.period==='later'?'\nLater → Nandi pavilion · Amman · Subrahmanya · Nataraja hall · Karuvur Devar · Ganesha':'');
 }
 
@@ -1857,6 +1858,7 @@ function viewSpec(v){
   var s=upm(), W=P.base, z0=0.45*W, fr=CXT.front||0;
   if(v==='halls') return {t:[0,H*0.12,(z0+fr)/2],r:(fr-z0)*0.62,th:1.05,ph:1.08,walk:[0,fr/s+20,0,fr/s,0.12]};
   if(v==='court') return {t:[0,H*0.15,CXT.zMid],r:125*s,th:0.75,ph:0.9,walk:[0,CXT.walkZ/s,0,0,0.12]};
+  if(v==='outer') return {t:[0,12*s,CXT.zK],r:34*s,th:0.35,ph:1.2,walk:[0,CXT.zK/s+30,0,CXT.zK/s,0.4]};
   if(v==='gates') return {t:[0,10*s,(CXT.zR+CXT.zK)/2],r:58*s,th:0.62,ph:1.15,walk:[0,CXT.zR/s+25,0,CXT.zR/s,0.42]};
   return {t:[0,H*0.47,0],r:Math.hypot(H*0.5,P.base*0.75),th:0.75,ph:1.2,walk:[-45,5,0,0,0.35]};
 }
@@ -1873,7 +1875,7 @@ function goView(v){
 }
 function updateViewButtons(){
   Array.prototype.forEach.call($('view-seg').children,function(b){
-    var v=b.dataset.v; b.disabled=(v==='halls'&&!P.halls)||((v==='court'||v==='gates')&&!P.court);
+    var v=b.dataset.v; b.disabled=(v==='halls'&&!P.halls)||((v==='court'||v==='gates'||v==='outer')&&!P.court);
   });
 }
 /* floor height at a point, in model units: a stair ramp if on one, else the highest floor underneath */
