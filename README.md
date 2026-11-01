@@ -23,7 +23,7 @@ The full sources are listed on the page. The research behind each part is in [`r
 ## Scope and limits
 
 - **An idealized composite,** made for learning. It is not an exact model of Thanjavur, and no specialist in temple architecture has reviewed it.
-- **No sanctum interior, and no deity imagery inside any building.** Deities may appear on exterior decoration. For now, the gateways' sculpture is shown as generic figures and other figure sculpture as blank blocks.
+- **No sanctum interior, and no deity imagery inside any building.** Deities may appear on exterior decoration. On the inner gateway's east face, the two guardians and the base panels are shown as real photographs (a trial; credits in [`assets/sculpture/CREDITS.md`](assets/sculpture/CREDITS.md)). The gateways' other sculpture is shown as generic figures, and figure sculpture elsewhere as blank blocks.
 - **Many sizes are estimates.** The main unread sources are Mayamata volume 2 and Pichard's architectural study of the temple. Both are listed in the research notes.
 
 ## How it was made
