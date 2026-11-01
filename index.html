@@ -331,7 +331,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <button type="button" aria-pressed="true">Vimana</button>
           <button type="button" disabled title="Not built yet">Gopuram</button>
         </div>
-        <p class="muted" style="margin-top:10px">Idealized composite, not a model of any specific temple. No sanctum interior. Sculpture on the gateways is shown as generic figures, with no attributes that identify any deity. In walk mode the front halls can be entered, and the walk stops at the closed sanctum door. Figure sculpture in the court, such as the Nandis on the wall and the Nandi bull, is drawn as blank blocks. Dashed buttons are not built yet.</p>
+        <p class="muted" style="margin-top:10px">Idealized composite, not a model of any specific temple. No sanctum interior, and no deity imagery inside any building. Deities may appear on exterior decoration; for now the gateways' sculpture is shown as generic figures. In walk mode the front halls can be entered, and the walk stops at the closed sanctum door. Figure sculpture in the court, such as the Nandis on the wall and the Nandi bull, is drawn as blank blocks. Dashed buttons are not built yet.</p>
         <p class="muted">Walk puts the camera at eye height, 1.6 m, taking the base as 30.18 m wide, the Thanjavur figure the model's base heights are scaled from <a data-cite="bala_tanj"></a>. The paving pattern is there to show movement and has no source. Up close, the mouldings and pavilions are plain blocks.</p>
       </section>
 
@@ -1501,7 +1501,7 @@ function build(){
 
     if(den>=0.3){
       var mn=mk('niche-'+s,'Niche panel, wall storey '+(s+1),'inv',
-        'Blank panel standing in for sculpted wall niches. The generator produces no figures and no deity imagery by design.',
+        'Blank panel standing in for sculpted wall niches. The sculpture in them is not drawn.',
         {src:[],gram:'Wall → Face → Repeat(Panel)',dims:[['Size and spacing',E,'set by the ornament density slider']]});
       var us=den>=0.65?[-0.395,-0.28,0.28,0.395]:[-0.28,0.28];
       ring4(function(t,sn,cs){
