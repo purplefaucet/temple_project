@@ -24,7 +24,7 @@ New sources go in `SRC` with `n`, `u`, `use` and `rel`. `rel` says how the sourc
 
 - **Allowed:** exterior architecture, plus the halls' interiors.
 - **No sanctum interior.** The walk stops at a closed sanctum door.
-- **No deity imagery.** Figure sculpture (guardians, the Nandi bull, base reliefs, wall-coping Nandis) is drawn as blank blocks of its recorded size.
+- **No identifiable deities.** On the gateways, sculpture (the guardians, the base reliefs, the Nayaka stucco figures) is drawn as generic figures from `figureGeoms()`: plain standing or seated shapes with no attributes or held objects, at the recorded size where one is known. Elsewhere (the Nandi bull, the wall-coping Nandis, the tower's niches) figure sculpture is still blank blocks. Evidence text must say the figures' forms are invented.
 - **Later additions** (Nayak, Pandya, Maratha) appear only under the court's "With later additions" period switch, labelled with their dates.
 
 ## Code map
