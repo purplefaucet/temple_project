@@ -24,7 +24,8 @@ New sources go in `SRC` with `n`, `u`, `use` and `rel`. `rel` says how the sourc
 
 - **Allowed:** exterior architecture, plus the halls' interiors.
 - **No sanctum interior.** The walk stops at a closed sanctum door.
-- **No identifiable deities.** On the gateways, sculpture (the guardians, the base reliefs, the Nayaka stucco figures) is drawn as generic figures from `figureGeoms()`: plain standing or seated shapes with no attributes or held objects, at the recorded size where one is known. Elsewhere (the Nandi bull, the wall-coping Nandis, the tower's niches) figure sculpture is still blank blocks. Evidence text must say the figures' forms are invented.
+- **Deities only on the outside.** Deity imagery may appear on exterior decoration (gateway and wall sculpture, reliefs, stucco figures, exterior niches). None inside any building: not in the halls, the shrines or the cloister cells. This is the owner's rule.
+- **How sculpture is shown now.** On the gateways it is drawn as generic figures from `figureGeoms()`: plain standing or seated shapes with no attributes or held objects, at the recorded size where one is known. Evidence text must say their forms are invented. Elsewhere (the Nandi bull, the wall-coping Nandis, the tower's niches) it is still blank blocks. A trial of real photographs of the Rajarajan's east-face sculpture is planned, from images in `assets/sculpture/` with credits in its `CREDITS.md`. Any photograph used must be credited on the page.
 - **Later additions** (Nayak, Pandya, Maratha) appear only under the court's "With later additions" period switch, labelled with their dates.
 
 ## Code map
