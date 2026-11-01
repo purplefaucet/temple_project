@@ -297,6 +297,14 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           </select>
           <div class="help">Later additions are the Nayak Nandi pavilion, five later shrines and halls, placed where map outlines show them <a data-cite="osm"></a>, and the Nayaka stucco figures on the gateways <a data-cite="ignca_in"></a>. The shrines' forms are not described in the sources read and are drawn as plain massing.</div>
         </div>
+        <div class="ctl">
+          <label for="p-sculpt">Gateway sculpture</label><span></span>
+          <select id="p-sculpt">
+            <option value="photo">Photographs (trial, inner gateway's east face)</option>
+            <option value="generic">Generic figures</option>
+          </select>
+          <div class="help">A trial of real photographs on the inner gateway's east face: the two guardians and the panels along the base. They are flat images, so they have no depth from the side. Photographs by Richard Mortel <a data-cite="ph_mortel"></a> and Thamizhpparithi Maari <a data-cite="ph_maari"></a>.</div>
+        </div>
         <div class="ctl" style="margin-bottom:0">
           <label for="p-shrines">Cloister shrines</label><span></span>
           <select id="p-shrines">
@@ -379,6 +387,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <li>ASI counts three side entrances to the court besides the gateway <a data-cite="asi"></a>, and Balasubrahmanyam three entrances in all <a data-cite="bala_composite"></a>. Three side openings are drawn, at estimated positions. The cloister shrines' positions are invented.</li>
           <li>Most sources date the present Nandi to the Nayak period <a data-cite="wiki"></a> <a data-cite="es"></a>, and an earlier Chola Nandi is unverified.</li>
           <li>The fort walls, the moat and the Maratha-period outer gate are left out. They are later than the temple <a data-cite="wiki"></a> <a data-cite="fh"></a>.</li>
+          <li>The photographs on the inner gateway's east face are a trial. They are flat images, lit by the photograph's own light, and the guardians' feet are cut off at the niche floor. Which photograph belongs in which place on the base is about 75% certain, and three places have none <a data-cite="ph_maari"></a>.</li>
           <li>A parametric Karnata-Dravida model exists <a data-cite="karnata"></a>. No published Chola shape grammar was found, in a search that was not exhaustive.</li>
           <li>Only Chola has been researched. Whether Pallava, Pandya, Vijayanagara and Nayak are distinct enough to be separate rule sets is unchecked.</li>
         </ul>
@@ -387,6 +396,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
       <section class="blk">
         <h3>About this page</h3>
         <p>An idealized composite, made for learning. It is not a model of any real temple, and no specialist in temple architecture has reviewed it.</p>
+        <p>Photographs on the inner gateway: Richard Mortel, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">CC BY 2.0</a>, and Thamizhpparithi Maari, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a>, via Wikimedia Commons. Cropped, and the guardians cut out, for this project; the crops of Maari's photographs are shared under CC BY-SA 3.0. Full credits are in <a href="https://github.com/purplefaucet/temple_project/blob/main/assets/sculpture/CREDITS.md" target="_blank" rel="noopener noreferrer">assets/sculpture/CREDITS.md</a>.</p>
         <p>Built with Claude, an AI model made by Anthropic. Claude read the sources, wrote the rules and set the confidence figures, which are its own estimates.</p>
       </section>
     </aside>
@@ -442,6 +452,8 @@ var SRC={
  ignca_in:{n:'IGNCA, Brihadisvara temple: inner gopuram',u:'https://ignca.gov.in/brhadisvaratemple/INNER_%20GOPURAM/images/Des_IG.html',use:'A three-storeyed stone structure. Base panels of forms of Siva, left unfinished. Guardians over 16 feet. The stucco figures above are 17th-century Nayaka work.',rel:'Indira Gandhi National Centre for the Arts. No author or references on the page. Read as summaries returned by a fetch tool.'},
  ignca_out:{n:'IGNCA, Brihadisvara temple: outer gopuram',u:'https://ignca.gov.in/brhadisvaratemple/OUTER_%20GOPURAM/images/Des_Og.html',use:'Five storeys, the first three granite and the upper two brick. First-storey niches meant for stone images. Stucco figures 17th-century Nayaka work.',rel:'Indira Gandhi National Centre for the Arts. No author or references on the page. Read as summaries returned by a fetch tool.'},
  gop_photos:{n:'Photographs of both gateways on Wikimedia Commons, examined for this project',u:'https://github.com/purplefaucet/temple_project/blob/main/research/gopuram.md',use:'Storeys, pavilion rows, centre bays, roof gables, finial counts, base panels and guardians, and heights scaled to the mapped bases.',rel:'Nine photographs, listed with links in the notes. Counts and heights were read by eye by Claude for this project, with errors of about ±15 to 25% on heights and about 50% confidence on pavilion counts.'},
+ ph_mortel:{n:'Richard Mortel, photographs of the Rajarajan gateway, 2017 (Wikimedia Commons, CC BY 2.0)',u:'https://commons.wikimedia.org/wiki/File:Brihadishwara_Temple,_Dedicated_to_Shiva,_built_by_Rajaraja_I,_completed_in_1010,_Thanjavur_(31)_(37237881240).jpg',use:'The two guardians of the east face and the large base panel under the south guardian, shown as images on the model.',rel:'Photographs, licensed CC BY 2.0. Cropped, and the guardians cut out from their background, for this project. Every file, its original and its edits are listed in assets/sculpture/CREDITS.md in the repository.'},
+ ph_maari:{n:'Thamizhpparithi Maari, photographs of the Rajarajan gateway\'s base, 2012 (Wikimedia Commons, CC BY-SA 3.0)',u:'https://commons.wikimedia.org/wiki/File:%22A_collection_of_details_on_the_Rajarajan_Entrance_of_The_Big_Temple%22.JPG',use:'The base panels of the east face, shown as images on the model.',rel:'Photographs, licensed CC BY-SA 3.0. Cropped for this project; the crops are shared under CC BY-SA 3.0. Every file, its original and its edits are listed in assets/sculpture/CREDITS.md in the repository.'},
  man32:{n:'Manasara, chapter 32, The attendant deities',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421079.html',use:'The bull\'s shrine in the east, made like a pavilion. The bali altar toward the gateway.',rel:MANREL},
  man33:{n:'Manasara, chapter 33, The gate-houses',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421080.html',use:'More storeys for gateways further out. Length 1¼ to 2 times the width.',rel:MANREL}
 };
@@ -461,7 +473,7 @@ var MODES={
 var DKIND={text:'Text',bldg:'Buildings',est:'Estimate'};
 
 /* ---------- State ---------- */
-var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',light:'noon',mode:'elem',halls:true,maha:'mapped',mukha:1,court:true,period:'chola',shrines:16,
+var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',light:'noon',mode:'elem',halls:true,maha:'mapped',mukha:1,court:true,period:'chola',shrines:16,sculpt:'photo',
   vis:{rule:true,inf:true,inv:true,src:true,part:true,est:true}};
 var metas=new Map();
 var selKey=null, selMeta=null, outlines=[];
@@ -624,13 +636,26 @@ function clearBuild(){
   metas.clear();
 }
 /* apply the current colour mode and tier toggles to every part, and update the legend counts */
+/* Photographs used as surfaces keep their own material whatever the colour mode; selected, they glow teal like the rest. */
+var PHOTO={}, texLoader=new THREE.TextureLoader();
+function photoMat(file){
+  if(PHOTO[file]) return PHOTO[file];
+  var tex=texLoader.load('assets/sculpture/'+file,function(){dirty=true;});
+  tex.encoding=THREE.sRGBEncoding; tex.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
+  var cut=/\.png$/.test(file);
+  var mat=new THREE.MeshStandardMaterial({map:tex,roughness:0.92,metalness:0,side:THREE.DoubleSide,alphaTest:cut?0.5:0});
+  mat.emissiveMap=tex; mat.emissive=new THREE.Color(0xffffff); mat.emissiveIntensity=0.22;
+  var sel=mat.clone(); sel.emissiveMap=null; sel.emissive=new THREE.Color(0x12a5b5).convertSRGBToLinear(); sel.emissiveIntensity=0.4;
+  return (PHOTO[file]={mat:mat,sel:sel});
+}
+function matOf(p,m,sel){return p.userData.photo?(sel?p.userData.photo.sel:p.userData.photo.mat):(sel?MATSEL:MAT)[catOf(m)];}
 function refresh(){
   var keys=MODES[P.mode].keys, cnt={};
   keys.forEach(function(k){cnt[k]=0;});
   metas.forEach(function(m){
     var c=catOf(m), vis=P.vis[c], mat=(m===selMeta?MATSEL:MAT)[c];
     cnt[c]+=m.n;
-    m.parts.forEach(function(p){p.visible=vis; p.material=mat;});
+    m.parts.forEach(function(p){p.visible=vis; p.material=p.userData.photo?matOf(p,m,m===selMeta):mat;});
   });
   keys.forEach(function(k,i){$('n-'+i).textContent=cnt[k];});
   dirty=true;
@@ -1019,8 +1044,15 @@ var GOP={
      neck:2.0,roof:2.0,roofInset:8.6,fins:7,finH:0.6}
 };
 /* Build one gateway centred at z = cz. Returns geometry lists keyed by part, plus footprints for walking. */
-function gopuramParts(G,cz,s,later){
-  var P2={base:[],panels:[],body:[],guard:[],porch:[],wall:[],tiers:[],pav:[],centre:[],roof:[],fin:[],stucco:[]}, obs=[];
+/* Photographs of the Rajarajan's east-face base (assets/sculpture/CREDITS.md): nine units per half, counted from the
+   passage outward, with each photograph's width/height ratio. A null file has no clear photograph and stays generic. */
+var PHOTO_UNITS={
+  S:[[null,0.195],[null,0.457],['panel-S3.jpg',147/737],['panel-S4.jpg',1000/659],['panel-S5.jpg',135/669],['panel-S6.jpg',329/684],['panel-S7.jpg',442/677],['panel-S8.jpg',535/662],['panel-S9.jpg',140/534]],
+  N:[['panel-N1.jpg',132/677],['panel-N2.jpg',316/692],['panel-N3.jpg',142/692],['panel-N4.jpg',1000/658],[null,0.2],['panel-N6.jpg',395/699],['panel-N7.jpg',438/699],['panel-N8.jpg',550/699],['panel-N9.jpg',162/534]]
+};
+var PHOTO_GUARD={N:['guardian-north.png',565/1000],S:['guardian-south.png',556/1000]};
+function gopuramParts(G,cz,s,later,photo){
+  var P2={base:[],panels:[],body:[],guard:[],porch:[],wall:[],tiers:[],pav:[],centre:[],roof:[],fin:[],stucco:[]}, obs=[], photos=[];
   var m=function(v){return v*s;}, w=m(G.w), d=m(G.d), pw=m(3.6), ph=m(5.4), dw=G.d/G.w;
   function B(list,bw,h,bd,x,y,z,ry){var g=box(bw,h,bd); if(ry) g.rotateY(ry); g.translate(x,y,z); list.push(g); return g;}
   /* a slab across the whole plan, split round the passage below its lintel */
@@ -1050,6 +1082,25 @@ function gopuramParts(G,cz,s,later){
     /* blank relief panels between pilasters on the long faces */
     [['+z',G.panelsE,pw/2+m(0.6)],['-z',G.panelsW,pw/2+m(5.0)]].forEach(function(f){
       var half=Math.round(f[1]/2), a=f[2], b=w/2-m(0.4), pitch=(b-a)/half;
+      if(photo&&f[0]==='+z'){
+        /* the photographed units, laid side by side at their own proportions to fill each half */
+        var gap=m(0.12);
+        ['S','N'].forEach(function(hs){
+          var U=PHOTO_UNITS[hs], sd=hs==='N'?1:-1, sum=0; U.forEach(function(e){sum+=e[1];});
+          var ph=Math.min(m(G.dado)*0.95,(b-a-gap*(U.length-1))/sum), at=a, yc=y+m(G.dado)/2;
+          U.forEach(function(e,k){
+            var uw=e[1]*ph, u=sd*(at+uw/2);
+            if(e[0]) photos.push({file:e[0],w:uw,h:ph,x:u,y:yc,z:cz+d/2+m(0.07)});
+            else{
+              P2.panels.push(onFace(box(uw*0.92,ph*0.9,m(0.12)),'+z',u,yc,w/2,d/2,m(0.06)));
+              figOn(P2.panels,'+z',u,y+m(G.dado)*0.2,w/2,d/2,m(0.12),m(G.dado)*0.58,'stand',0.3);
+            }
+            if(k<U.length-1) P2.base.push(onFace(box(gap,m(G.dado),m(0.16)),'+z',sd*(at+uw+gap/2),yc,w/2,d/2,m(0.08)));
+            at+=uw+gap;
+          });
+        });
+        return;
+      }
       for(var k=0;k<half;k++){[-1,1].forEach(function(sd){
         var u=sd*(a+(k+0.5)*pitch);
         P2.panels.push(onFace(box(pitch*0.72,m(G.dado)*0.68,m(0.12)),f[0],u,y+m(G.dado)/2,w/2,d/2,m(0.06)));
@@ -1095,7 +1146,8 @@ function gopuramParts(G,cz,s,later){
   if(G.dado){
     [-1,1].forEach(function(sd){
       var gx=sd*w/4, gw=m(1.8), gd=m(1.1), gh=m(5.2);
-      figOn(P2.guard,'+z',gx,baseTop,w/2,d/2,m(0.35),gh,'stand4');
+      if(photo){var PG=PHOTO_GUARD[sd>0?'N':'S']; photos.push({file:PG[0],w:gh*PG[1],h:gh,x:gx,y:baseTop+gh/2,z:cz+d/2+m(0.45)});}
+      else figOn(P2.guard,'+z',gx,baseTop,w/2,d/2,m(0.35),gh,'stand4');
       obs.push({x0:gx-gw/2,x1:gx+gw/2,z0:cz+d/2,z1:cz+d/2+gd});
       var px=sd*(pw/2+m(0.8)+m(1.75)), pd=m(2.5), pz=cz-d/2-pd/2, l1=m(3.2), l2=m(2.6);
       B(P2.porch,m(3.5),baseTop,pd*1.05,px,baseTop/2,pz);
@@ -1194,7 +1246,7 @@ function gopuramParts(G,cz,s,later){
     var kg=new THREE.LatheGeometry([[0,0],[0.5,0],[1,0.45],[0.8,0.9],[0.3,1.1],[0.15,1.8],[0,2.2]].map(function(p){return new THREE.Vector2(p[0]*fh*0.3,p[1]*fh/2.2);}),10);
     kg.translate(fx,ridge-m(0.05),cz); P2.fin.push(kg);
   }
-  return {parts:P2,obs:obs,top:ridge+fh};
+  return {parts:P2,obs:obs,top:ridge+fh,photos:photos};
 }
 
 function buildCourt(W,upH,adH,padH){
@@ -1304,14 +1356,33 @@ function buildCourt(W,upH,adH,padH){
   /* the two gateways, each split into elements so every part carries its own evidence */
   var PHN='research/gopuram.md';
   function gopuram(key,G,cz,info){
-    var r=gopuramParts(G,cz,s,P.period==='later'), parts=r.parts;
+    var r=gopuramParts(G,cz,s,P.period==='later',key==='rr'&&P.sculpt==='photo'), parts=r.parts;
     r.obs.forEach(function(o){WK.obs.push(o);});
+    if(r.photos.length) photoParts(r.photos,cz);
     info.forEach(function(e){
       if(!parts[e.part].length) return;
       var mm=mk(key+'-'+e.part,e.name,e.tier,e.rule,e.o); add(mm,parts[e.part]); mm.n+=e.n||1;
     });
   }
   var heightNote=['Heights',E,'scaled from frontal photographs to the mapped base width, about ±15% [@gop_photos]'];
+  /* the photograph trial: each photograph is its own flat surface, so these elements are not merged */
+  function photoParts(list,cz){
+    var pg=list.filter(function(q){return /^guardian/.test(q.file);}), pp=list.filter(function(q){return /^panel/.test(q.file);});
+    [[pg,mk('rr-photo-guard','Rajarajan gateway, guardians (photographs)','rule',
+      'The two giant guardians of the east face, shown as photographs of the actual figures by Richard Mortel, cropped and cut out from their niches [@ph_mortel]. Balasubrahmanyam records them as four-armed and centred in the halves of the face [@bala_early], over 16 feet high [@ignca_in]. They are flat images: from the side they have no depth, and the photograph\'s own light does not follow the page\'s lighting. Their feet are cut off where the niche floor meets the photograph\'s edge. Which is the north and which the south figure is about 90% certain. This is a trial; the “Gateway sculpture” control switches back to generic figures.',
+      {src:['ph_mortel','bala_early','ignca_in'],conf:85,basis:'Buildings (photographs)',gram:'Rajarajan → East face → Guardian×2 (photograph)',
+       dims:[['Appearance',B,'photographs of the figures [@ph_mortel]'],['Height',B,'about 5.2 m [@ignca_in][@es]'],['Depth',E,'none: flat images']]})],
+     [pp,mk('rr-photo-panels','Rajarajan gateway, base panels (photographs)','inf',
+      'The relief panels along the base of the east face, shown as photographs: the large panel under the south guardian by Richard Mortel [@ph_mortel], the rest by Thamizhpparithi Maari [@ph_maari]. Each half has nine units, counted from the passage outward. Laid side by side at their photographed proportions, they fill the base\'s length at about 2 m high, which matches the base\'s height estimated separately from other photographs. Which photograph belongs in which place is about 75% certain. Three units with no clear photograph (two by the passage on the south, one on the north) are drawn as generic panels. The scenes show forms of Siva [@ignca_in][@bala_early]; one in the panel under the north guardian is consistent with Kirata and Arjuna. The smaller photographs are low in resolution and slightly oblique.',
+      {src:['ph_mortel','ph_maari','ignca_in','bala_early'],conf:70,basis:'Buildings (photographs)',gram:'Base → Dado → Unit×9 per half (photograph)',
+       dims:[['Appearance',B,'photographs of the panels [@ph_mortel][@ph_maari]'],['Proportions',B,'from the photographs [@ph_maari]'],['Placement',E,'about 75% certain']]})]].forEach(function(e){
+      var meta=e[1]; meta.noMerge=true;
+      e[0].forEach(function(q){
+        var mesh=put(meta,new THREE.PlaneGeometry(q.w,q.h),q.x,q.y,q.z,0);
+        mesh.userData.photo=photoMat(q.file); mesh.castShadow=false; meta.n++;
+      });
+    });
+  }
   gopuram('rr',GOP.R,zR,[
     {part:'base',name:'Rajarajan gateway, base',tier:'inf',rule:'A plinth, a dado carrying one row of relief panels between pilasters, a cornice with lion heads over the pilasters, and two plain courses, as photographs of the east face show [@gop_photos]. Balasubrahmanyam notes attractive panels on this base [@bala_complex]. The Mayamata\'s rules for gateway bases are in its second volume, which was not available [@maya], so the mouldings are not named.',
      o:{src:['gop_photos','bala_complex','maya'],conf:60,basis:'Buildings',gram:'Rajarajan → Base → Plinth | Dado | Cornice | Courses×2',dims:[['Sequence',B,'from photographs of the east face [@gop_photos]'],heightNote]}},
@@ -1652,7 +1723,7 @@ function build(){
    instead of one per block. Selection, picking and colouring all work per element, so nothing else changes. */
 function mergeParts(){
   metas.forEach(function(m){
-    if(m.parts.length<2) return;
+    if(m.parts.length<2||m.noMerge) return;
     var geoms=m.parts.map(function(p){p.updateMatrix(); var g=p.geometry.clone(); g.applyMatrix4(p.matrix); return g;});
     m.parts.forEach(function(p){ROOT.remove(p); p.geometry.dispose();});
     m.parts=[];
@@ -1663,7 +1734,7 @@ function mergeParts(){
 /* ---------- Selection ---------- */
 var outlineMat=new THREE.LineBasicMaterial({color:0x0bd0e0,depthTest:false,transparent:true});
 function clearOutline(){
-  if(selMeta){var mm=selMeta, mat=MAT[catOf(mm)]; mm.parts.forEach(function(p){p.material=mat;});}
+  if(selMeta){var mm=selMeta; mm.parts.forEach(function(p){p.material=matOf(p,mm,false);});}
   outlines.forEach(function(l){if(l.parent)l.parent.remove(l); l.geometry.dispose();});
   outlines=[];
 }
@@ -1673,7 +1744,7 @@ function select(m){
   if(m){
     var mat=MATSEL[catOf(m)];
     m.parts.forEach(function(p){
-      p.material=mat;
+      p.material=matOf(p,m,true);
       var l=new THREE.LineSegments(new THREE.EdgesGeometry(p.geometry,25),outlineMat);
       l.renderOrder=999; l.raycast=function(){};
       p.add(l); outlines.push(l);
@@ -1968,9 +2039,10 @@ $('p-crown').addEventListener('change',function(e){P.crown=e.target.value; sched
 $('p-halls').addEventListener('change',function(e){P.halls=e.target.checked; $('p-maha').disabled=!P.halls; $('p-mukha').disabled=!P.halls||P.maha==='mapped'; schedule();});
 $('p-maha').addEventListener('change',function(e){P.maha=e.target.value; $('p-mukha').disabled=P.maha==='mapped'||!P.halls; schedule();});
 $('p-mukha').addEventListener('change',function(e){P.mukha=parseFloat(e.target.value); schedule();});
-$('p-court').addEventListener('change',function(e){P.court=e.target.checked; $('p-period').disabled=$('p-shrines').disabled=!P.court; schedule();});
+$('p-court').addEventListener('change',function(e){P.court=e.target.checked; $('p-period').disabled=$('p-shrines').disabled=$('p-sculpt').disabled=!P.court; schedule();});
 $('p-period').addEventListener('change',function(e){P.period=e.target.value; schedule();});
 $('p-shrines').addEventListener('change',function(e){P.shrines=parseInt(e.target.value,10); schedule();});
+$('p-sculpt').addEventListener('change',function(e){P.sculpt=e.target.value; schedule();});
 $('tier-presets').addEventListener('click',function(e){
   var b=e.target.closest('button'); if(!b) return;
   var n=parseInt(b.dataset.n,10); P.tiers=n; $('p-tiers').value=n; $('o-tiers').textContent=n; schedule();
