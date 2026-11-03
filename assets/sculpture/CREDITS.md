@@ -1,6 +1,8 @@
 # Sculpture images: sources, licences and edits
 
-Images of the sculpture on the **east (outer) face of the Rajarajan gopuram** at Thanjavur, for use as textures in the 3D model. Gathered 1 November 2026. Every file here is a crop of a photograph on Wikimedia Commons. None of the photographs is mine.
+Images of the sculpture on the **Rajarajan gopuram** at Thanjavur, for use as textures in the 3D model: the **east (outer) face**, gathered 1 November 2026, and the **west (court) face** (files named `west-…`), gathered 3 November 2026 and described in the [West face](#west-face-court-side) section at the end. Every file here is a crop of a photograph on Wikimedia Commons. None of the photographs is mine.
+
+The sections up to "Not done" cover the east face.
 
 ## Licences in short
 
@@ -122,3 +124,81 @@ Searched on 1 November 2026: the Sketchfab API (queries thanjavur, tanjore, brih
 - **S1, S2 and N5:** no clear frontal photograph found (see above).
 - **The panels' subjects:** not identified one by one, except where noted. The IGNCA's list (Kalyanasundara, Kirata-Arjuna, Kamantaka) and eSamskriti's (Kannappa Nayanar and others) are recorded in `research/gopuram.md`.
 - **Flickr originals:** Richard Mortel's full album on Flickr may hold further close-ups not copied to Commons, under the same CC BY 2.0. Not checked, because the workspace cannot reach Flickr.
+
+## West face (court side)
+
+Gathered 3 November 2026. Twelve files, all named `west-…`.
+
+### Licences for the west-face files
+
+| Photographer | Licence | Files |
+|---|---|---|
+| Richard Mortel | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/), no share-alike | `west-corner-north.png`, `west-corner-south.png`, `west-porch-north.png`, `west-porch-south.png`, `west-panel-N1.jpg` to `west-panel-N4.jpg` (8 files) |
+| Thamizhpparithi Maari | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), **share-alike** | `west-panel-S1.jpg` to `west-panel-S4.jpg` (4 files). As on the east face, these crops must be shared under CC BY-SA 3.0 or a compatible licence. |
+
+**Share-alike was used only where nothing else would do.** The only CC BY photographs of the south half of the base are Mortel's frontal views (42) and (59). In them the south panels are in shade, at about half the resolution, and partly behind visitors and a signboard. So for S1–S4 the choice was not equal, and Thamizhpparithi Maari's close view was used. For everything else a Mortel photograph was at least as good, and was used.
+
+Suggested credit lines:
+- *West-face niche figures and north base panels: photos by Richard Mortel (CC BY 2.0), cropped and background removed.*
+- *West-face south base panels: photos by Thamizhpparithi Maari (CC BY-SA 3.0), cropped; these crops are shared under CC BY-SA 3.0.*
+
+### Layout and how positions are named
+
+From the passage outward, each half of the west face has:
+1. **A porch pavilion** projecting beside the passage. It is two-level, with a small door in its base and a window in its wall. Above its cornice is a small niche with a **seated figure**.
+2. **An outer bay.** Its wall storey has a tall **corner niche with a standing figure**. Its base has **four panel units**, numbered **1 to 4 from the porch outward**. Unit 4 is a narrow strip at the outer end.
+
+`N` is the north half, which is on the left as you face the gateway from the court, looking east. `S` is the south half.
+
+- **Basis for the layout.** Two whole-face views were used for reference only, not cropped:
+  - Thamizhpparithi Maari's frontal view, ["A beautiful stone work on Rajarajan Entrance The Big Temple"](https://commons.wikimedia.org/wiki/File:%22A_beautiful_stone_work_on_Rajarajan_Entrance_The_Big_Temple%22.JPG) (CC BY-SA 3.0, 22 Sep 2012). This is PH2 in `research/gopuram.md`.
+  - Mortel's frontal view (59), [Commons page](https://commons.wikimedia.org/wiki/File:Brihadishwara_Temple,_Dedicated_to_Shiva,_built_by_Rajaraja_I,_completed_in_1010,_Thanjavur_(59)_(37497300751).jpg) (CC BY 2.0).
+- **Confidence:** the layout is about 85%. Each file's position carries its own figure below.
+- **The two halves' bases differ.**
+  - The south bay's panels hold two or three rows of small scenes, like the east face.
+  - The north bay's panels hold one row of large figures.
+  - The north unit 4 is plain, uncarved blocks.
+- **Possible identity of the porch figures, about 60%.** The south porch figure sits under a **many-headed serpent hood**. eSamskriti mentions "2 sub shrines of Indra and Nagaraja" on either side of the entrance (see `research/gopuram.md`, ES). The hood fits Nagaraja. The north figure is crowned and seated; that it is Indra is not verified.
+- **Corner figures:** standing, with a tall crown, one hand raised palm-out at the chest and the other at the hip. Not identified.
+
+### Niche figures (transparent PNG)
+
+The masks were made differently by size:
+- **`west-corner-south.png`:** BiRefNet, the same model as for the east guardians.
+- **The three small figures:** BiRefNet and GrabCut alone both failed on them. They kept the niche pilaster or the niche's back wall. So these masks are an outline **traced by hand** and then refined with OpenCV's GrabCut, and their edges are approximate.
+
+The three small files are left at the source's own resolution, not enlarged, so they are small.
+
+| File | Source | Region of the original (x, y, w, h) | Edits | Notes | Position confidence |
+|---|---|---|---|---|---|
+| `west-corner-south.png` (320 × 1000) | Mortel (174), [Commons page](https://commons.wikimedia.org/wiki/File:Brihadishwara_Temple,_Dedicated_to_Shiva,_built_by_Rajaraja_I,_completed_in_1010,_Thanjavur_(174)_(23645360418).jpg) · [original](https://upload.wikimedia.org/wikipedia/commons/a/aa/Brihadishwara_Temple%2C_Dedicated_to_Shiva%2C_built_by_Rajaraja_I%2C_completed_in_1010%2C_Thanjavur_%28174%29_%2823645360418%29.jpg) (5940 × 3910, 1 Sep 2017) | 3049, 1076, 830, 2594 | Cropped, scaled to 1400 px tall, background removed with BiRefNet-general-lite. A second pass on the lower half restored a leg the first pass dropped, and the two masks were blended below the waist. Trimmed, scaled to 1000 px tall, reduced to a 256-colour palette. | Close, frontal, in even shade. The feet merge into the pedestal and are cut at the ankles. | about 80%: the pose matches the south corner figure in the frontal views, and sky shows beyond the niche's outer side. Mortel took it at sunset, two minutes after his close view (168) of the west face. |
+| `west-corner-north.png` (134 × 456) | Mortel (168), [Commons page](https://commons.wikimedia.org/wiki/File:Brihadishwara_Temple,_Dedicated_to_Shiva,_built_by_Rajaraja_I,_completed_in_1010,_Thanjavur_(168)_(37239659700).jpg) · [original](https://upload.wikimedia.org/wikipedia/commons/8/8c/Brihadishwara_Temple%2C_Dedicated_to_Shiva%2C_built_by_Rajaraja_I%2C_completed_in_1010%2C_Thanjavur_%28168%29_%2837239659700%29.jpg) (6000 × 4000) | 596, 2754, 134, 456 | Cropped. The mask was made at 2.55× size, hand-traced and GrabCut-refined, and the result was scaled back to the source's size. | Seen from below and from the north-west, in warm evening light, and soft. The raised arm is partly lost in the mask. This was the sharpest of the four views compared. | about 90% |
+| `west-porch-north.png` (104 × 134) | Mortel (42), [Commons page](https://commons.wikimedia.org/wiki/File:Brihadishwara_Temple,_Dedicated_to_Shiva,_built_by_Rajaraja_I,_completed_in_1010,_Thanjavur_(42)_(36785937204).jpg) · [original](https://upload.wikimedia.org/wikipedia/commons/7/76/Brihadishwara_Temple%2C_Dedicated_to_Shiva%2C_built_by_Rajaraja_I%2C_completed_in_1010%2C_Thanjavur_%2842%29_%2836785937204%29.jpg) (5948 × 3920, 1 Sep 2017) | 1799, 2391, 104, 134 | As for the north corner figure (mask made at 5.7× size). | The cutout keeps the slab behind the figure. In this low view the lap is cut off by the niche's lower edge; the higher frontal view PH2 shows the figure seated. | about 90% |
+| `west-porch-south.png` (118 × 136) | Mortel (42), as above | 3796, 2375, 118, 136 | As above (5.6× size) | The cutout keeps the serpent hood. Same lower edge as the north one. | about 90% |
+
+### Base panels (JPG)
+
+**Edits to every panel file:** cropped to the panel's frame and saved as JPEG (quality 90 for S, 92 for N). Nothing else was changed, and nothing was scaled.
+
+| File | Position | Source | Region of the original (x, y, w, h) | Notes |
+|---|---|---|---|---|
+| `west-panel-S1.jpg` (405 × 740) | S1, next to the porch | T. Maari, ["A view of collection of details on the backside of Rajarajan Entrance of The Big Temple"](https://commons.wikimedia.org/wiki/File:%22A_view_of_collection_of_details_on_the_backside_of_Rajarajan_Entrance_of_The_Big_Temple%22.JPG) · [original](https://upload.wikimedia.org/wikipedia/commons/2/2c/%22A_view_of_collection_of_details_on_the_backside_of_Rajarajan_Entrance_of_The_Big_Temple%22.JPG) (2256 × 1504, 22 Sep 2012, 14:17) | 120, 450, 405, 740 | Three rows. The bottom one shows a rider on a large animal. |
+| `west-panel-S2.jpg` (488 × 740) | S2 | same | 672, 448, 488, 740 | The bottom row is only roughed out, apparently unfinished. |
+| `west-panel-S3.jpg` (608 × 760) | S3, the widest | same | 1282, 460, 608, 760 | Three rows plus a strip of small figures at the foot. |
+| `west-panel-S4.jpg` (178 × 440) | S4, the narrow strip at the outer end | same | 1982, 720, 178, 440 | The photo is slightly oblique here. |
+| `west-panel-N1.jpg` (280 × 305) | N1, next to the porch | Mortel (42), as above | 1145, 3230, 280, 305 | Standing figures. **The lower right is hidden behind a visitor's head.** |
+| `west-panel-N2.jpg` (245 × 305) | N2 | same | 905, 3230, 245, 305 | A figure with arms raised. The bottom right corner is slightly obstructed. |
+| `west-panel-N3.jpg` (285 × 305) | N3 | same | 620, 3230, 285, 305 | A large standing figure with smaller figures beside it. |
+| `west-panel-N4.jpg` (115 × 305) | N4, the outer end | same | 500, 3230, 115, 305 | Plain, uncarved blocks |
+
+- **Why S1–S4 are named as the south half (about 85%).** The close view's four units match, in width order and row pattern, the four south-bay units in the frontal view PH2. The north bay looks different.
+- **Why N1–N4 come from Mortel (42).** It is sunlit and about two and a half times the resolution of PH2. Mortel (59) shows the north panels unobstructed, but it is noticeably softer. PH2 is unobstructed but only about 120 px tall for the whole panel row.
+
+### West face: searched, not found or not done
+
+- **Where I searched:**
+  - Commons categories "Gopurams of the Brihadisvara Temple" (all of it), "Brihadisvara Temple porch", and "Reliefs and sculptures at the Brihadisvara Temple". In the last, only the first ~140 of ~375 thumbnails were checked; many failed to load.
+  - The complete Commons sets of Richard Mortel (2017), Vengolis (2016) and Thamizhpparithi Maari (2012).
+- **Missing close-ups:** no close-up of either porch niche, or of the north corner niche, was found. Those three files are 100–460 px tall and only usable at small sizes on the model.
+- **Not included:** the stucco figures on the upper tiers. They are 17th-century Nayaka additions (IGNCA, in `research/gopuram.md`) and were not asked for.
+- **3D scans:** not searched again for the west face. The east-face search above found no scans of this gopuram's sculpture at all.
