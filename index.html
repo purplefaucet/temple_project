@@ -301,10 +301,10 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
         <div class="ctl">
           <label for="p-sculpt">Gateway sculpture</label><span></span>
           <select id="p-sculpt">
-            <option value="photo">Photographs (trial, inner gateway's east face)</option>
+            <option value="photo">Photographs (inner gateway's east face)</option>
             <option value="generic">Generic figures</option>
           </select>
-          <div class="help">A trial of real photographs on the inner gateway's east face: the two guardians and the panels along the base. They are flat images, so they have no depth from the side. Photographs by Richard Mortel <a data-cite="ph_mortel"></a> and Thamizhpparithi Maari <a data-cite="ph_maari"></a>.</div>
+          <div class="help">Real photographs of the sculpture on the inner gateway's east face: the two guardians and the panels along the base. They are flat images, so they have no depth from the side. Photographs by Richard Mortel <a data-cite="ph_mortel"></a> and Thamizhpparithi Maari <a data-cite="ph_maari"></a>.</div>
         </div>
         <div class="ctl" style="margin-bottom:0">
           <label for="p-shrines">Cloister shrines</label><span></span>
@@ -388,7 +388,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <li>ASI counts three side entrances to the court besides the gateway <a data-cite="asi"></a>, and Balasubrahmanyam three entrances in all <a data-cite="bala_composite"></a>. Three side openings are drawn, at estimated positions. The cloister shrines' positions are invented.</li>
           <li>Most sources date the present Nandi to the Nayak period <a data-cite="wiki"></a> <a data-cite="es"></a>, and an earlier Chola Nandi is unverified.</li>
           <li>The fort walls, the moat and the Maratha-period outer gate are left out. They are later than the temple <a data-cite="wiki"></a> <a data-cite="fh"></a>.</li>
-          <li>The photographs on the inner gateway's east face are a trial. They are flat images, lit by the photograph's own light, and the guardians' feet are cut off at the niche floor. Which photograph belongs in which place on the base is about 75% certain, and three places have none <a data-cite="ph_maari"></a>.</li>
+          <li>The photographs on the inner gateway's east face are flat images, lit by the photograph's own light, and the guardians' feet are cut off at the niche floor. Which photograph belongs in which place on the base is about 75% certain, and three places have none <a data-cite="ph_maari"></a>.</li>
           <li>A parametric Karnata-Dravida model exists <a data-cite="karnata"></a>. No published Chola shape grammar was found, in a search that was not exhaustive.</li>
           <li>Only Chola has been researched. Whether Pallava, Pandya, Vijayanagara and Nayak are distinct enough to be separate rule sets is unchecked.</li>
         </ul>
@@ -1366,11 +1366,11 @@ function buildCourt(W,upH,adH,padH){
     });
   }
   var heightNote=['Heights',E,'scaled from frontal photographs to the mapped base width, about ±15% [@gop_photos]'];
-  /* the photograph trial: each photograph is its own flat surface, so these elements are not merged */
+  /* photographs of the sculpture: each is its own flat surface, so these elements are not merged */
   function photoParts(list,cz){
     var pg=list.filter(function(q){return /^guardian/.test(q.file);}), pp=list.filter(function(q){return /^panel/.test(q.file);});
     [[pg,mk('rr-photo-guard','Rajarajan gateway, guardians (photographs)','rule',
-      'The two giant guardians of the east face, shown as photographs of the actual figures by Richard Mortel, cropped and cut out from their niches [@ph_mortel]. Balasubrahmanyam records them as four-armed and centred in the halves of the face [@bala_early], over 16 feet high [@ignca_in]. They are flat images: from the side they have no depth, and the photograph\'s own light does not follow the page\'s lighting. Their feet are cut off where the niche floor meets the photograph\'s edge. Which is the north and which the south figure is about 90% certain. This is a trial; the “Gateway sculpture” control switches back to generic figures.',
+      'The two giant guardians of the east face, shown as photographs of the actual figures by Richard Mortel, cropped and cut out from their niches [@ph_mortel]. Balasubrahmanyam records them as four-armed and centred in the halves of the face [@bala_early], over 16 feet high [@ignca_in]. They are flat images: from the side they have no depth, and the photograph\'s own light does not follow the page\'s lighting. Their feet are cut off where the niche floor meets the photograph\'s edge. Which is the north and which the south figure is about 90% certain. The “Gateway sculpture” control switches to generic figures instead.',
       {src:['ph_mortel','bala_early','ignca_in'],conf:85,basis:'Buildings (photographs)',gram:'Rajarajan → East face → Guardian×2 (photograph)',
        dims:[['Appearance',B,'photographs of the figures [@ph_mortel]'],['Height',B,'about 5.2 m [@ignca_in][@es]'],['Depth',E,'none: flat images']]})],
      [pp,mk('rr-photo-panels','Rajarajan gateway, base panels (photographs)','inf',
