@@ -404,7 +404,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <button type="button" disabled title="Not built yet">Gopuram</button>
         </div>
         <p class="muted" style="margin-top:10px">Idealized composite, not a model of any specific temple. No sanctum interior, and no deity imagery inside any building. Deities may appear on exterior decoration; the sculpture on the gateways and in the tower's wall niches is shown as generic figures that depict no one. In walk mode the front halls can be entered, and the walk stops at the closed sanctum door. Figure sculpture in the court, such as the Nandis on the wall and the Nandi bull, is drawn as blank blocks. Dashed buttons are not built yet.</p>
-        <p class="muted">Walk puts the camera at eye height, 1.6 m, taking the base as 30.18 m wide, the Thanjavur figure the model's base heights are scaled from <a data-cite="bala_tanj"></a>. Walking is 2.5 m a second and running 7. The head-bob, the eased steps and the stride length are there for feel and have no source, like the paving pattern, which is there to show movement. The stone's grain and the joints between its blocks are drawn in code and have no source, and they fade out with distance. Up close, the tower's pavilions, the halls and the court are still plain blocks.</p>
+        <p class="muted">Walk puts the camera at eye height, 1.6 m, taking the base as 30.18 m wide, the Thanjavur figure the model's base heights are scaled from <a data-cite="bala_tanj"></a>. Walking is 2.5 m a second and running 7. The head-bob, the eased steps and the stride length are there for feel and have no source, like the paving pattern, which is there to show movement. The stone's grain and the joints between its blocks are drawn in code and have no source, and they fade out with distance. Up close, the halls and the court are still plain blocks.</p>
       </section>
 
       <section class="blk">
@@ -433,7 +433,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <li>The Manasara rules come from Acharya's 1933 translation <a data-cite="man19"></a> <a data-cite="man21"></a>, read as excerpts returned by a fetch tool, not as full pages. Where the Mayamata gives the same rule, it is cited first.</li>
           <li>One source counts 14 tiers at Thanjavur <a data-cite="sahapedia"></a>, against 13 elsewhere <a data-cite="unesco"></a>. Its height is 63.41 m in Balasubrahmanyam <a data-cite="bala_tanj"></a> and anything from about 61 m to 66 m in other sources consulted.</li>
           <li>Tier heights step down evenly, as in the Mayamata <a data-cite="maya"></a>. Hardy notes that those in the Samarangana follow no regular progression <a data-cite="hardy"></a>.</li>
-          <li>The dome and finial rest on texts alone. No source in this list describes their form in built temples.</li>
+          <li>The dome, its dormers and the finial rest mostly on texts. Of Thanjavur's own, Balasubrahmanyam says only that the sikhara is cupola-shaped and the finial 3.35 to 3.81 m high <a data-cite="bala_tanj"></a>. The pavilions' curved roofs, their finials and the dormers on their fronts follow the Mayamata's descriptions (22.82 to 89, 20.38) <a data-cite="maya"></a>; their exact shapes are estimates. The Nandis at the top's corners are drawn as blank blocks at the recorded size.</li>
           <li>The carving on the sub-base, the base and the walls follows the Mayamata's chapters on the socle, the base, pillars and the entablature (13 to 16) <a data-cite="maya"></a>. The text names the mouldings and the parts of a pilaster and of an entablature. It does not say how Thanjavur's were carved, and no source read describes Thanjavur's own pilasters, mouldings or cornice dormers, so their number, size and spacing are estimates. Which kind of sub-base Thanjavur has, and whether the base's torus is rounded or faceted, were not checked. The friezes the text fills with lions, elephants, geese or dwarves are drawn bare.</li>
           <li>The number of wall niches is read from a summary of Balasubrahmanyam's list of the sculptures on each wall, returned by a fetch tool: four or five figures a side besides two door guardians <a data-cite="bala_tanj"></a>. That reading is about 70% certain, and which bays hold the niches is an estimate. The figures in them are generic shapes that depict no one. The central openings of the lower storey are drawn as closed doors.</li>
           <li>The Mayamata lets any base carry small pillars on its neck <a data-cite="maya"></a>. Whether Thanjavur's does was not checked, so they are about 60% certain.</li>
@@ -957,24 +957,34 @@ function panjaraGeom(w,depth,hb){
 
 /* Hara: split one side of a storey into parts and assign them to pavilions.
    y = top of the entablature, cw = its width, hn = height of the storey behind. Returns pavilions per side. */
-function hara(y,cw,hn,lvlMax,den,label,id,gramHead){
-  if(lvlMax<0) return 0;
+/* how one side of a storey divides into parts and pavilions: K corner, S middle sala, s small sala, H gallery, G gap */
+function haraLayout(cw,hn,lvlMax){
+  if(lvlMax<0) return null;
   var p=0.95*hn, n=Math.max(2,Math.round(cw/p)), pe=cw/n, hv=Math.min(pe,hn);
   var seq=[], S, Hh, G, per=2;
   if(lvlMax>=2&&n>=10){S=Math.min(4,n-8); Hh=(n-4-S)/4; seq=[['H',Hh],['s',1],['H',Hh],['S',S],['H',Hh],['s',1],['H',Hh]]; per=9;}
   else if(lvlMax>=1&&n>=6){S=Math.min(4,n-4); Hh=(n-2-S)/2; seq=[['H',Hh],['S',S],['H',Hh]]; per=5;}
   else if(n>=4){S=Math.min(4,n-2); G=(n-2-S)/2; seq=[['G',G],['S',S],['G',G]]; per=3;}
   else if(n===3){seq=[['S',1]]; per=3;}
+  /* the stretches of the side that carry a pavilion, as [from, to, at a corner] */
+  var bays=[[-cw/2,-cw/2+pe,-1],[cw/2-pe,cw/2,1]], cur=-cw/2+pe;
+  seq.forEach(function(e){var len=e[1]*pe; if(e[0]==='S'||e[0]==='s') bays.push([cur,cur+len,0]); cur+=len;});
+  return {n:n,pe:pe,hv:hv,seq:seq,per:per,bays:bays};
+}
+function hara(y,cw,hn,lvlMax,den,label,id,gramHead){
+  var L=haraLayout(cw,hn,lvlMax);
+  if(!L) return 0;
+  var pe=L.pe, hv=L.hv, seq=L.seq;
   var has=function(t){return seq.some(function(e){return e[0]===t;});};
 
   var mK=mk('kuta-'+id,label+', kuta (corner pavilion)','rule',
-    'Square pavilion at each corner. The Mayamata divides the side of a storey into parts: one for each corner pavilion, two or three for the middle one, half or one for each niche between, and the rest for the dwarf galleries that link them (chapters 20 to 22) [@maya]. It puts square pavilions at the corners, elongated ones in the middle and intermediate ones between (22.78 to 79) [@maya]. The Manasara and Hardy give the same row [@man22][@hardy]. Drawn with a pyramid roof, as Dagens describes kutas [@maya].',
-    {src:['maya','soas','man21','man22','hardy'],conf:90,basis:'Text and buildings',gram:gramHead+'Corner → Kuta',
-     dims:[['Width',T,'one part of the side [@maya][@man21]'],PAVH,PARTSIZE]});
+    'Square pavilion at each corner. The Mayamata divides the side of a storey into parts: one for each corner pavilion, two or three for the middle one, half or one for each niche between, and the rest for the dwarf galleries that link them (chapters 20 to 22) [@maya]. It puts square pavilions at the corners, elongated ones in the middle and intermediate ones between (22.78 to 79) [@maya]. The Manasara and Hardy give the same row [@man22][@hardy]. The Mayamata gives a corner pavilion a square, octagonal, round or sixteen-sided roof with one finial (22.82 to 89) [@maya]. It is drawn with a square roof curving in to a pot finial; the curve is an estimate. Balasubrahmanyam says every storey at Thanjavur is adorned with ornamental salas and kutas [@bala_tanj].',
+    {src:['maya','soas','man21','man22','hardy','bala_tanj'],conf:90,basis:'Text and buildings',gram:gramHead+'Corner → Kuta',
+     dims:[['Width',T,'one part of the side [@maya][@man21]'],PAVH,PARTSIZE,['Roof and finial',T,'a square roof with one finial (Mayamata 22.82 to 89) [@maya]'],['Curve of the roof',E,'estimated']]});
   var mS=has('S')?mk('sala-'+id,label+', sala (middle pavilion)','rule',
-    'Elongated pavilion with a wagon roof at the middle of each side. The Mayamata makes it two or three parts long [@maya], the Manasara two to four [@man21][@man24].',
+    'Elongated pavilion with a wagon roof at the middle of each side. The Mayamata makes it two or three parts long [@maya], the Manasara two to four [@man21][@man24]. The Mayamata gives the elongated pavilion several finials (22.82 to 89) and puts arches on the pavilions (20.38) [@maya], so it carries finials along its ridge and a false dormer on its front.',
     {src:['maya','soas','man21','man24','hardy'],conf:90,basis:'Text and buildings',gram:gramHead+'Middle → Sala',
-     dims:[['Width',T,'two to four parts, as many as fit [@maya][@man21]'],PAVH,PARTSIZE]}):null;
+     dims:[['Width',T,'two to four parts, as many as fit [@maya][@man21]'],PAVH,PARTSIZE,['Finials and dormer',T,'several finials, and an arch on the front (Mayamata 22.82 to 89, 20.38) [@maya]'],['Number of finials',E,'three']]}):null;
   var ms=has('s')?mk('ssala-'+id,label+', small sala','rule',
     'Small hall between the corner and the middle. For tall buildings the Manasara gives each storey a great hall, four kutas, eight small halls and sixteen hall-windows [@man30], and it names small halls for eight-storey buildings too [@man26]. The Mayamata has types with two elongated pavilions on a face (chapter 21) [@maya]. Using small halls on a tower of any height is an extension of these.',
     {src:['man26','man30','maya'],conf:65,basis:'Text',gram:gramHead+'Between → Small sala',
@@ -983,36 +993,37 @@ function hara(y,cw,hn,lvlMax,den,label,id,gramHead){
     'Low dwarf gallery with an arched niche, filling the side between pavilions. Dagens describes the hara as a miniature gallery that runs round the building like a chain, interrupted by intermediate pavilions (panjara) seen from the front as niches [@maya]. The Mayamata gives the niche half a part or one part and the gallery the rest [@maya], and the Manasara agrees [@man22][@man24].',
     {src:['maya','man22','man24','hardy'],conf:85,basis:'Text',gram:gramHead+'Between → Hara + Panjara',
      dims:[['Width',T,'the parts left after kutas and salas [@maya][@man22]'],['Height and niche size',E,'estimated']]}):null;
-  var mF=(den>=0.6&&pe>0.2)?mk('fin-'+id,label+', ball finial','inv',
-    'Small ball finial added to break up kuta roofs. Decoration only.',
-    {src:[],gram:'Kuta → Finial',dims:[['Size',E,'decoration']]}):null;
 
-  var kb=0.86*pe, c=cw/2-pe/2;
+  var KG=[], SG=[], sG=[], HG=[], kb=0.86*pe, c=cw/2-pe/2, g;
   for(var sx=-1;sx<=1;sx+=2){for(var sz=-1;sz<=1;sz+=2){
-    put(mK,box(kb,0.55*hv,kb),sx*c,y+0.275*hv,sz*c,0);
-    var cg=new THREE.ConeGeometry(kb*0.72,0.42*hv,4); cg.rotateY(Math.PI/4);
-    put(mK,cg,sx*c,y+0.76*hv,sz*c,0); mK.n++;
-    if(mF){put(mF,new THREE.SphereGeometry(pe*0.07,8,6),sx*c,y+0.97*hv+pe*0.05,sz*c,0); mF.n++;}
+    KG.push(bx(kb,0.5*hv,kb,sx*c,y+0.25*hv,sz*c));
+    KG.push(bx(kb*1.12,0.07*hv,kb*1.12,sx*c,y+0.535*hv,sz*c));
+    g=domeGeom(kb*0.72,0.36*hv,4,Math.PI/4); g.translate(sx*c,y+0.57*hv,sz*c); KG.push(g);
+    g=finialGeom(pe*0.08,0.17*hv); g.translate(sx*c,y+0.92*hv,sz*c); KG.push(g);
+    mK.n++;
   }}
-  ring4(function(t,sn,cs){
+  /* a barrel-roofed pavilion in a face's frame: body and barrel, a ledge under the barrel, finials on the ridge, a dormer on the front */
+  function sala(list,len,dep,hb,nf,r,u,t){
+    list.push(onSide(salaGeom(len,dep,hb),r,u,y,t));
+    list.push(onSide(box(len*1.04,0.06*hv,dep*1.08),r,u,y+hb,t));
+    for(var i=0;i<nf;i++) list.push(onSide(finialGeom(dep*0.085,0.14*hv),r,u+(nf>1?(i/(nf-1)-0.5)*len*0.66:0),y+hb+dep/2-0.01*hv,t));
+    list.push(onSide(kuduGeom(Math.min(0.62*dep,0.4*len),hb*0.75,0.05*dep,true),r+dep/2,u,y+hb*0.62,t));
+  }
+  ring4(function(t){
     var cur=-cw/2+pe;
     seq.forEach(function(e){
-      var len=e[1]*pe, u=cur+len/2, xz; cur+=len;
-      if(e[0]==='S'){
-        xz=sideXZ(cw/2-0.38*pe,u,sn,cs);
-        put(mS,salaGeom(len*0.9,0.7*pe,0.5*hv),xz[0],y,xz[1],t); mS.n++;
-      }else if(e[0]==='s'){
-        xz=sideXZ(cw/2-0.33*pe,u,sn,cs);
-        put(ms,salaGeom(len*0.86,0.6*pe,0.42*hv),xz[0],y,xz[1],t); ms.n++;
-      }else if(e[0]==='H'&&len>0.01){
-        xz=sideXZ(cw/2-0.16*pe,u,sn,cs);
-        put(mH,box(len,0.28*hv,0.26*pe),xz[0],y+0.14*hv,xz[1],t);
-        xz=sideXZ(cw/2-0.24*pe,u,sn,cs);
-        put(mH,panjaraGeom(0.5*Math.min(pe,len),0.42*pe,0.4*hv),xz[0],y,xz[1],t); mH.n++;
+      var len=e[1]*pe, u=cur+len/2; cur+=len;
+      if(e[0]==='S'){sala(SG,len*0.9,0.7*pe,0.5*hv,3,cw/2-0.38*pe,u,t); mS.n++;}
+      else if(e[0]==='s'){sala(sG,len*0.86,0.6*pe,0.42*hv,2,cw/2-0.33*pe,u,t); ms.n++;}
+      else if(e[0]==='H'&&len>0.01){
+        HG.push(onSide(box(len,0.28*hv,0.26*pe),cw/2-0.16*pe,u,y+0.14*hv,t));
+        HG.push(onSide(box(len,0.05*hv,0.32*pe),cw/2-0.16*pe,u,y+0.305*hv,t));
+        HG.push(onSide(panjaraGeom(0.5*Math.min(pe,len),0.42*pe,0.4*hv),cw/2-0.24*pe,u,y,t)); mH.n++;
       }
     });
   });
-  return per;
+  putAll(mK,KG); if(mS) putAll(mS,SG); if(ms) putAll(ms,sG); if(mH) putAll(mH,HG);
+  return L.per;
 }
 
 /* ---------- Detail kit ----------
@@ -1120,22 +1131,35 @@ function entProf(y0,e,pp,top){
   return {prof:r,rim:K,back:b};
 }
 /* a false dormer window (nasika, Tamil kudu): a horseshoe plaque facing +z, its foot at y = 0 and its back at z = 0 */
-function kuduGeom(w,h,dp){
+function kuduGeom(w,h,dp,lite){
   var a=w/2, sh=archShape(a,Math.max(0.02*h,h-a));
-  if(HI){var hole=new THREE.Path(); hole.absarc(0,Math.max(0.02*h,h-a),a*0.52,0,Math.PI*2,true); sh.holes.push(hole);}
-  return mono(new THREE.ExtrudeGeometry(sh,{depth:dp,bevelEnabled:false,curveSegments:HI?6:3}));
+  if(HI&&!lite){var hole=new THREE.Path(); hole.absarc(0,Math.max(0.02*h,h-a),a*0.52,0,Math.PI*2,true); sh.holes.push(hole);}
+  return mono(new THREE.ExtrudeGeometry(sh,{depth:dp,bevelEnabled:false,curveSegments:HI&&!lite?6:3}));
+}
+/* a faceted dome on a square or octagonal plan, from the shrine dome's profile; R is the corner radius */
+function domeGeom(R,h,segs,rot){
+  var g=new THREE.LatheGeometry(DOMEPROF.map(function(p){return new THREE.Vector2(p[0]*R,p[1]*h);}),segs);
+  if(rot) g.rotateY(rot);
+  var f=g.toNonIndexed(); g.dispose(); f.computeVertexNormals(); return mono(f);
+}
+/* a small pot finial, r wide and h high, its foot at y = 0 */
+function finialGeom(r,h){
+  return mono(new THREE.LatheGeometry([[0,0],[0.6,0],[1,0.3],[0.85,0.52],[0.35,0.68],[0.22,0.85],[0,1]].map(function(p){return new THREE.Vector2(p[0]*r,p[1]*h);}),5));
 }
 /* dormers along one straight run of cornice: E is what entProf returned, e the entablature height */
-function kudus(list,E,y0,e,r,u0,u1,pitch,t){
+function kudus(list,E,y0,e,r,u0,u1,pitch,t,lite){
   var k=Math.max(1,Math.round((u1-u0)/pitch)), w=Math.min(0.42*e,0.6*(u1-u0)/k), dp=E.rim-0.03*e-E.back;
-  for(var i=0;i<k;i++) list.push(onSide(kuduGeom(w,0.36*e,dp),r+E.back,u0+(i+0.5)*(u1-u0)/k,y0+0.47*e,t));
+  for(var i=0;i<k;i++) list.push(onSide(kuduGeom(w,0.36*e,dp,lite),r+E.back,u0+(i+0.5)*(u1-u0)/k,y0+0.47*e,t));
 }
 /* A square pilaster (Mayamata 15.13 to 16): shaft, bell capital, abacus and bracket capital, with a band under the
    bell and a block (dye) over the abacus at high detail. Made in a face's frame: centred on u, foot at y, back at z. */
-function pilasterGeoms(w,h,pj,u,y,z){
-  var g=[], k=Math.min(w,0.15*h), hp=0.62*k, hd=HI?0.28*k:0, ha=0.28*k, hk=0.6*k, hn=HI?0.32*k:0, hb=HI?0.3*k:0;
+function pilasterGeoms(w,h,pj,u,y,z,lite){
+  var g=[], k=Math.min(w,0.15*h), hi=HI&&!lite, hp=0.62*k, hd=hi?0.28*k:0, ha=0.28*k, hk=0.6*k, hn=hi?0.32*k:0, hb=hi?0.3*k:0;
   var hs=h-hp-hd-ha-hk-hn-hb, yy=y;
   function b(bw,bh,bd){g.push(bx(bw,bh,bd,u,yy+bh/2,z+bd/2)); yy+=bh;}
+  /* far from the eye: shaft, one block for bell and abacus, and the bracket */
+  if(lite&&!HI){b(w,hs,pj); b(w*1.7,hk+ha,pj*1.7); b(w*2.7,hp,pj*1.2); return g;}
+  var HI0=HI; HI=hi;
   if(HI) b(w*1.3,hb,pj*1.3);
   b(w,hs,pj);
   if(HI) b(w*1.16,hn,pj*1.16);
@@ -1144,6 +1168,7 @@ function pilasterGeoms(w,h,pj,u,y,z){
   b(w*1.9,ha,pj*1.85);
   if(HI) b(w*0.95,hd,pj*0.95);
   if(HI){b(w*2.1,hp*0.5,pj*1.2); b(w*3,hp*0.5,pj*1.2);} else b(w*2.7,hp,pj*1.2);
+  HI=HI0;
   return g;
 }
 /* A niche frame (Mayamata 20.36 to 39, 22.70 to 79): two colonnettes, a lintel and a plain arch (torana) over it.
@@ -1988,6 +2013,7 @@ function build(){
   var W=P.base, N=P.tiers, den=P.density, tp=P.taper, hr=P.hratio;
   var i, y=0;
   HI=P.detail==='high';
+  var um=upm();
 
   /* Sub-base and base: heights as measured at Thanjavur, mouldings split by the Padabandha scheme */
   var upH=(1.40/30.18)*W, adH=(3.60/30.18)*W, upW=1.10*W+upH;   /* projection of half its height on each side */
@@ -2176,14 +2202,27 @@ function build(){
              ['Step between tiers',T,'even steps, as in the Mayamata (chapter 22) [@maya][@man24]. The slider sets how far they fall. The text reaches one half over twelve storeys'],
              ['Bottom tier height',E,'0.116 of the base width, chosen so 13 tiers come out near Thanjavur\'s height [@bala_tanj]'],
              ['Taper',T,'equal steps storey by storey, with the top storey 0.3 to 0.5 of the ground storey in three and four-storey temples (Mayamata 21 and 22) [@maya]. The slider sets the ratio'],
-             ['Extension to this many tiers',E,'the text gives no storey widths above five storeys']]});
-    put(mt,box(w,padH,w),0,y+padH/2,0); mt.n++;
+             ['Extension to this many tiers',E,'the text gives no storey widths above five storeys'],
+             ['Projecting bays and pilasters',T,'the wall stands forward under each pavilion of its row, with square pilasters at the edges (Mayamata, introduction and chapter 15) [@maya]'],
+             ['Depth of the bays and size of the pilasters',E,'estimated']]});
+    /* the wall steps forward under each pavilion of the row it carries, with a pilaster at each edge of the step */
+    var LY=haraLayout(cw,hn,lvlMax), tg=[bx(w,padH,w,0,y+padH/2,0)], pwT=padH/8, pjT=pwT/4, bpT=0.6*pwT, kT=w/cw;
+    if(LY) ring4(function(t){
+      LY.bays.forEach(function(b){
+        var u0=b[0]*kT-(b[2]<0?bpT:0), u1=b[1]*kT+(b[2]>0?bpT:0);
+        tg.push(onSide(box(u1-u0,padH,bpT),w/2+bpT/2,(u0+u1)/2,y+padH/2,t));
+        [u0+pwT/2,u1-pwT/2].forEach(function(u){pilasterGeoms(pwT,padH,pjT,u,y,0,true).forEach(function(g){tg.push(onSide(g,w/2+bpT,0,0,t));});});
+      });
+    });
+    putAll(mt,tg); mt.n++;
     y+=padH;
     var mc=mk('tier-ent-'+ti,label+', entablature (prastara)','rule',
-      'Entablature over the pillar zone, about half its height [@maya][@man19]. The pavilions of the hara stand on it.',
-      {src:['maya','man16','man19','man21'],conf:85,basis:'Text',gram:'Tower → Tier('+(ti+1)+') → Prastara',
-       dims:[['Height',T,HALF],['Overhang',E,'7%']]});
-    put(mc,box(cw,entH,cw),0,y+entH/2,0); mc.n++;
+      'Entablature over the pillar zone, about half its height [@maya][@man19]. The pavilions of the hara stand on it. It is drawn in the Mayamata\'s parts, like the wall\'s: an architrave, a frieze, a rounded cornice with false dormer windows, and an upper frieze (chapter 16) [@maya].',
+      {src:['maya','man16','man19','man21'],conf:85,basis:'Text',gram:'Tower → Tier('+(ti+1)+') → Prastara → Architrave | Frieze | Cornice + Dormers | Upper frieze',
+       dims:[['Height',T,HALF],['Parts',T,'architrave, fascia, frieze, cornice with dormers, upper frieze (Mayamata 16.2 to 35) [@maya]'],['Overhang, share of each part and number of dormers',E,'the ledge 3.5% each side; one dormer to each part of the side']]});
+    var EPt=entProf(y,entH,bpT+pjT,(cw-w)/2), cg=[bx(w,entH,w,0,y+entH/2,0),sweep([[w/2,-w/2],[w/2,w/2],[-w/2,w/2],[-w/2,-w/2]],EPt.prof,true)];
+    if(den>=0.15) ring4(function(t){kudus(cg,EPt,y,entH,w/2,-w/2,w/2,LY?LY.pe*kT:w/8,t,true);});
+    putAll(mc,cg); mc.n++;
     y+=entH;
     perSide.push(hara(y,cw,hn,lvlMax,den,label,String(ti),'Tier('+(ti+1)+') → Hara → '));
   }
@@ -2195,8 +2234,20 @@ function build(){
     'Low platform (stereobate) between the top storey and the neck. The Mayamata makes the neck twice as high as it in most schemes, though one passage says three times (chapters 18 to 22) [@maya]. The Manasara agrees [@man20][@man22], and its one-storey scheme makes the platform seven eighths of the building width [@man19]. Balasubrahmanyam reports a single granite block 7.77 m square at the top of the Thanjavur tower [@bala_tanj]. Which part that block forms was not clear in the excerpt read.',
     {src:['maya','man19','man20','man22','bala_tanj'],conf:85,basis:'Text',gram:'Tower → Crown → Platform',
      dims:[['Height',T,'half the neck, as in most schemes [@maya][@man20]'],['Width',T,'seven eighths of the storey below, a one-storey rule extended to the top tier [@man19]'],MODSIZE]});
-  put(mv,box(vW,vH,vW),0,y+vH/2,0); mv.n++;
+  putAll(mv,[bx(vW,vH,vW,0,y+vH/2,0),bx(vW*1.035,vH*0.2,vW*1.035,0,y+vH*0.1,0),bx(vW*1.035,vH*0.2,vW*1.035,0,y+vH*0.9,0)]); mv.n++;
   y+=vH;
+  /* Nandis in pairs at the four corners of the top, recorded at Thanjavur: blank blocks, like those on the court wall */
+  var mnd=mk('crown-nandis','Nandis at the corners of the top (blank blocks)','rule',
+    'Balasubrahmanyam records Nandis in pairs at the four corners of the single granite block, 7.77 m square, that closes the top of the Thanjavur tower. Each is 1.98 by 1.68 m [@bala_tanj]. They are figure sculpture and are drawn as blank blocks, like the Nandis on the court wall. They sit on the platform under the neck, which with the default settings is about as wide as that block.',
+    {src:['bala_tanj'],conf:80,basis:'Buildings (one example)',gram:'Crown → Platform → Corner → Nandi×2',
+     dims:[['Number and place',B,'a pair at each of the four corners [@bala_tanj]'],['Size',B,'1.98 by 1.68 m each [@bala_tanj]'],['Breadth, and which way they face',E,'estimated']]});
+  var nL=Math.min(1.98*um,0.24*vW), nH=nL*1.68/1.98, nB=nL*0.5, ndg=[];
+  [[1,1],[1,-1],[-1,1],[-1,-1]].forEach(function(c){
+    ndg.push(bx(nL,nH,nB,c[0]*(vW/2-nL/2-nB*1.05),y+nH/2,c[1]*(vW/2-nB/2)));
+    ndg.push(bx(nB,nH,nL,c[0]*(vW/2-nB/2),y+nH/2,c[1]*(vW/2-nL/2-nB*1.05)));
+    mnd.n+=2;
+  });
+  putAll(mnd,ndg);
   var rn=(gw/2)/Math.cos(OCT);
   var ng=new THREE.CylinderGeometry(rn,rn,mod,8); ng.rotateY(OCT);
   var mg=mk('griva','Griva (neck)','rule',
@@ -2209,10 +2260,16 @@ function build(){
   var prof=[[0.74,0],[1,0.03],[1.08,0.1],[1.06,0.24],[0.86,0.48],[0.56,0.74],[0.3,0.93],[0.14,1.0],[0,1.0]].map(function(p){return new THREE.Vector2(p[0]*R,p[1]*domeH);});
   var dg=new THREE.LatheGeometry(prof,8); dg.rotateY(OCT);
   var msk=mk('sikhara','Sikhara (octagonal dome)','rule',
-    'Dome (roof) over the neck. The Mayamata makes the roof double or triple the height of the attic, and a little over double in its storey schemes [@maya]. A roof that is octagonal from the attic up marks the class called dravida [@maya][@man18]. No source in this list describes the dome shape of built Chola temples.',
-    {src:['maya','man18','man19','man22'],conf:80,basis:'Text',gram:'Crown → Dome',
-     dims:[['Height',T,'twice the neck [@maya][@man19]'],['Plan',T,'octagonal [@maya][@man18]'],['Profile and overhang',E,'estimated']]});
-  put(msk,dg,0,y,0); msk.n++;
+    'Dome (roof) over the neck. The Mayamata makes the roof double or triple the height of the attic, and a little over double in its storey schemes [@maya]. A roof that is octagonal from the attic up marks the class called dravida [@maya][@man18]. The Mayamata sets large false dormers (mahanasi) in the roof, eight on an octagonal one (19.18 to 19a, chapter 21) [@maya]. They are drawn as plain horseshoe arches, one on each face. Balasubrahmanyam calls Thanjavur\'s sikhara cupola-shaped [@bala_tanj]. No source read describes its dormers.',
+    {src:['maya','man18','man19','man22','bala_tanj'],conf:80,basis:'Text',gram:'Crown → Dome + Dormer×8',
+     dims:[['Height',T,'twice the neck [@maya][@man19]'],['Plan',T,'octagonal [@maya][@man18]'],['Dormers',T,'eight large false dormers, projecting by half their width or more (Mayamata 19.18 to 19a, chapter 21) [@maya]'],['Profile, overhang and dormer size',E,'estimated']]});
+  var skg=[mono(dg)], dnw=0.4*R, k8;
+  dg.translate(0,y,0);
+  if(den>=0.15) for(k8=0;k8<8;k8++){
+    skg.push(onSide(kuduGeom(dnw,0.4*domeH,0.24*R,true),0.84*R,0,y+0.03*domeH,k8*Math.PI/4));
+    if(HI) skg.push(onSide(kuduGeom(dnw*0.55,0.24*domeH,0.03*R,true),1.08*R,0,y+0.06*domeH,k8*Math.PI/4));
+  }
+  putAll(msk,skg); msk.n++;
   y+=domeH;
   var kk=mod/2.7;
   var kp=[[0,0],[0.55,0],[0.6,0.12],[1.0,0.5],[1.05,0.9],[0.75,1.3],[0.4,1.55],[0.55,1.7],[0.3,1.95],[0.12,2.4],[0,2.7]].map(function(p){return new THREE.Vector2(p[0]*kk,p[1]*kk);});
@@ -2220,7 +2277,7 @@ function build(){
     'Finial over the dome, about as tall as the neck and half the dome in the Mayamata and in several Manasara schemes [@maya][@man19][@man22]. The translation glosses the finial as a pitcher (kumbha) with a lotus and a pinnacle-staff above it [@man18][@man19], which is why it is drawn as a pot. Balasubrahmanyam gives the Thanjavur finial as 3.35 to 3.81 m, which is taller in proportion than this one [@bala_tanj].',
     {src:['maya','man18','man19','man22','bala_tanj'],conf:80,basis:'Text',gram:'Crown → Finial',
      dims:[['Height',T,'half the dome [@maya][@man19]'],['Profile',E,'estimated as a pot shape']]});
-  put(mkl,new THREE.LatheGeometry(kp,24),0,y-0.02*mod,0); mkl.n++;
+  put(mkl,mono(new THREE.LatheGeometry(kp,24)),0,y-0.02*mod,0); mkl.n++;
   var topY=y+mod;
   if(P.crown==='spike'){
     var msp=mk('spike','Spike above kalasa','inf',
