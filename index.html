@@ -60,6 +60,7 @@ a{color:var(--accent)}
 .pad [data-k="l"]{grid-area:2/1}
 .pad [data-k="b"]{grid-area:2/2}
 .pad [data-k="r"]{grid-area:2/3}
+.aim{position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#fff;border:1.5px solid #14110c;opacity:.85;pointer-events:none}
 .fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--fg);background:var(--surface)}
 .panel{display:flex;flex-direction:column;gap:12px;min-width:0}
 .blk{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;min-width:0}
@@ -143,6 +144,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
         <h1>Vimana Grammar</h1>
         <p>An idealized Chola-style tower, halls and court built from stacked rules. No sanctum interior.</p>
       </div>
+      <div class="aim" id="aim" hidden></div>
       <div class="pad" id="pad" role="group" aria-label="Walk controls" hidden>
         <button type="button" data-k="f" aria-label="Walk forward">▲</button>
         <button type="button" data-k="l" aria-label="Turn left">↺</button>
@@ -337,6 +339,18 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
       </section>
 
       <section class="blk">
+        <h3>Walking</h3>
+        <div class="ctl">
+          <label for="p-bob">Head-bob</label><input type="checkbox" id="p-bob" checked>
+          <div class="help">A slight rise and fall with each step. It is off when your device asks for reduced motion.</div>
+        </div>
+        <div class="ctl" style="margin-bottom:0">
+          <label for="p-mlook">Mouse look</label><input type="checkbox" id="p-mlook" checked>
+          <div class="help">With a mouse: click the view while walking, and moving the mouse then turns your head without dragging. A dot marks the middle of the view; click to inspect whatever it is on. Esc gives the mouse back, and Esc again leaves the walk.</div>
+        </div>
+      </section>
+
+      <section class="blk">
         <h3>Scope</h3>
         <div class="sublabel">STYLE</div>
         <div class="seg">
@@ -352,7 +366,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <button type="button" disabled title="Not built yet">Gopuram</button>
         </div>
         <p class="muted" style="margin-top:10px">Idealized composite, not a model of any specific temple. No sanctum interior, and no deity imagery inside any building. Deities may appear on exterior decoration; for now the gateways' sculpture is shown as generic figures. In walk mode the front halls can be entered, and the walk stops at the closed sanctum door. Figure sculpture in the court, such as the Nandis on the wall and the Nandi bull, is drawn as blank blocks. Dashed buttons are not built yet.</p>
-        <p class="muted">Walk puts the camera at eye height, 1.6 m, taking the base as 30.18 m wide, the Thanjavur figure the model's base heights are scaled from <a data-cite="bala_tanj"></a>. The paving pattern is there to show movement and has no source. Up close, the mouldings and pavilions are plain blocks.</p>
+        <p class="muted">Walk puts the camera at eye height, 1.6 m, taking the base as 30.18 m wide, the Thanjavur figure the model's base heights are scaled from <a data-cite="bala_tanj"></a>. Walking is 2.5 m a second and running 7. The head-bob, the eased steps and the stride length are there for feel and have no source, like the paving pattern, which is there to show movement. Up close, the mouldings and pavilions are plain blocks.</p>
       </section>
 
       <section class="blk">
@@ -487,7 +501,7 @@ var MODES={
 var DKIND={text:'Text',bldg:'Buildings',est:'Estimate'};
 
 /* ---------- State ---------- */
-var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',day:80,time:540,mode:'elem',halls:true,maha:'mapped',mukha:1,court:true,period:'chola',shrines:16,sculpt:'photo',
+var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',day:80,time:540,bob:true,mlook:true,mode:'elem',halls:true,maha:'mapped',mukha:1,court:true,period:'chola',shrines:16,sculpt:'photo',
   vis:{rule:true,inf:true,inv:true,src:true,part:true,est:true}};
 var metas=new Map();
 var selKey=null, selMeta=null, outlines=[];
@@ -758,7 +772,9 @@ var paving=(function(){
 
 /* ---------- Walk mode state: distances in metres, with the base taken as 30.18 m as at Thanjavur ---------- */
 var BASE_M=30.18, EYE_M=1.6, BODY_M=0.4, STEP_M=0.6, START_M=45, ROAM_M=220;
-var walk=false, wk={x:0,z:0,lv:0,yaw:0,pitch:0.3}, held={}, padHeld={};
+/* wk: position and floor level in metres, plus the feel of walking: off is how far the eye still has to rise or fall after a
+   step, ph and bobA the head-bob's phase and strength, vf and vs the eased speed forward and sideways, moved the distance covered this frame */
+var walk=false, wk={x:0,z:0,lv:0,yaw:0,pitch:0.3,off:0,ramp:false,ph:0,bobA:0,vf:0,vs:0,moved:0}, held={}, padHeld={};
 function upm(){return P.base/BASE_M;}   /* model units per metre */
 /* Walkable surfaces, rebuilt with the model, in model units: raised floors, stair ramps and solid footprints */
 var WK={plats:[],ramps:[],obs:[],roofs:[],lamps:[]};
@@ -2021,7 +2037,8 @@ var th=0.75, ph=1.2, dist=34, target=new THREE.Vector3(0,9,0);
 var DMIN=10, DMAX=320, userMoved=false;
 function updateCam(){
   if(walk){
-    var s=upm(), cp=Math.cos(wk.pitch), x=wk.x*s, y=(wk.lv+EYE_M)*s, z=wk.z*s;
+    var s=upm(), cp=Math.cos(wk.pitch), bob=0.032*wk.bobA, sway=0.5*bob*Math.sin(wk.ph/2);   /* the head also sways a little from foot to foot */
+    var x=(wk.x+Math.cos(wk.yaw)*sway)*s, y=(wk.lv+wk.off+EYE_M+bob*Math.sin(wk.ph))*s, z=(wk.z-Math.sin(wk.yaw)*sway)*s;
     camera.position.set(x,y,z);
     camera.lookAt(x-Math.sin(wk.yaw)*cp,y+Math.sin(wk.pitch),z-Math.cos(wk.yaw)*cp);
     var indoors=WK.roofs.some(function(r){return x>r.x0&&x<r.x1&&z>r.z0&&z<r.z1&&y<r.y;});
@@ -2063,6 +2080,7 @@ function settleWalker(){
   var s=upm();
   for(var i=0;i<80&&hitObs(wk.x*s,wk.z*s,BODY_M*s);i++){wk.x+=Math.sin(wk.yaw); wk.z+=Math.cos(wk.yaw);}
   wk.lv=levelAt(wk.x*s,wk.z*s)/s;
+  wk.ramp=onRamp; wk.off=wk.bobA=wk.vf=wk.vs=wk.moved=0;
 }
 
 /* ---------- Viewpoints ----------
@@ -2093,11 +2111,13 @@ function updateViewButtons(){
   });
 }
 /* floor height at a point, in model units: a stair ramp if on one, else the highest floor underneath */
+var onRamp=false;      /* whether the last levelAt() answer came from a stair */
 function levelAt(x,z){
   var i, h=0;
+  onRamp=false;
   for(i=0;i<WK.ramps.length;i++){
     var r=WK.ramps[i], u=r.ax==='z'?z:x, v=r.ax==='z'?x:z;
-    if(v>=r.c0&&v<=r.c1&&u>=Math.min(r.a,r.b)&&u<=Math.max(r.a,r.b)) return r.htop+(r.hbot-r.htop)*(u-r.a)/(r.b-r.a);
+    if(v>=r.c0&&v<=r.c1&&u>=Math.min(r.a,r.b)&&u<=Math.max(r.a,r.b)){onRamp=true; return r.htop+(r.hbot-r.htop)*(u-r.a)/(r.b-r.a);}
   }
   for(i=0;i<WK.plats.length;i++){
     var p=WK.plats[i];
@@ -2124,12 +2144,18 @@ function moveBy(fw,rt){
   var sy=Math.sin(wk.yaw), cy=Math.cos(wk.yaw), s=upm();
   var dx=-sy*fw+cy*rt, dz=-cy*fw-sy*rt, n=Math.max(1,Math.ceil(Math.hypot(dx,dz)/0.25));
   dx/=n; dz/=n;
+  var x0=wk.x, z0=wk.z;
   for(var i=0;i<n;i++){
     if(canStand((wk.x+dx)*s,wk.z*s)) wk.x+=dx;
     if(canStand(wk.x*s,(wk.z+dz)*s)) wk.z+=dz;
-    wk.lv=levelAt(wk.x*s,wk.z*s)/s;
+    var lv=levelAt(wk.x*s,wk.z*s)/s, was=wk.ramp, dl=lv-wk.lv;
+    wk.ramp=onRamp;
+    /* a stair is a slope and is followed exactly. Any other change of floor is a step: the eye stays where it was and catches up (walkFeel) */
+    if(dl&&((!was&&!onRamp)||Math.abs(dl)>0.2)) wk.off=clamp(wk.off-dl,-0.9,0.9);
+    wk.lv=lv;
   }
   var rm=Math.max(ROAM_M,0.95*140*ground.scale.x/s), d=Math.hypot(wk.x,wk.z); if(d>rm){wk.x*=rm/d; wk.z*=rm/d;}
+  wk.moved+=Math.hypot(wk.x-x0,wk.z-z0);
   updateCam();
 }
 var MOVE={KeyW:1,KeyA:1,KeyS:1,KeyD:1,ArrowUp:1,ArrowDown:1,ArrowLeft:1,ArrowRight:1};
@@ -2137,15 +2163,34 @@ function stepWalk(dt){
   var f=(held.KeyW||held.ArrowUp||padHeld.f?1:0)-(held.KeyS||held.ArrowDown||padHeld.b?1:0);
   var sd=(held.KeyD?1:0)-(held.KeyA?1:0);
   var tn=(held.ArrowLeft||padHeld.l?1:0)-(held.ArrowRight||padHeld.r?1:0);
-  if(!f&&!sd&&!tn) return;
-  wk.yaw+=tn*1.5*dt;
-  var sp=(held.shift?7:2.5)*dt/(f&&sd?Math.SQRT2:1);   /* metres per second: walking, or running with Shift */
-  moveBy(f*sp,sd*sp);
+  var sp=(held.shift?7:2.5)/(f&&sd?Math.SQRT2:1);   /* metres per second: walking, or running with Shift */
+  var k=Math.min(1,dt*12);                           /* speed builds and falls away over a fraction of a second */
+  wk.vf+=(f*sp-wk.vf)*k; wk.vs+=(sd*sp-wk.vs)*k;
+  if(!f&&Math.abs(wk.vf)<0.03) wk.vf=0;
+  if(!sd&&Math.abs(wk.vs)<0.03) wk.vs=0;
+  if(tn) wk.yaw+=tn*1.5*dt;
+  if(wk.vf||wk.vs) moveBy(wk.vf*dt,wk.vs*dt); else if(tn) updateCam();
+}
+/* the feel of walking, once a frame: head-bob tied to the distance covered, and the eye catching up after a step */
+function walkFeel(dt){
+  var mv=wk.moved, run=dt>0&&mv/dt>4, on=P.bob&&!REDUCED&&mv>1e-4, off0=wk.off, a0=wk.bobA;
+  wk.moved=0;
+  wk.ph+=mv*2*Math.PI/(run?1.5:0.75);                /* one rise and fall for each stride */
+  wk.bobA+=((on?(run?1.6:1):0)-wk.bobA)*Math.min(1,dt*(on?10:6));
+  if(wk.bobA<0.004) wk.bobA=0;
+  wk.off*=Math.exp(-dt*11); if(Math.abs(wk.off)<0.003) wk.off=0;
+  if(off0||a0||wk.bobA) updateCam();
 }
 var coarse=!!(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches);
+/* Mouse look: with a mouse, a click in walk mode locks the pointer to the view, so moving the mouse turns the head.
+   The browser frees it on Esc. While it is locked a click inspects whatever is in the middle of the view. */
+var canLock=!coarse&&!!cv.requestPointerLock, unlockT=0;
+function locked(){return document.pointerLockElement===cv;}
 function setHint(){
   $('hint').textContent=walk
-    ?(coarse?'Hold the arrows to walk. Drag to look. Tap an element.':'WASD or arrow keys to walk, Shift to run. Drag to look. Esc to leave.')
+    ?(coarse?'Hold the arrows to walk. Drag to look. Tap an element.'
+      :locked()?'Mouse to look, WASD to walk, Shift to run. Click to inspect. Esc frees the mouse.'
+      :'WASD or arrow keys to walk, Shift to run. '+(canLock&&P.mlook?'Click to look with the mouse.':'Drag to look.')+' Esc to leave.')
     :(coarse?'Drag to orbit. Pinch to zoom. Tap an element.':'Drag to orbit. Scroll or pinch to zoom. Click an element.');
 }
 function setWalk(on){
@@ -2161,13 +2206,17 @@ function setWalk(on){
     ?'3D view at eye level. W A S D or arrow keys walk, Shift runs, Escape returns to orbit.'
     :'3D view of the generated tower. Arrow keys orbit, plus and minus zoom.');
   setHint();
-  if(!on){lantern.intensity=0; if(!userMoved) dist=fitDist();}
+  if(!on){lantern.intensity=0; if(locked()) document.exitPointerLock(); if(!userMoved) dist=fitDist();}
   applyLight();      /* the haze is thicker at eye level */
   updateCam();
   if(on) cv.focus({preventScroll:true});
 }
 
 var pts=new Map(), down=null, pinch0=0, dist0=0;
+document.addEventListener('pointerlockchange',function(){
+  if(!locked()) unlockT=performance.now();
+  $('aim').hidden=!locked(); pts.clear(); down=null; cv.style.cursor='grab'; setHint();
+});
 cv.addEventListener('pointerdown',function(e){
   try{cv.setPointerCapture(e.pointerId);}catch(_){}
   pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
@@ -2179,6 +2228,10 @@ cv.addEventListener('pointerdown',function(e){
   cv.style.cursor='grabbing';
 });
 cv.addEventListener('pointermove',function(e){
+  if(walk&&locked()){      /* some browsers report an occasional wild jump, so each movement is capped */
+    wk.yaw-=clamp(e.movementX||0,-120,120)*0.0022; wk.pitch=clamp(wk.pitch-clamp(e.movementY||0,-120,120)*0.0022,-1.2,1.5);
+    updateCam(); return;
+  }
   var p=pts.get(e.pointerId); if(!p) return;
   var dx=e.clientX-p.x, dy=e.clientY-p.y; p.x=e.clientX; p.y=e.clientY;
   if(pts.size===1){
@@ -2195,7 +2248,9 @@ function endPtr(e){
   var had=pts.delete(e.pointerId);
   cv.style.cursor='grab';
   if(had&&down&&down.id===e.pointerId&&down.moved<6&&e.type==='pointerup'){
-    var m=pick(e.clientX,e.clientY); if(m) select(m);
+    var lk=walk&&locked(), r=cv.getBoundingClientRect();
+    var m=lk?pick(r.left+r.width/2,r.top+r.height/2):pick(e.clientX,e.clientY); if(m) select(m);
+    if(walk&&!lk&&canLock&&P.mlook&&e.pointerType==='mouse'){var pr=cv.requestPointerLock(); if(pr&&pr.catch) pr.catch(function(){});}
   }
   if(pts.size<2) pinch0=0;
   if(pts.size===0) down=null;
@@ -2210,7 +2265,7 @@ cv.addEventListener('wheel',function(e){
 cv.addEventListener('keydown',function(e){
   if(walk){
     held.shift=e.shiftKey;
-    if(e.key==='Escape'){setWalk(false); return;}
+    if(e.key==='Escape'){if(!locked()&&performance.now()-unlockT>400) setWalk(false); return;}   /* the first Esc only frees the mouse */
     if(MOVE[e.code]){held[e.code]=true; e.preventDefault();}
     return;
   }
@@ -2237,7 +2292,7 @@ var last=0;
 (function frame(now){
   requestAnimationFrame(frame);
   var dt=last?Math.min(0.05,(now-last)/1000):0; last=now;
-  if(walk) stepWalk(dt);
+  if(walk){stepWalk(dt); walkFeel(dt);}
   if(playing){P.time+=dt*40; if(P.time>1200) P.time=270; syncLight(); applyLight();}      /* forty minutes a second */
   if(walk&&lampNear&&!REDUCED){indoorK+=(indoorT-indoorK)*Math.min(1,dt*4); ambient(); updateLamps(now/1000); dirty=true;}   /* the lamps flicker */
   if(dirty){dirty=false; sky.position.copy(camera.position); renderer.render(scene,camera);}
@@ -2263,6 +2318,8 @@ $('p-court').addEventListener('change',function(e){P.court=e.target.checked; $('
 $('p-period').addEventListener('change',function(e){P.period=e.target.value; schedule();});
 $('p-shrines').addEventListener('change',function(e){P.shrines=parseInt(e.target.value,10); schedule();});
 $('p-sculpt').addEventListener('change',function(e){P.sculpt=e.target.value; schedule();});
+$('p-bob').addEventListener('change',function(e){P.bob=e.target.checked;});
+$('p-mlook').addEventListener('change',function(e){P.mlook=e.target.checked; if(!P.mlook&&locked()) document.exitPointerLock(); setHint();});
 $('tier-presets').addEventListener('click',function(e){
   var b=e.target.closest('button'); if(!b) return;
   var n=parseInt(b.dataset.n,10); P.tiers=n; $('p-tiers').value=n; $('o-tiers').textContent=n; schedule();
@@ -2335,6 +2392,8 @@ Array.prototype.forEach.call($('pad').children,function(b){
 })();
 
 /* ---------- Start ---------- */
+if(REDUCED){P.bob=false; $('p-bob').checked=false; $('p-bob').disabled=true;}
+if(!canLock){P.mlook=false; $('p-mlook').checked=false; $('p-mlook').disabled=true;}
 setHint();
 syncLight();
 $('p-mukha').disabled=P.maha==='mapped';
