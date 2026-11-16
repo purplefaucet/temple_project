@@ -73,6 +73,15 @@ The gateways' detail rests on `gopuram.md`, the halls' on `mandapa.md` and the c
 | Salas | Three finials on the ridge, a dormer on the front | Rule-derived | Several finials: Text (22.82–89). Arch on pavilions: Text (20.38). Count: Estimate. |
 | Nandis at the top | A pair at each corner of the platform under the neck, blank blocks 1.98 by 1.68 m | Rule-derived | Count, place, size: Buildings (BS-C). Breadth and facing: Estimate. |
 | Sikhara dormers | Eight plain horseshoe dormers, one a face | Part of the sikhara (Rule-derived) | Presence: Text (19.18–19a; ch. 21). Size: Estimate. Thanjavur's own not described in BS-C. |
+| Hall walls | Pilasters at the tower's spacing on every outside face; a pilaster each side of a door as its jamb, with a lintel band | Part of each hall (Rule-derived) | Form: Text (ch. 15; 19.20–22 for jambs). Count and size: Estimate. |
+| Hall entablature | The tower wall's cornice and dormers round all three halls; ceiling beams over each row of pillars | Rule-derived | Parts: Text (ch. 16; MS 34.70–72). Beams: Text (16.36 on). Sizes: Estimate. |
+| Hall pillars | Square shaft, abacus and a cross-shaped bracket capital | Rule-derived | "Plain, square and heavy": Buildings (BS-G). Bracket on every pillar: Text (15.28a). |
+| Guardians at the side doors | Generic standing figures either side of each ardhamandapa door, outside | Rule-derived (presence); form invented | Presence: Buildings (BS-T, `mandapa.md` §2). Size, place: Estimate. |
+| Stair balustrades | A wavy band ending in a curl at the foot | Rule-derived | "Sinuous" (BS-T) and "elephant's trunk" (MM 19.6–7): Text and Buildings. Curve: Estimate. |
+| Court wall | Coping of architrave, fascia, doucine and cap-stone at 3 : 3 : 2 : 3, as high as the wall is thick, on the outer face | Part of the wall (Rule-derived) | Text (MM 23.23–25). |
+| Cloister | Moulded base, a cornice with dormers on the ground storey and a cornice on the upper; pillars with abacus and bracket | Rule-derived | Base, pillars, entablature: Text (MM 23.30–31, 23.67b–69; MS 31.61–62). Shapes: Estimate. |
+| Shrines | Stepped base, pilasters, three-step entablature with a dormer a face, pot finial | As each shrine | Shrines may look like temples: Text (MM 23.57b–58a). Shapes: Estimate. |
+| Nandi pavilion (later) | Moulded platform, twelve pillars round the edge, beams, cornice | Inferred | All Estimate. Not the Nayak building as it stands. |
 
 ## 5. Not read or still needed
 
