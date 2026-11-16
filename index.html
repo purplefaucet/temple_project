@@ -318,10 +318,21 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
 
       <section class="blk">
         <h3>Light</h3>
-        <div class="seg" id="light-seg" role="group" aria-label="Lighting">
-          <button type="button" data-l="morning" aria-pressed="false">Morning</button>
-          <button type="button" data-l="noon" aria-pressed="true">Noon</button>
-          <button type="button" data-l="dusk" aria-pressed="false">Dusk</button>
+        <div class="ctl">
+          <label for="p-time">Time of day</label><output id="o-time">09:00</output>
+          <input type="range" id="p-time" min="270" max="1200" step="1" value="540">
+        </div>
+        <div class="seg" id="light-seg" role="group" aria-label="Jump to a time of day" style="margin:-4px 0 14px">
+          <button type="button" data-l="morning">Morning</button>
+          <button type="button" data-l="noon">Noon</button>
+          <button type="button" data-l="dusk">Dusk</button>
+          <button type="button" data-l="now" title="The date and time in Thanjavur right now. At night it stops at the nearest end of the slider.">Now</button>
+          <button type="button" data-l="play" aria-pressed="false">Run the day</button>
+        </div>
+        <div class="ctl" style="margin-bottom:0">
+          <label for="p-day">Date</label><output id="o-day">21 March</output>
+          <input type="range" id="p-day" min="1" max="365" step="1" value="80">
+          <div class="help"><span id="o-sun"></span> The sun is placed for Thanjavur's latitude and longitude, in Indian Standard Time, with the temple's real axis, which points 70.1° east of north <a data-cite="osm"></a>. Its position is calculated <a data-cite="sunpos"></a>, not observed. The sky's colours, the haze, the stars and the lamps in the halls are artistic and have no source.</div>
         </div>
       </section>
 
@@ -380,7 +391,8 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <li>The court, gateways, Nandi pavilion and court shrines are placed from OpenStreetMap outlines, measured for this project and checked against satellite imagery, to within about 1.5 to 4 m <a data-cite="osm"></a>. That is not a published survey. The open court's inner edge is the least certain figure, at about 4 m.</li>
           <li>The measured cloister, 241 by 121 m outside, matches the Archaeological Survey of India's 240.9 by 122 m <a data-cite="asi"></a>, so that figure describes the outside of the walls. Balasubrahmanyam's 152.40 by 77.20 m <a data-cite="bala_complex"></a> matches nothing on the site. His “almost a hundred metres” between the gateways also disagrees with the measured 71.9 m. It fits if counted from the later outermost gate, which is a guess.</li>
           <li>No Chola wall round the outer gateway was found. The only outer wall is the later fort's, which runs through the gateway <a data-cite="osm"></a>, so the gateway is drawn standing alone. ICOMOS's 270 by 140 m outer boundary <a data-cite="ic87"></a> matches nothing mapped.</li>
-          <li>The real complex faces about 20° north of east. The model uses its own axis, so the light presets do not show the real sun angles.</li>
+          <li>The real complex faces about 20° north of east: its axis bears 70.1°, measured from map outlines to about ±0.3° <a data-cite="osm"></a>. The light uses that bearing and a calculated sun for Thanjavur (10.78° N, 79.13° E) in 2026 <a data-cite="sunpos"></a>. The calculation leaves out the bending of light near the horizon, about half a degree, so the drawn sun rises a few minutes late and sets a few minutes early; the sunrise and sunset times shown allow for it. The ground is flat and nothing outside the complex casts a shadow. The sun's path in 1010 was not calculated. The sky's colours, the haze, the brightness of the light and the stars are artistic, not measured.</li>
+          <li>The lamps in the halls are invented. No source read for this project says how the halls were lit, so their form, number and places have no evidence behind them.</li>
           <li>The halls follow the mapped outline by default: their main east face is 67.2 m from the tower's centre, with a porch 10.5 m wide in front <a data-cite="osm"></a>. Reading that porch as the mukhamandapa is an inference. How the length divides between the ardhamandapa and the great hall is estimated.</li>
           <li>The map labels the small shrine north of the tower “Perumal temple”. It stands where the Chandesvara shrine should be, so it is drawn as that shrine, which is about 70% certain. The later shrines' names are also the map's own and unverified.</li>
           <li>Wall height and thickness, pillar spacing and all building heights are estimates. The wall's height follows the Mayamata's rule tying it to the cloister <a data-cite="maya"></a>. The cloister is drawn whole, but its upper storey has almost disappeared today <a data-cite="sp_notes"></a>.</li>
@@ -456,7 +468,8 @@ var SRC={
  ph_mortel:{n:'Richard Mortel, photographs of the Rajarajan gateway, 2017 (Wikimedia Commons, CC BY 2.0)',u:'https://commons.wikimedia.org/wiki/File:Brihadishwara_Temple,_Dedicated_to_Shiva,_built_by_Rajaraja_I,_completed_in_1010,_Thanjavur_(31)_(37237881240).jpg',use:'The two guardians of the east face, the large base panel under the south guardian, and the west face\'s niche figures and north base panels, shown as images on the model.',rel:'Photographs, licensed CC BY 2.0. Cropped, and the guardians cut out from their background, for this project. Every file, its original and its edits are listed in assets/sculpture/CREDITS.md in the repository.'},
  ph_maari:{n:'Thamizhpparithi Maari, photographs of the Rajarajan gateway\'s base, 2012 (Wikimedia Commons, CC BY-SA 3.0)',u:'https://commons.wikimedia.org/wiki/File:%22A_collection_of_details_on_the_Rajarajan_Entrance_of_The_Big_Temple%22.JPG',use:'The base panels of the east face and of the west face\'s south bay, shown as images on the model.',rel:'Photographs, licensed CC BY-SA 3.0. Cropped for this project; the crops are shared under CC BY-SA 3.0. Every file, its original and its edits are listed in assets/sculpture/CREDITS.md in the repository.'},
  man32:{n:'Manasara, chapter 32, The attendant deities',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421079.html',use:'The bull\'s shrine in the east, made like a pavilion. The bali altar toward the gateway.',rel:MANREL},
- man33:{n:'Manasara, chapter 33, The gate-houses',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421080.html',use:'More storeys for gateways further out. Length 1¼ to 2 times the width.',rel:MANREL}
+ man33:{n:'Manasara, chapter 33, The gate-houses',u:'https://www.wisdomlib.org/hinduism/book/manasara-english-translation/d/doc421080.html',use:'More storeys for gateways further out. Length 1¼ to 2 times the width.',rel:MANREL},
+ sunpos:{n:'Wikipedia, Position of the Sun, giving the Astronomical Almanac\'s approximate formula',u:'https://en.wikipedia.org/wiki/Position_of_the_Sun',use:'The sun\'s height and bearing for a date and time, used by the Light controls. The page gives the formula\'s precision as about 0.01° for dates between 1950 and 2050, and cites the Astronomical Almanac for 2010, page C5.',rel:'Tertiary source for a standard formula, read as excerpts returned by a fetch tool. The Almanac itself was not read. The page\'s code was written by Claude and checked against the SunCalc library for Thanjavur across 2026: bearings agree to 0.01° and heights to 0.02°, apart from the bending of light near the horizon, which this page leaves out.'}
 };
 var NUM={}; Object.keys(SRC).forEach(function(k,i){NUM[k]=i+1;});
 function cite(t){return t.replace(/\[@(\w+)\]/g,function(_,k){return '['+NUM[k]+']';});}
@@ -474,7 +487,7 @@ var MODES={
 var DKIND={text:'Text',bldg:'Buildings',est:'Estimate'};
 
 /* ---------- State ---------- */
-var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',light:'noon',mode:'elem',halls:true,maha:'mapped',mukha:1,court:true,period:'chola',shrines:16,sculpt:'photo',
+var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',day:80,time:540,mode:'elem',halls:true,maha:'mapped',mukha:1,court:true,period:'chola',shrines:16,sculpt:'photo',
   vis:{rule:true,inf:true,inv:true,src:true,part:true,est:true}};
 var metas=new Map();
 var selKey=null, selMeta=null, outlines=[];
@@ -521,23 +534,166 @@ sun.shadow.camera.near=1; sun.shadow.camera.far=400;
 sun.shadow.camera.updateProjectionMatrix();
 sun.shadow.bias=-0.0012; sun.shadow.normalBias=0.09;
 scene.add(sun); scene.add(sun.target);
-var LIGHTS={
- morning:{sun:0xffd9b0,si:2.6,dir:[-0.7,0.45,0.55],sky:0xc6d6ea,gnd:0x8b7e6b,hi:1.0,a:'#a9c6dd',b:'#f1d6b8'},
- noon:{sun:0xfff6e8,si:2.6,dir:[0.35,1.0,0.45],sky:0xd3e2f2,gnd:0x8d8678,hi:1.1,a:'#7db0de',b:'#d8e7f3'},
- dusk:{sun:0xff9a66,si:2.5,dir:[0.85,0.22,-0.5],sky:0x7a7ab0,gnd:0x3a3040,hi:0.9,a:'#2b2a58',b:'#e48b5e'}
-};
+/* Shadows are drawn again only when the sun or the model changes, not on every frame. */
+renderer.shadowMap.autoUpdate=false;
+function shadowTouch(){renderer.shadowMap.needsUpdate=true;}
+/* three warm lights shared among the hall lamps: they sit at the lamps nearest the viewer (see updateLamps).
+   Always in the scene, like the lantern, so the shaders never need recompiling. */
+var lampL=[0,1,2].map(function(){var l=new THREE.PointLight(0xffc27e,0,1,1.6); l.color.convertSRGBToLinear(); scene.add(l); return l;});
+var lampK=0, lampsLit=false, lampNear=false, dayK=1;
+/* a soft second light with no shadows: the bright sky where the sun has set or is about to rise, then a dim cool fill at night */
+var glowL=new THREE.DirectionalLight(0xffffff,0); scene.add(glowL); scene.add(glowL.target);
+/* under a hall roof after sunset the outdoor light is turned down, so the lamps carry the room. indoorK eases toward indoorT. */
+var hemiBase=1, glowBase=0, indoorT=0, indoorK=0;
+function ambient(){var k=lampK*indoorK; hemi.intensity=hemiBase*(1-0.5*k); glowL.intensity=glowBase*(1-0.85*k);}
+var REDUCED=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+/* ---------- Sun, sky and haze ----------
+   The sun is placed for Thanjavur on a day of 2026 and a clock time in Indian Standard Time, then turned into the
+   model's frame with the temple's real axis: +z bears 70.1° and +x 340.1° (research/measurements.md, section 2).
+   The position is the Astronomical Almanac's low-precision formula, with no refraction. Checked against the SunCalc
+   library across the year: bearings agree to 0.01°, heights to 0.02° apart from refraction near the horizon.
+   Everything else here (colours, haze, stars) is artistic. */
+var SITE={lat:10.7828,lon:79.1318,axis:70.1,tz:5.5}, RAD=Math.PI/180;
+function sunAt(day,min){
+  var n=9496.5+(day-1)+(min/60-SITE.tz)/24;                 /* days since noon UT on 1 January 2000 */
+  var L=(280.460+0.9856474*n)%360, g=((357.528+0.9856003*n)%360)*RAD;
+  var lam=(L+1.915*Math.sin(g)+0.020*Math.sin(2*g))*RAD, eps=(23.439-0.0000004*n)*RAD;
+  var ra=Math.atan2(Math.cos(eps)*Math.sin(lam),Math.cos(lam)), dec=Math.asin(Math.sin(eps)*Math.sin(lam));
+  var gmst=(18.697374558+24.06570982441908*n)%24, ha=(gmst*15+SITE.lon)*RAD-ra, lat=SITE.lat*RAD;
+  var alt=Math.asin(Math.sin(lat)*Math.sin(dec)+Math.cos(lat)*Math.cos(dec)*Math.cos(ha));
+  var az=Math.atan2(-Math.cos(dec)*Math.sin(ha),Math.sin(dec)*Math.cos(lat)-Math.cos(dec)*Math.cos(ha)*Math.sin(lat));
+  return {alt:alt/RAD,az:(az/RAD+360)%360};                 /* height above the horizon, and bearing clockwise from north */
+}
+/* sunrise and sunset (the sun's top edge on the horizon, with standard refraction: centre at -0.833°) and the highest sun, in minutes */
+var dayCache={day:0};
+function dayTimes(day){
+  if(dayCache.day===day) return dayCache;
+  var r={day:day,rise:null,set:null,noon:720}, best=-99, prev=sunAt(day,0).alt, m, a;
+  for(m=1;m<1440;m++){
+    a=sunAt(day,m).alt;
+    if(prev<-0.833&&a>=-0.833) r.rise=m;
+    if(prev>=-0.833&&a<-0.833) r.set=m;
+    if(a>best){best=a; r.noon=m;}
+    prev=a;
+  }
+  return (dayCache=r);
+}
+function smooth(a,b,x){var t=clamp((x-a)/(b-a),0,1); return t*t*(3-2*t);}
+function hhmm(m){m=Math.round(m); return ('0'+Math.floor(m/60)).slice(-2)+':'+('0'+m%60).slice(-2);}
+var MONTHS=[['January',31],['February',28],['March',31],['April',30],['May',31],['June',30],['July',31],['August',31],['September',30],['October',31],['November',30],['December',31]];
+function dateText(day){for(var i=0;i<12;i++){if(day<=MONTHS[i][1]) return day+' '+MONTHS[i][0]; day-=MONTHS[i][1];} return '';}
+var WINDS=['north','north-east','east','south-east','south','south-west','west','north-west'];
+
+/* Sky: a dome that follows the camera, shaded from the horizon haze up to the zenith, with the sun's disc and glow.
+   Colours are written straight to the screen, like the fog, so the dome meets the haze on the ground exactly. */
+var sky=new THREE.Mesh(new THREE.SphereGeometry(1,32,16),new THREE.ShaderMaterial({
+  side:THREE.BackSide,depthWrite:false,depthTest:false,fog:false,
+  uniforms:{uZen:{value:new THREE.Color()},uHor:{value:new THREE.Color()},uGlow:{value:new THREE.Color()},uDisc:{value:new THREE.Color()},
+    uSun:{value:new THREE.Vector3(0,1,0)},uGold:{value:0},uNight:{value:0}},
+  vertexShader:'varying vec3 vD;\nvoid main(){vD=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
+  fragmentShader:[
+    'uniform vec3 uZen; uniform vec3 uHor; uniform vec3 uGlow; uniform vec3 uDisc; uniform vec3 uSun; uniform float uGold; uniform float uNight;',
+    'varying vec3 vD;',
+    'float hash(vec3 p){return fract(sin(dot(p,vec3(12.9898,78.233,37.719)))*43758.5453);}',
+    'void main(){',
+    '  vec3 d=normalize(vD); float y=d.y;',
+    '  float ch=length(d-uSun);',                                              /* chord to the sun, close to the angle in radians */
+    '  float side=max(dot(normalize(d.xz+vec2(1e-5)),normalize(uSun.xz+vec2(1e-5))),0.0);',
+    '  vec3 c=mix(mix(uHor,uGlow,uGold*side*side*side),uZen,pow(clamp(y,0.0,1.0),0.42));',
+    '  c+=uGlow*uGold*0.5*exp(-ch*2.4)*(1.0-clamp(y*1.7,0.0,1.0));',
+    '  c+=uDisc*(0.2*exp(-ch*9.0)+1.0-smoothstep(0.010,0.014,ch));',
+    '  vec3 q=d*110.0;',
+    '  float star=step(0.9965,hash(floor(q)))*(1.0-smoothstep(0.1,0.42,length(fract(q)-0.5)));',
+    '  c+=vec3(0.85,0.9,1.0)*star*uNight*smoothstep(0.03,0.35,y);',
+    '  c=mix(uHor,c,smoothstep(0.0,0.07,y));',                                 /* at and below the horizon, all haze */
+    '  c+=(hash(vec3(gl_FragCoord.xy,1.0))-0.5)/255.0;',                       /* a little noise, against banding */
+    '  gl_FragColor=vec4(c,1.0);',
+    '}'].join('\n')
+}));
+sky.scale.setScalar(1800); sky.renderOrder=-10; sky.frustumCulled=false; sky.raycast=function(){}; scene.add(sky);
+scene.fog=new THREE.FogExp2(0xc6d9ea,0.001);
+
+var tmpC=new THREE.Color();
+/* mix three colours by the weights of night, twilight and day */
+function blend(out,n,g,d,w){
+  out.setRGB(0,0,0);
+  [[n,w.n],[g,w.g],[d,w.d]].forEach(function(p){tmpC.setHex(p[0]); out.r+=tmpC.r*p[1]; out.g+=tmpC.g*p[1]; out.b+=tmpC.b*p[1];});
+  return out;
+}
 function applyLight(){
-  var L=LIGHTS[P.light];
-  var d=new THREE.Vector3(L.dir[0],L.dir[1],L.dir[2]).normalize();
-  sun.color.setHex(L.sun).convertSRGBToLinear(); sun.intensity=L.si;
+  var S=sunAt(P.day,P.time), h=S.alt, a=(S.az-SITE.axis)*RAD;
+  var w={d:smooth(-2,14,h),n:1-smooth(-14,-3,h)}; w.g=1-w.d-w.n;
+  var U=sky.material.uniforms, up=smooth(0,28,h);
+  function dir(v,alt){var c=Math.cos(alt*RAD); return v.set(-c*Math.sin(a),Math.sin(alt*RAD),c*Math.cos(a));}
+  dir(U.uSun.value,h);
+  var d=dir(new THREE.Vector3(),Math.max(h,2.5));          /* the light itself never drops below 2.5°; it fades out instead */
+  sun.color.setHex(0xff9c5c).lerp(tmpC.setHex(0xfff4e4),up).convertSRGBToLinear(); sun.intensity=2.6*smooth(-1,8,h);
   sun.position.set(d.x*150,H*0.4+d.y*150,CXT.sz+d.z*150);
   sun.target.position.set(0,H*0.4,CXT.sz);
   var ext=Math.max(30,H*0.75+P.base,CXT.sh*1.1);
   sun.shadow.camera.left=sun.shadow.camera.bottom=-ext; sun.shadow.camera.right=sun.shadow.camera.top=ext;
   sun.shadow.camera.updateProjectionMatrix();
-  hemi.color.setHex(L.sky).convertSRGBToLinear(); hemi.groundColor.setHex(L.gnd).convertSRGBToLinear(); hemi.intensity=L.hi;
-  var st=$('stage'); st.style.setProperty('--sky-a',L.a); st.style.setProperty('--sky-b',L.b);
-  dirty=true;
+  blend(hemi.color,0x4a5a8c,0x8d86a8,0xd3e2f2,w).convertSRGBToLinear();
+  blend(hemi.groundColor,0x1e1f2c,0x4a3d40,0x8d8678,w).convertSRGBToLinear();
+  hemiBase=0.9*w.n+1.0*w.g+1.08*w.d;
+  dir(glowL.position,25).multiplyScalar(150); glowL.position.y+=H*0.4; glowL.position.z+=CXT.sz; glowL.target.position.copy(sun.target.position);
+  glowL.color.setHex(0x9fb2e0).lerp(tmpC.setHex(0xffb493),w.g/Math.max(w.g+w.n,1e-6)).convertSRGBToLinear();
+  glowBase=0.95*w.g*(1-smooth(0,8,h))+0.75*w.n;
+  blend(U.uZen.value,0x060a1a,0x2c3a78,0x4f93d6,w);
+  blend(U.uHor.value,0x18223c,0xa594a6,0xc6d9ea,w);
+  U.uGlow.value.setHex(0xf2935a);
+  U.uDisc.value.setHex(0xff6a2a).lerp(tmpC.setHex(0xfff6dc),up).multiplyScalar(smooth(-1.5,0.5,h));
+  U.uGold.value=w.g*smooth(-13,-5,h); U.uNight.value=1-smooth(-12,-5,h);
+  /* haze: light from the orbit view so the evidence colours stay readable, thicker at eye level and around dawn and dusk */
+  scene.fog.color.copy(U.uHor.value);
+  scene.fog.density=(walk?0.0011:0.00045)*(1+0.9*w.g+0.3*w.n)/upm();
+  var st=$('stage'); st.style.setProperty('--sky-a','#'+U.uZen.value.getHexString()); st.style.setProperty('--sky-b','#'+U.uHor.value.getHexString());
+  /* lamps come on as the sun gets low; photographs lose their own glow at night */
+  dayK=smooth(-6,10,h); lampK=1-smooth(-4,6,h);
+  var lit=lampK>0.02;
+  if(lit!==lampsLit){lampsLit=lit; lampVis();}
+  LAMPGLOW.mat.uniforms.uK.value=lampK; ambient();
+  Object.keys(PHOTO).forEach(function(k){PHOTO[k].mat.emissiveIntensity=photoGlow();});
+  var T=dayTimes(P.day);
+  $('o-sun').textContent=(h>=0?'Sun '+Math.round(h)+'° above the horizon, bearing '+Math.round(S.az)+'° ('+WINDS[Math.round(S.az/45)%8]+').'
+    :'Sun '+Math.round(-h)+'° below the horizon.')+' Sunrise '+hhmm(T.rise)+', sunset '+hhmm(T.set)+'.';
+  shadowTouch(); updateLamps(); dirty=true;
+}
+function photoGlow(){return 0.22*(0.2+0.8*dayK);}
+
+/* ---------- Hall lamps ----------
+   The flames and their glow are one mesh, drawn only when the lamps are lit. Real light comes from the three shared
+   lights, placed at the lamp pairs nearest the viewer and faded so that none switches on or off abruptly. */
+var LAMPGLOW=(function(){
+  var m=new THREE.ShaderMaterial({
+    transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,fog:false,
+    uniforms:{uK:{value:0}},
+    vertexShader:'varying vec3 vN; varying vec3 vV; varying float vB;\nvoid main(){vec4 mv=modelViewMatrix*vec4(position,1.0); vN=normalMatrix*normal; vV=-mv.xyz; vB=uv.x; gl_Position=projectionMatrix*mv;}',
+    fragmentShader:'uniform float uK; varying vec3 vN; varying vec3 vV; varying float vB;\nvoid main(){float f=max(dot(normalize(vN),normalize(vV)),0.0); gl_FragColor=vec4(vec3(1.0,0.62,0.24)*f*f*f*vB*uK,1.0);}'
+  });
+  return {mat:m,sel:m};
+})();
+function lampVis(){
+  var m=metas.get('hall-lamps'); if(!m) return;
+  var vis=P.vis[catOf(m)];
+  m.parts.forEach(function(p){if(p.userData.night) p.visible=vis&&lampsLit;});
+}
+function updateLamps(t){
+  var m=metas.get('hall-lamps'), st=WK.lamps, s=upm(), c=camera.position, i;
+  var k=(m&&P.vis[catOf(m)])?lampK:0;
+  lampNear=false;
+  if(k<=0.02||!st.length){for(i=0;i<3;i++) lampL[i].intensity=0; return;}
+  var ds=st.map(function(p,j){return [Math.hypot(p.x-c.x,p.y-c.y,p.z-c.z),j];}).sort(function(p,q){return p[0]-q[0];});
+  var d4=ds.length>3?ds[3][0]:0;
+  lampNear=ds[0][0]<45*s;
+  for(i=0;i<3;i++){
+    var L=lampL[i];
+    if(i>=ds.length){L.intensity=0; continue;}
+    var j=ds[i][1], p=st[j], wgt=d4?clamp((d4-ds[i][0])/(3*s),0,1):1;
+    var fl=t==null?1:1+0.07*Math.sin(t*9.1+j*2.3)+0.05*Math.sin(t*23.7+j*5.1);
+    L.position.set(p.x,p.y,p.z); L.distance=13*s; L.intensity=0.95*k*wgt*fl;
+  }
 }
 
 /* ---------- Materials ---------- */
@@ -570,6 +726,9 @@ var ROOT=new THREE.Group(); tower.add(ROOT);
 var ground=new THREE.Mesh(new THREE.CircleGeometry(140,96),new THREE.MeshStandardMaterial({color:0x5d655f,roughness:1}));
 ground.material.color.convertSRGBToLinear();
 ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; scene.add(ground);
+/* plain ground beyond the disc, out to where the haze hides it, so the horizon is ground meeting sky. It scales with the disc. */
+var farGround=new THREE.Mesh(new THREE.RingGeometry(139.5,2400,96,1),new THREE.MeshStandardMaterial({color:0x5d655f,roughness:1}));
+farGround.material.color.convertSRGBToLinear(); farGround.position.z=-0.02; farGround.raycast=function(){}; ground.add(farGround);
 /* Paving drawn on a canvas, shown only in walk mode so the ground visibly moves. Rows are 0.6 m, so one tile is 4.8 m. */
 var PAVE_M=4.8;
 var paving=(function(){
@@ -602,7 +761,7 @@ var BASE_M=30.18, EYE_M=1.6, BODY_M=0.4, STEP_M=0.6, START_M=45, ROAM_M=220;
 var walk=false, wk={x:0,z:0,lv:0,yaw:0,pitch:0.3}, held={}, padHeld={};
 function upm(){return P.base/BASE_M;}   /* model units per metre */
 /* Walkable surfaces, rebuilt with the model, in model units: raised floors, stair ramps and solid footprints */
-var WK={plats:[],ramps:[],obs:[],roofs:[]};
+var WK={plats:[],ramps:[],obs:[],roofs:[],lamps:[]};
 /* extent of the whole complex along z, for lighting and the orbit camera */
 var CXT={zc:0,half:10,front:0,sz:0,sh:10,ground:140,courtLine:'',walkZ:null};
 
@@ -641,11 +800,11 @@ function clearBuild(){
 var PHOTO={}, texLoader=new THREE.TextureLoader();
 function photoMat(file){
   if(PHOTO[file]) return PHOTO[file];
-  var tex=texLoader.load('assets/sculpture/'+file,function(){dirty=true;});
+  var tex=texLoader.load('assets/sculpture/'+file,function(){shadowTouch(); dirty=true;});
   tex.encoding=THREE.sRGBEncoding; tex.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
   var cut=/\.png$/.test(file);
   var mat=new THREE.MeshStandardMaterial({map:tex,roughness:0.92,metalness:0,side:THREE.DoubleSide,alphaTest:cut?0.5:0});
-  mat.emissiveMap=tex; mat.emissive=new THREE.Color(0xffffff); mat.emissiveIntensity=0.22;
+  mat.emissiveMap=tex; mat.emissive=new THREE.Color(0xffffff); mat.emissiveIntensity=photoGlow();
   var sel=mat.clone(); sel.emissiveMap=null; sel.emissive=new THREE.Color(0x12a5b5).convertSRGBToLinear(); sel.emissiveIntensity=0.4;
   return (PHOTO[file]={mat:mat,sel:sel});
 }
@@ -656,10 +815,10 @@ function refresh(){
   metas.forEach(function(m){
     var c=catOf(m), vis=P.vis[c], mat=(m===selMeta?MATSEL:MAT)[c];
     cnt[c]+=m.n;
-    m.parts.forEach(function(p){p.visible=vis; p.material=p.userData.photo?matOf(p,m,m===selMeta):mat;});
+    m.parts.forEach(function(p){p.visible=vis&&(lampsLit||!p.userData.night); p.material=p.userData.photo?matOf(p,m,m===selMeta):mat;});
   });
   keys.forEach(function(k,i){$('n-'+i).textContent=cnt[k];});
-  dirty=true;
+  shadowTouch(); updateLamps(); dirty=true;
 }
 function applyMode(){
   var M=MODES[P.mode];
@@ -874,6 +1033,37 @@ function buildHalls(W,upH,adH,upW,MOULD,slabs,padH,entH){
     'Four pillars inside the front hall. Halls in front of the shrine have pillars in the texts [@maya][@man34], but no source read describes the front hall\'s.',
     {src:['maya','man34'],conf:50,basis:'Text, loosely',gram:'Mukhamandapa → Pillars',dims:[['Number and spacing',E,'four, estimated'],PSIZE]});
   grid(mpk,wxK-t,zK,zE-t,2,2);
+
+  /* Lamps: a pair at each row of the central aisle, lit when the sun is low. Invented. */
+  var mlp=mk('hall-lamps','Lamps in the halls','inv',
+    'Standing oil lamps beside the pillars along the middle of the halls, lit when the sun is low so the halls can be walked at dusk. No source read for this project says how the halls were lit. The lamps\' form, number and places are invented, and they carry no figures.',
+    {src:[],gram:'Halls → Hall → Repeat(Lamp)',dims:[['Form, number and places',E,'invented']]});
+  mlp.noMerge=true;
+  var LG=[], LF=[];
+  function lampPair(x,z){
+    [-1,1].forEach(function(sd){
+      var g, i, u, X=sd*x;
+      g=new THREE.CylinderGeometry(0.11*s,0.15*s,0.06*s,8); g.translate(X,bt+0.03*s,z); LG.push(g);
+      g=new THREE.CylinderGeometry(0.03*s,0.04*s,1.1*s,6); g.translate(X,bt+0.61*s,z); LG.push(g);
+      g=new THREE.CylinderGeometry(0.13*s,0.05*s,0.08*s,8); g.translate(X,bt+1.2*s,z); LG.push(g);
+      /* flame and glow: uv.x carries the brightness for the glow shader */
+      [[0.045,2.2,6],[0.34,1,0.5]].forEach(function(f){
+        g=new THREE.SphereGeometry(f[0]*s,10,8); g.scale(1,f[1],1); g.translate(X,bt+1.34*s,z);
+        u=g.attributes.uv; for(i=0;i<u.count;i++) u.setXY(i,f[2],0);
+        LF.push(g);
+      });
+      WK.obs.push({x0:X-0.15*s,x1:X+0.15*s,z0:z-0.15*s,z1:z+0.15*s});
+      mlp.n++;
+    });
+    WK.lamps.push({x:0,y:bt+1.7*s,z:z});
+  }
+  var lj, lo=ps/2+0.2*s;
+  for(lj=0;lj<2;lj++) lampPair((wxA-t)/2-lo,zA+(lj+0.5)*LA/2);
+  for(lj=0;lj<HALLROWS;lj++) lampPair(wi/6-lo,zM+t+(lj+0.5)*(LM-2*t)/HALLROWS);
+  lampPair((wxK-t)/2+lo,zK+0.75*(zE-t-zK));
+  put(mlp,mergeGeoms(LG),0,0,0).castShadow=false;
+  var lfm=put(mlp,mergeGeoms(LF),0,0,0);
+  lfm.castShadow=lfm.receiveShadow=false; lfm.userData.photo=LAMPGLOW; lfm.userData.night=true; lfm.renderOrder=5;
 
   /* flat roofs: an entablature over each hall */
   var mr=mk('hall-prastara','Hall entablature and roof (prastara)','rule',
@@ -1526,7 +1716,7 @@ function build(){
     {src:['bala_tanj','maya','man13'],conf:80,basis:'Buildings (one example) and text',gram:'Tower → Sub-base',
      dims:[['Height',B,'1.40 m on a 30.18 m base at Thanjavur, about two fifths of the moulded base, a ratio the Mayamata lists [@bala_tanj][@maya]'],['Projection',T,'half its height, the top of the range the Mayamata gives [@maya]']]});
   put(mu,box(upW,upH,upW),0,upH/2,0); mu.n++;
-  WK={plats:[],ramps:[],obs:[],roofs:[]};
+  WK={plats:[],ramps:[],obs:[],roofs:[],lamps:[]};
   WK.plats.push({x0:-upW/2,x1:upW/2,z0:-upW/2,z1:upW/2,h:upH});
   WK.plats.push({x0:-0.53*W,x1:0.53*W,z0:-0.53*W,z1:0.53*W,h:upH+adH});
   WK.obs.push({x0:-0.45*W,x1:0.45*W,z0:-0.45*W,z1:0.45*W});
@@ -1755,7 +1945,7 @@ function mergeParts(){
 }
 
 /* ---------- Selection ---------- */
-var outlineMat=new THREE.LineBasicMaterial({color:0x0bd0e0,depthTest:false,transparent:true});
+var outlineMat=new THREE.LineBasicMaterial({color:0x0bd0e0,depthTest:false,transparent:true,fog:false});
 function clearOutline(){
   if(selMeta){var mm=selMeta; mm.parts.forEach(function(p){p.material=matOf(p,mm,false);});}
   outlines.forEach(function(l){if(l.parent)l.parent.remove(l); l.geometry.dispose();});
@@ -1768,6 +1958,7 @@ function select(m){
     var mat=MATSEL[catOf(m)];
     m.parts.forEach(function(p){
       p.material=matOf(p,m,true);
+      if(p.userData.night) return;      /* no outline round a flame's glow */
       var l=new THREE.LineSegments(new THREE.EdgesGeometry(p.geometry,25),outlineMat);
       l.renderOrder=999; l.raycast=function(){};
       p.add(l); outlines.push(l);
@@ -1834,14 +2025,15 @@ function updateCam(){
     camera.position.set(x,y,z);
     camera.lookAt(x-Math.sin(wk.yaw)*cp,y+Math.sin(wk.pitch),z-Math.cos(wk.yaw)*cp);
     var indoors=WK.roofs.some(function(r){return x>r.x0&&x<r.x1&&z>r.z0&&z<r.z1&&y<r.y;});
-    lantern.position.set(x,y,z); lantern.distance=30*s; lantern.intensity=indoors?1.1:0;
-    dirty=true; return;
+    lantern.position.set(x,y,z); lantern.distance=30*s; lantern.intensity=indoors?1.1-0.85*lampK:0;   /* dimmer once the lamps are lit */
+    indoorT=indoors?1:0; if(REDUCED||!lampNear){indoorK=indoorT; ambient();}
+    updateLamps(); dirty=true; return;
   }
   camera.position.set(
     target.x+dist*Math.sin(ph)*Math.sin(th),
     target.y+dist*Math.cos(ph),
     target.z+dist*Math.sin(ph)*Math.cos(th));
-  camera.lookAt(target); dirty=true;
+  camera.lookAt(target); indoorT=indoorK=0; ambient(); updateLamps(); dirty=true;
 }
 function orbitTarget(){target.set(0,H*(P.halls?0.35:0.47),CXT.zc);}
 function fitDist(){
@@ -1962,6 +2154,7 @@ function setWalk(on){
   camera.fov=on?65:38; camera.near=on?0.25*upm():0.5; camera.updateProjectionMatrix();
   var gm=ground.material; gm.map=on?paving:null;
   gm.color.setHex(on?0xffffff:0x5d655f).convertSRGBToLinear(); gm.needsUpdate=true;
+  farGround.material.color.setHex(on?0x6a6760:0x5d655f).convertSRGBToLinear();   /* the paving's average colour */
   $('pad').hidden=!on;
   $('walk').textContent=on?'Orbit':'Walk';
   cv.setAttribute('aria-label',on
@@ -1969,6 +2162,7 @@ function setWalk(on){
     :'3D view of the generated tower. Arrow keys orbit, plus and minus zoom.');
   setHint();
   if(!on){lantern.intensity=0; if(!userMoved) dist=fitDist();}
+  applyLight();      /* the haze is thicker at eye level */
   updateCam();
   if(on) cv.focus({preventScroll:true});
 }
@@ -2044,7 +2238,9 @@ var last=0;
   requestAnimationFrame(frame);
   var dt=last?Math.min(0.05,(now-last)/1000):0; last=now;
   if(walk) stepWalk(dt);
-  if(dirty){dirty=false; renderer.render(scene,camera);}
+  if(playing){P.time+=dt*40; if(P.time>1200) P.time=270; syncLight(); applyLight();}      /* forty minutes a second */
+  if(walk&&lampNear&&!REDUCED){indoorK+=(indoorT-indoorK)*Math.min(1,dt*4); ambient(); updateLamps(now/1000); dirty=true;}   /* the lamps flicker */
+  if(dirty){dirty=false; sky.position.copy(camera.position); renderer.render(scene,camera);}
 })(0);
 
 /* ---------- Controls ---------- */
@@ -2071,11 +2267,33 @@ $('tier-presets').addEventListener('click',function(e){
   var b=e.target.closest('button'); if(!b) return;
   var n=parseInt(b.dataset.n,10); P.tiers=n; $('p-tiers').value=n; $('o-tiers').textContent=n; schedule();
 });
+/* Light: a time slider and a date slider, quick jumps tied to that day's sunrise and sunset, and a button that runs the day */
+var playing=false;
+function syncLight(){
+  $('p-time').value=Math.round(P.time); $('o-time').textContent=hhmm(P.time);
+  $('p-day').value=P.day; $('o-day').textContent=dateText(P.day);
+}
+function setPlaying(on){
+  playing=on; var b=$('light-seg').querySelector('[data-l="play"]');
+  b.setAttribute('aria-pressed',String(on)); b.textContent=on?'Pause':'Run the day';
+}
+$('p-time').addEventListener('input',function(e){setPlaying(false); P.time=parseFloat(e.target.value); syncLight(); applyLight();});
+$('p-day').addEventListener('input',function(e){P.day=parseInt(e.target.value,10); syncLight(); applyLight();});
 $('light-seg').addEventListener('click',function(e){
   var b=e.target.closest('button'); if(!b) return;
-  P.light=b.dataset.l;
-  Array.from(this.children).forEach(function(c){c.setAttribute('aria-pressed',String(c===b));});
-  applyLight();
+  var l=b.dataset.l, T=dayTimes(P.day);
+  if(l==='play'){setPlaying(!playing); return;}
+  setPlaying(false);
+  if(l==='morning') P.time=T.rise+80;
+  else if(l==='noon') P.time=T.noon;
+  else if(l==='dusk') P.time=T.set+14;
+  else{
+    var d=new Date(Date.now()+SITE.tz*3600e3);      /* the clock in Thanjavur, read from the UTC fields */
+    P.day=clamp(Math.floor((Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())-Date.UTC(d.getUTCFullYear(),0,0))/864e5),1,365);
+    P.time=d.getUTCHours()*60+d.getUTCMinutes();
+  }
+  P.time=clamp(P.time,270,1200);
+  syncLight(); applyLight();
 });
 [0,1,2].forEach(function(i){
   $('v-'+i).addEventListener('change',function(e){
@@ -2118,6 +2336,7 @@ Array.prototype.forEach.call($('pad').children,function(b){
 
 /* ---------- Start ---------- */
 setHint();
+syncLight();
 $('p-mukha').disabled=P.maha==='mapped';
 Array.prototype.forEach.call(document.querySelectorAll('a[data-cite]'),function(a){
   var k=a.getAttribute('data-cite'); a.href=SRC[k].u; a.target='_blank'; a.rel='noopener noreferrer'; a.title=SRC[k].n; a.textContent='['+NUM[k]+']';

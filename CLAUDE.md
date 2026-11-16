@@ -31,9 +31,11 @@ New sources go in `SRC` with `n`, `u`, `use` and `rel`. `rel` says how the sourc
 ## Code map
 
 - **Units:** model units, with the base width `W = P.base` standing for 30.18 m. `upm()` converts metres to units. Measured figures are written in metres times `s = upm()`.
-- **Axes:** +z is temple east (toward the gateways), +x is temple north, the tower is centred at the origin. The real axis bearing is 70.1°, not used in the model.
+- **Axes:** +z is temple east (toward the gateways), +x is temple north, the tower is centred at the origin. The real axis bearing is 70.1°: +z bears 70.1° and +x 340.1°. Only the sun uses it.
 - **Build order:** `build()` makes the tower, then `buildHalls()` if `P.halls`, then `buildCourt()` if `P.court`, which uses `gopuramParts()` and the `GOP` table for the gateways. `mergeParts()` then joins each element's parts into one mesh. This is a performance fix for phones: keep new parts going through `put()` or the court's `add()`, so they merge.
 - **Walk mode:** `WK` holds raised floors (`plats`), stair ramps (`ramps`), solid footprints (`obs`) and roofs (`roofs`, for the indoor light), all rebuilt by `build()`. A walker climbs at most 0.6 m per step. New solid things need an `obs` entry, new floors a `plat`.
+- **Light:** `P.day` (day of 2026) and `P.time` (minutes, Indian Standard Time) drive `applyLight()`. `sunAt()` gives the sun's height and bearing for Thanjavur (the Astronomical Almanac's approximate formula, checked against SunCalc), turned into the model's frame with the axis bearing. Everything else is artistic and says so on the page: the sky dome (`sky`, a shader that follows the camera), the haze (`scene.fog`, lighter in orbit so the evidence colours stay readable), `glowL` (twilight and night fill) and the stars. Shadows are redrawn only when `shadowTouch()` is called, so call it after anything that changes what casts a shadow.
+- **Hall lamps:** the `hall-lamps` element is Invented. Its flames are a second mesh marked `userData.night`, shown only when `lampsLit`. Real light comes from three shared point lights (`lampL`) that `updateLamps()` moves to the lamp pairs nearest the camera (`WK.lamps`). Keep the number of lights in the scene fixed: adding or hiding a light recompiles every shader.
 - **Camera framing:** `CXT` holds the complex's extents, used for framing, shadows, the ground size and the "Go to" viewpoints (`viewSpec`).
 
 ## Testing (the cloud sandbox blocks cdnjs)
@@ -43,7 +45,8 @@ There is no test suite. Check changes in headless Chromium with Playwright:
 - **three.js:** cdnjs is blocked, so fetch the same version with `npm pack three@0.128.0` and serve `build/three.min.js` through `page.route('**/three.min.js', ...)`.
 - **Internals:** to reach internal state, serve `index.html` through `page.route` with `'use strict';` replaced by `'use strict'; window.__t=function(){return {wk:wk, ...};};`.
 - **What to check:** no console or page errors; screenshots of the views touched; walking routes (stairs, doors, walls); tapping elements; a 390 × 844 touch viewport with no horizontal scroll.
-- **Performance:** `renderer.info.render.calls` is about 130 in the default view; don't let it climb back toward 1,000.
+- **Performance:** `renderer.info.render.calls` is about 135 in the default view; don't let it climb back toward 1,000. That figure leaves out the shadow pass, which three.js does not count. The shadow pass costs about as much again, and now runs only when the light or the model changes.
+- **Light:** check noon, a low sun, dusk and night. A colour or intensity that becomes NaN turns the whole model black with no error.
 
 Run a syntax check after edits:
 `node -e "new Function(require('fs').readFileSync('index.html','utf8').split('<script>')[1].split('</script>')[0])"`

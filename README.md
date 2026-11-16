@@ -2,7 +2,7 @@
 
 **[Open the model](https://purplefaucet.github.io/temple_project/)**
 
-A 3D model of an idealized Chola temple, after the Brihadisvara temple at Thanjavur, that runs in the browser. It shows the tower (vimana), the three halls in front of it, the cloistered court with its shrines, and the two Chola gateways. You can walk through it at eye level, on a computer or a phone.
+A 3D model of an idealized Chola temple, after the Brihadisvara temple at Thanjavur, that runs in the browser. It shows the tower (vimana), the three halls in front of it, the cloistered court with its shrines, and the two Chola gateways. You can walk through it at eye level, on a computer or a phone. A time-of-day slider places the sun where it stands at Thanjavur on a chosen date, using the temple's real orientation.
 
 The model's point is its evidence. Every element is tagged by how firmly it is known:
 - **Rule-derived:** a documented convention puts it there.
@@ -24,6 +24,7 @@ The full sources are listed on the page. The research behind each part is in [`r
 
 - **An idealized composite,** made for learning. It is not an exact model of Thanjavur, and no specialist in temple architecture has reviewed it.
 - **No sanctum interior, and no deity imagery inside any building.** Deities may appear on exterior decoration. On the inner gateway, the sculpture of the east and west faces (guardians, niche figures and base panels) is shown as real photographs (credits in [`assets/sculpture/CREDITS.md`](assets/sculpture/CREDITS.md)). The gateways' other sculpture is shown as generic figures, and figure sculpture elsewhere as blank blocks.
+- **The sun's position is calculated; the rest of the atmosphere is not.** The sky's colours, the haze, the stars and the oil lamps in the halls are artistic, and the lamps are tagged Invented.
 - **Many sizes are estimates.** The main unread sources are Mayamata volume 2 and Pichard's architectural study of the temple. Both are listed in the research notes.
 
 ## How it was made
