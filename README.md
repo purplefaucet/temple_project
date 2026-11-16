@@ -2,7 +2,7 @@
 
 **[Open the model](https://purplefaucet.github.io/temple_project/)**
 
-A 3D model of an idealized Chola temple, after the Brihadisvara temple at Thanjavur, that runs in the browser. It shows the tower (vimana), the three halls in front of it, the cloistered court with its shrines, and the two Chola gateways. You can walk through it at eye level, on a computer or a phone. A time-of-day slider places the sun where it stands at Thanjavur on a chosen date, using the temple's real orientation.
+A 3D model of an idealized Chola temple, after the Brihadisvara temple at Thanjavur, that runs in the browser. It shows the tower (vimana), the three halls in front of it, the cloistered court with its shrines, and the two Chola gateways. You can walk through it at eye level, on a computer or a phone. On foot there is a small map, footstep sounds, and a journal that keeps the evidence for each kind of element you inspect. A time-of-day slider places the sun where it stands at Thanjavur on a chosen date, using the temple's real orientation.
 
 The model's point is its evidence. Every element is tagged by how firmly it is known:
 - **Rule-derived:** a documented convention puts it there.

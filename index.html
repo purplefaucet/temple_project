@@ -61,6 +61,16 @@ a{color:var(--accent)}
 .pad [data-k="b"]{grid-area:2/2}
 .pad [data-k="r"]{grid-area:2/3}
 .aim{position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#fff;border:1.5px solid #14110c;opacity:.85;pointer-events:none}
+.mini{position:absolute;top:12px;right:12px;width:148px;height:148px;padding:0;border:1px solid var(--line);border-radius:4px;background:var(--surface);opacity:.94;overflow:hidden;cursor:pointer}
+.mini canvas{display:block;width:100%;height:100%}
+.toast{position:absolute;left:12px;bottom:58px;max-width:min(24rem,calc(100% - 190px));background:var(--accent);color:var(--accent-fg);border-radius:4px;padding:6px 10px;font:500 12.5px/1.4 var(--font-body);pointer-events:none}
+.jlist{display:flex;flex-direction:column;gap:6px;max-height:20rem;overflow:auto;margin-bottom:8px}
+.jlist:empty{display:none}
+.jlist details{border:1px solid var(--line);border-radius:4px;padding:6px 8px;background:var(--bg)}
+.jlist summary{cursor:pointer;font-weight:600;overflow-wrap:anywhere}
+.jlist summary .chip{margin-right:6px;font-size:10px;padding:3px 5px;vertical-align:1px}
+.jlist p{margin:6px 0 0;font-size:13px}
+.jlist button{margin-top:8px}
 .fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--fg);background:var(--surface)}
 .panel{display:flex;flex-direction:column;gap:12px;min-width:0}
 .blk{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;min-width:0}
@@ -129,6 +139,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
   .title-card h1{font-size:1.25rem}
   .title-card p{display:none}
   .hint{font-size:11px}
+  .mini{width:112px;height:112px}
 }
 @media (prefers-reduced-motion: no-preference){
   .stage{transition:background .4s}
@@ -145,6 +156,8 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
         <p>An idealized Chola-style tower, halls and court built from stacked rules. No sanctum interior.</p>
       </div>
       <div class="aim" id="aim" hidden></div>
+      <button class="mini" id="mini" type="button" hidden aria-label="Map of where you are. Press to switch between near and far."><canvas id="mini-cv" width="8" height="8"></canvas></button>
+      <div class="toast" id="toast" role="status" hidden></div>
       <div class="pad" id="pad" role="group" aria-label="Walk controls" hidden>
         <button type="button" data-k="f" aria-label="Walk forward">▲</button>
         <button type="button" data-k="l" aria-label="Turn left">↺</button>
@@ -185,6 +198,15 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <dt>Confidence</dt><dd id="i-conf"></dd>
           <dt>Sources</dt><dd id="i-src"></dd>
         </dl>
+      </section>
+
+      <section class="blk" id="journal">
+        <h3>Journal</h3>
+        <p id="j-count" style="margin:0 0 2px;font-weight:600"></p>
+        <p class="muted" id="j-tiers" style="margin:0 0 8px"></p>
+        <div class="jlist" id="j-list"></div>
+        <p class="muted" id="j-empty">Press Walk, go up to something and click or tap it. Each kind of element you inspect on foot is kept here with the evidence for it. The journal is saved in this browser only.</p>
+        <button class="btn" id="j-clear" type="button" hidden>Empty the journal</button>
       </section>
 
       <section class="blk">
@@ -344,9 +366,17 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <label for="p-bob">Head-bob</label><input type="checkbox" id="p-bob" checked>
           <div class="help">A slight rise and fall with each step. It is off when your device asks for reduced motion.</div>
         </div>
-        <div class="ctl" style="margin-bottom:0">
+        <div class="ctl">
           <label for="p-mlook">Mouse look</label><input type="checkbox" id="p-mlook" checked>
-          <div class="help">With a mouse: click the view while walking, and moving the mouse then turns your head without dragging. A dot marks the middle of the view; click to inspect whatever it is on. Esc gives the mouse back, and Esc again leaves the walk.</div>
+          <div class="help">With a mouse: click the view while walking, and moving the mouse then turns your head without dragging. A dot marks the middle of the view; click, or press E, to inspect whatever it is on. Esc gives the mouse back, and Esc again leaves the walk.</div>
+        </div>
+        <div class="ctl">
+          <label for="p-sound">Footsteps</label><input type="checkbox" id="p-sound" checked>
+          <div class="help">Footstep sounds that change with the surface: the court's paving, a hall floor, a stair, and softer ground outside the walls. They are made in the browser from filtered noise. They are not recordings from the temple.</div>
+        </div>
+        <div class="ctl" style="margin-bottom:0">
+          <label for="p-mini">Map</label><input type="checkbox" id="p-mini" checked>
+          <div class="help">A small plan in the corner while walking, with you at the centre. Temple east, toward the gateways, is to the right. The arrow marked N points to true north, and a yellow dot on the rim shows where the sun is. Press the map to switch between near and far. It is drawn from the model's own walls and floors, so it is no more accurate than they are.</div>
         </div>
       </section>
 
@@ -501,7 +531,7 @@ var MODES={
 var DKIND={text:'Text',bldg:'Buildings',est:'Estimate'};
 
 /* ---------- State ---------- */
-var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',day:80,time:540,bob:true,mlook:true,mode:'elem',halls:true,maha:'mapped',mukha:1,court:true,period:'chola',shrines:16,sculpt:'photo',
+var P={tiers:13,base:10,taper:0.36,hratio:0.55,density:0.6,crown:'kalasa',day:80,time:540,bob:true,mlook:true,sound:true,mini:true,mode:'elem',halls:true,maha:'mapped',mukha:1,court:true,period:'chola',shrines:16,sculpt:'photo',
   vis:{rule:true,inf:true,inv:true,src:true,part:true,est:true}};
 var metas=new Map();
 var selKey=null, selMeta=null, outlines=[];
@@ -672,7 +702,7 @@ function applyLight(){
   var T=dayTimes(P.day);
   $('o-sun').textContent=(h>=0?'Sun '+Math.round(h)+'° above the horizon, bearing '+Math.round(S.az)+'° ('+WINDS[Math.round(S.az/45)%8]+').'
     :'Sun '+Math.round(-h)+'° below the horizon.')+' Sunrise '+hhmm(T.rise)+', sunset '+hhmm(T.set)+'.';
-  shadowTouch(); updateLamps(); dirty=true;
+  shadowTouch(); updateLamps(); miniDraw(); dirty=true;
 }
 function photoGlow(){return 0.22*(0.2+0.8*dayK);}
 
@@ -1674,6 +1704,7 @@ function buildCourt(W,upH,adH,padH){
     {src:['maya','man32'],conf:55,basis:'Text',gram:'Court → Axis → Altar',dims:[['Proportions',T,'as high as it is wide [@maya]'],['Size and position',E,'estimated']]});
   var as=0.08*W, az=zR-RR.d/2-0.35*W;
   CXT.walkZ=az-12*s; CXT.zR=zR; CXT.zK=zK; CXT.zMid=zMid;
+  CXT.inside={x:x0,z0:zW,z1:zE};      /* the open court, for the sound underfoot */
   add(ma,[bx(as*1.3,as*0.25,as*1.3,0,as*0.125,az),bx(as,as*0.75,as,0,as*0.25+as*0.375,az)]); ma.n++;
   WK.obs.push({x0:-as*0.65,x1:as*0.65,z0:az-as*0.65,z1:az+as*0.65});
 
@@ -1818,7 +1849,7 @@ function build(){
 
   if(P.halls) buildHalls(W,upH,adH,upW,MOULD,slabs,padH0,entH0);
   else CXT={zc:0,half:upW/2,front:upW/2};
-  CXT.sz=CXT.zc; CXT.sh=CXT.half; CXT.ground=140; CXT.courtLine=''; CXT.walkZ=null;
+  CXT.sz=CXT.zc; CXT.sh=CXT.half; CXT.ground=140; CXT.courtLine=''; CXT.walkZ=null; CXT.inside=null;
   if(P.court) buildCourt(W,upH,adH,padH0);
 
   /* Tiers: repeat N times, heights stepping down evenly. Tier → Pada | Prastara, then a Hara on the ledge */
@@ -1938,6 +1969,7 @@ function build(){
   }
   else if(!userMoved) dist=fitDist();
   mergeParts();
+  miniPlan(); renderJournal();
   applyLight();
   updateCam();
   refresh();
@@ -2044,7 +2076,7 @@ function updateCam(){
     var indoors=WK.roofs.some(function(r){return x>r.x0&&x<r.x1&&z>r.z0&&z<r.z1&&y<r.y;});
     lantern.position.set(x,y,z); lantern.distance=30*s; lantern.intensity=indoors?1.1-0.85*lampK:0;   /* dimmer once the lamps are lit */
     indoorT=indoors?1:0; if(REDUCED||!lampNear){indoorK=indoorT; ambient();}
-    updateLamps(); dirty=true; return;
+    updateLamps(); miniDraw(); dirty=true; return;
   }
   camera.position.set(
     target.x+dist*Math.sin(ph)*Math.sin(th),
@@ -2175,7 +2207,9 @@ function stepWalk(dt){
 function walkFeel(dt){
   var mv=wk.moved, run=dt>0&&mv/dt>4, on=P.bob&&!REDUCED&&mv>1e-4, off0=wk.off, a0=wk.bobA;
   wk.moved=0;
+  var c0=Math.floor((wk.ph-1.5*Math.PI)/(2*Math.PI));
   wk.ph+=mv*2*Math.PI/(run?1.5:0.75);                /* one rise and fall for each stride */
+  if(mv>0&&Math.floor((wk.ph-1.5*Math.PI)/(2*Math.PI))!==c0) footfall(run);      /* the foot lands at the bottom of the bob */
   wk.bobA+=((on?(run?1.6:1):0)-wk.bobA)*Math.min(1,dt*(on?10:6));
   if(wk.bobA<0.004) wk.bobA=0;
   wk.off*=Math.exp(-dt*11); if(Math.abs(wk.off)<0.003) wk.off=0;
@@ -2200,7 +2234,7 @@ function setWalk(on){
   var gm=ground.material; gm.map=on?paving:null;
   gm.color.setHex(on?0xffffff:0x5d655f).convertSRGBToLinear(); gm.needsUpdate=true;
   farGround.material.color.setHex(on?0x6a6760:0x5d655f).convertSRGBToLinear();   /* the paving's average colour */
-  $('pad').hidden=!on;
+  $('pad').hidden=!on; $('mini').hidden=!(on&&P.mini); if(on) audio();
   $('walk').textContent=on?'Orbit':'Walk';
   cv.setAttribute('aria-label',on
     ?'3D view at eye level. W A S D or arrow keys walk, Shift runs, Escape returns to orbit.'
@@ -2210,6 +2244,144 @@ function setWalk(on){
   applyLight();      /* the haze is thicker at eye level */
   updateCam();
   if(on) cv.focus({preventScroll:true});
+}
+
+/* ---------- Footsteps ----------
+   Made in the browser: a burst of filtered noise and a low thump for each stride, tuned by what is underfoot.
+   Nothing here is a recording, and nothing is loaded. The sound starts only after Walk is pressed. */
+var AC=null, SND={n:0,last:''};
+function audio(){
+  if(!P.sound) return null;
+  if(!AC){
+    var C=window.AudioContext||window.webkitAudioContext; if(!C) return null;
+    try{AC=new C(); AC.master=AC.createGain(); AC.master.gain.value=0.4; AC.master.connect(AC.destination);}catch(_){AC=null; return null;}
+  }
+  if(AC.state==='suspended'&&AC.resume){var pr=AC.resume(); if(pr&&pr.catch) pr.catch(function(){});}
+  return AC;
+}
+function noiseBuf(ctx){
+  if(ctx._nb) return ctx._nb;
+  var b=ctx.createBuffer(1,Math.floor(ctx.sampleRate*0.4),ctx.sampleRate), d=b.getChannelData(0);
+  for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+  return (ctx._nb=b);
+}
+/* f: centre of the noise band in Hz, q: its sharpness, d: length in seconds, g: loudness, th: loudness of the thump, echo: a room's reply */
+var STEP={
+  court:{f:1700,q:0.9,d:0.07,g:0.5,th:0.22},
+  hall:{f:1250,q:1.1,d:0.11,g:0.55,th:0.3,echo:0.24},
+  stair:{f:2100,q:1.0,d:0.06,g:0.45,th:0.18},
+  earth:{f:420,q:0.6,d:0.1,g:0.75,th:0.1,low:true}
+};
+function footstep(ctx,out,kind,t,run){
+  var S=STEP[kind], v=0.85+Math.random()*0.3;
+  var src=ctx.createBufferSource(), bp=ctx.createBiquadFilter(), g=ctx.createGain();
+  src.buffer=noiseBuf(ctx); src.playbackRate.value=0.8+Math.random()*0.4;
+  bp.type=S.low?'lowpass':'bandpass'; bp.frequency.value=S.f*v; bp.Q.value=S.q;
+  g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(S.g*(run?1.25:1)*v,t+0.004); g.gain.exponentialRampToValueAtTime(0.001,t+S.d);
+  src.connect(bp); bp.connect(g); g.connect(out);
+  src.start(t,Math.random()*0.2); src.stop(t+S.d+0.03);
+  var o=ctx.createOscillator(), og=ctx.createGain();
+  o.frequency.setValueAtTime(110,t); o.frequency.exponentialRampToValueAtTime(55,t+0.07);
+  og.gain.setValueAtTime(S.th,t); og.gain.exponentialRampToValueAtTime(0.001,t+0.08);
+  o.connect(og); og.connect(out); o.start(t); o.stop(t+0.1);
+  if(S.echo){var dl=ctx.createDelay(0.3), dg=ctx.createGain(); dl.delayTime.value=0.085; dg.gain.value=S.echo; g.connect(dl); dl.connect(dg); dg.connect(out);}
+}
+/* what the walker is standing on: a stair, a hall floor under a roof, stone in the open, or the ground outside the court's walls */
+function surfaceAt(){
+  var s=upm(), x=wk.x*s, z=wk.z*s, y=(wk.lv+EYE_M)*s, c=CXT.inside;
+  if(wk.ramp) return 'stair';
+  if(WK.roofs.some(function(r){return x>r.x0&&x<r.x1&&z>r.z0&&z<r.z1&&y<r.y;})) return 'hall';
+  if(wk.lv>0.5||!c) return 'court';
+  return (Math.abs(x)<c.x&&z>c.z0&&z<c.z1)?'court':'earth';
+}
+function footfall(run){
+  var k=surfaceAt(); SND.n++; SND.last=k;
+  var ctx=P.sound?audio():null;
+  if(ctx&&ctx.state==='running') footstep(ctx,ctx.master,k,ctx.currentTime+0.005,run);
+}
+
+/* ---------- Journal ----------
+   Each kind of element inspected on foot is kept, with the inspector's own text. Elements that repeat up the tower
+   count once ("Tower tier, kuta"), so the journal has a few dozen entries, not a few hundred.
+   Only the names found are saved, in this browser; the text always comes from the current model. */
+var JKEY='vimana-journal-1', found={};
+try{found=JSON.parse(localStorage.getItem(JKEY)||'{}')||{};}catch(_){found={};}
+function saveFound(){try{localStorage.setItem(JKEY,JSON.stringify(found));}catch(_){}}
+function famOf(m){return m.name.replace(/^Tier \d+ of \d+/,'Tower tier').replace(/^Wall storey \d+ of \d+/,'Wall storey').replace(/, wall storey \d+$/,'');}
+function families(){
+  var F=new Map();
+  metas.forEach(function(m){if(!m.parts.length) return; var f=famOf(m); if(!F.has(f)) F.set(f,m);});
+  return F;
+}
+var toastT=0;
+function toast(t){var e=$('toast'); e.textContent=t; e.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){e.hidden=true;},3200);}
+function discover(m){
+  var f=famOf(m); if(found[f]) return;
+  var n=0; Object.keys(found).forEach(function(k){n=Math.max(n,found[k]);});
+  found[f]=n+1; saveFound(); renderJournal();
+  toast('New in your journal: '+f+' ('+MODES.elem.label[m.tier].toLowerCase()+')');
+}
+function renderJournal(){
+  var F=families(), tot={rule:0,inf:0,inv:0}, got={rule:0,inf:0,inv:0}, list=[];
+  F.forEach(function(m,f){tot[m.tier]++; if(found[f]){got[m.tier]++; list.push([found[f],f,m]);}});
+  list.sort(function(a,b){return b[0]-a[0];});      /* newest first */
+  $('j-count').textContent=list.length+' of '+F.size+' kinds of element found on foot';
+  $('j-tiers').textContent=KEYS.map(function(k){return MODES.elem.label[k]+' '+got[k]+' of '+tot[k];}).join(' · ');
+  $('j-empty').hidden=list.length>0; $('j-clear').hidden=!Object.keys(found).length;
+  var box=$('j-list'); box.textContent='';
+  list.forEach(function(e){
+    var m=e[2], d=document.createElement('details'), sm=document.createElement('summary'), ch=document.createElement('span'), p=document.createElement('p'), b=document.createElement('button');
+    ch.className='chip c-'+m.tier; ch.textContent=MODES.elem.label[m.tier];
+    sm.appendChild(ch); sm.appendChild(document.createTextNode(' '+e[1]));
+    p.textContent=cite(m.rule)+(m.conf==null?'':' Confidence: '+m.conf+'%.');
+    b.type='button'; b.className='btn'; b.textContent='Show in the inspector';
+    b.addEventListener('click',function(){var cur=metas.get(m.key); if(cur&&P.vis[catOf(cur)]){select(cur); $('inspector').scrollIntoView({block:'nearest'});}});
+    d.appendChild(sm); d.appendChild(p); d.appendChild(b); box.appendChild(d);
+  });
+}
+
+/* ---------- Map ----------
+   A plan drawn from the walkable data (floors, stairs, solid footprints), with the walker at the centre.
+   Right is +z, temple east; up is +x, temple north. True north is 19.9° clockwise of temple north. */
+var MINI={plan:null,ppm:2,x1:0,z0:0,far:false,last:''};
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()||'#888';}
+function miniPlan(){
+  var s=upm(), q=MINI.ppm/s, B={x0:1e9,x1:-1e9,z0:1e9,z1:-1e9};
+  WK.obs.concat(WK.plats).forEach(function(o){B.x0=Math.min(B.x0,o.x0); B.x1=Math.max(B.x1,o.x1); B.z0=Math.min(B.z0,o.z0); B.z1=Math.max(B.z1,o.z1);});
+  var pad=10*s; B.x0-=pad; B.x1+=pad; B.z0-=pad; B.z1+=pad;
+  var c=MINI.plan||document.createElement('canvas');
+  c.width=Math.max(8,Math.ceil((B.z1-B.z0)*q)); c.height=Math.max(8,Math.ceil((B.x1-B.x0)*q));
+  var g=c.getContext('2d');
+  function R(o){g.fillRect((o.z0-B.z0)*q,(B.x1-o.x1)*q,Math.max(1,(o.z1-o.z0)*q),Math.max(1,(o.x1-o.x0)*q));}
+  g.clearRect(0,0,c.width,c.height);
+  g.fillStyle=cssVar('--line'); g.globalAlpha=0.55; WK.plats.forEach(R);                       /* raised floors */
+  g.globalAlpha=0.9; g.fillStyle=cssVar('--muted');
+  WK.ramps.forEach(function(r){var a=Math.min(r.a,r.b), b=Math.max(r.a,r.b); R(r.ax==='z'?{x0:r.c0,x1:r.c1,z0:a,z1:b}:{x0:a,x1:b,z0:r.c0,z1:r.c1});});   /* stairs */
+  g.globalAlpha=1; g.fillStyle=cssVar('--fg'); WK.obs.forEach(R);                               /* walls, pillars, shrines */
+  MINI.plan=c; MINI.x1=B.x1/s; MINI.z0=B.z0/s; MINI.last='';
+}
+function miniDraw(){
+  if(!walk||!P.mini||!MINI.plan) return;
+  var key=wk.x.toFixed(1)+','+wk.z.toFixed(1)+','+wk.yaw.toFixed(2)+','+MINI.far+','+Math.round(P.time)+','+P.day;
+  if(key===MINI.last) return;
+  MINI.last=key;
+  var c=$('mini-cv'), W=Math.round(c.clientWidth*Math.min(window.devicePixelRatio||1,2)); if(!W) return;
+  if(c.width!==W) c.width=c.height=W;
+  var g=c.getContext('2d'), k=W/(2*(MINI.far?175:42)), u=W/148, h=W/2;      /* k: pixels to a metre; u: one CSS pixel on the large map */
+  g.setTransform(1,0,0,1,0,0); g.fillStyle=cssVar('--surface'); g.fillRect(0,0,W,W);
+  g.drawImage(MINI.plan,h+(MINI.z0-wk.z)*k,h-(MINI.x1-wk.x)*k,MINI.plan.width/MINI.ppm*k,MINI.plan.height/MINI.ppm*k);
+  /* the walker: an arrow along the heading. Forward is (-sin yaw, -cos yaw) in (x, z), so (-cos yaw, sin yaw) on the map */
+  var fx=-Math.cos(wk.yaw), fy=Math.sin(wk.yaw), a=7*u;
+  g.fillStyle=cssVar('--accent'); g.strokeStyle=cssVar('--surface'); g.lineWidth=1.5*u; g.beginPath();
+  g.moveTo(h+fx*a,h+fy*a); g.lineTo(h-fx*a*0.7-fy*a*0.6,h-fy*a*0.7+fx*a*0.6); g.lineTo(h-fx*a*0.3,h-fy*a*0.3); g.lineTo(h-fx*a*0.7+fy*a*0.6,h-fy*a*0.7-fx*a*0.6); g.closePath(); g.stroke(); g.fill();
+  /* a bearing b from true north points (sin, -cos) of b + 19.9° on the map */
+  function dirOf(b){var t=(b+360-SITE.axis+90)*RAD; return [Math.sin(t),-Math.cos(t)];}
+  var S=sunAt(P.day,P.time);
+  if(S.alt>0){var sd=dirOf(S.az); g.fillStyle='#e8b021'; g.strokeStyle='#14110c'; g.lineWidth=u; g.beginPath(); g.arc(h+sd[0]*(h-7*u),h+sd[1]*(h-7*u),4*u,0,2*Math.PI); g.fill(); g.stroke();}
+  var nd=dirOf(0), nx=W-17*u, ny=19*u;
+  g.strokeStyle=g.fillStyle=cssVar('--fg'); g.lineWidth=1.5*u; g.beginPath(); g.moveTo(nx-nd[0]*9*u,ny-nd[1]*9*u); g.lineTo(nx+nd[0]*9*u,ny+nd[1]*9*u); g.stroke();
+  g.beginPath(); g.moveTo(nx+nd[0]*12*u,ny+nd[1]*12*u); g.lineTo(nx+nd[0]*5*u-nd[1]*4*u,ny+nd[1]*5*u+nd[0]*4*u); g.lineTo(nx+nd[0]*5*u+nd[1]*4*u,ny+nd[1]*5*u-nd[0]*4*u); g.closePath(); g.fill();
+  g.font='600 '+Math.round(10*u)+'px sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('N',nx-nd[0]*15*u-4*u,ny-nd[1]*15*u+2*u);
 }
 
 var pts=new Map(), down=null, pinch0=0, dist0=0;
@@ -2249,7 +2421,7 @@ function endPtr(e){
   cv.style.cursor='grab';
   if(had&&down&&down.id===e.pointerId&&down.moved<6&&e.type==='pointerup'){
     var lk=walk&&locked(), r=cv.getBoundingClientRect();
-    var m=lk?pick(r.left+r.width/2,r.top+r.height/2):pick(e.clientX,e.clientY); if(m) select(m);
+    var m=lk?pick(r.left+r.width/2,r.top+r.height/2):pick(e.clientX,e.clientY); if(m){select(m); if(walk) discover(m);}
     if(walk&&!lk&&canLock&&P.mlook&&e.pointerType==='mouse'){var pr=cv.requestPointerLock(); if(pr&&pr.catch) pr.catch(function(){});}
   }
   if(pts.size<2) pinch0=0;
@@ -2267,6 +2439,7 @@ cv.addEventListener('keydown',function(e){
     held.shift=e.shiftKey;
     if(e.key==='Escape'){if(!locked()&&performance.now()-unlockT>400) setWalk(false); return;}   /* the first Esc only frees the mouse */
     if(MOVE[e.code]){held[e.code]=true; e.preventDefault();}
+    if(e.code==='KeyE'&&!e.repeat){var rc=cv.getBoundingClientRect(), me=pick(rc.left+rc.width/2,rc.top+rc.height/2); if(me){select(me); discover(me);}}
     return;
   }
   var used=true;
@@ -2319,6 +2492,15 @@ $('p-period').addEventListener('change',function(e){P.period=e.target.value; sch
 $('p-shrines').addEventListener('change',function(e){P.shrines=parseInt(e.target.value,10); schedule();});
 $('p-sculpt').addEventListener('change',function(e){P.sculpt=e.target.value; schedule();});
 $('p-bob').addEventListener('change',function(e){P.bob=e.target.checked;});
+$('p-sound').addEventListener('change',function(e){P.sound=e.target.checked; if(P.sound&&walk) audio();});
+$('p-mini').addEventListener('change',function(e){P.mini=e.target.checked; $('mini').hidden=!(walk&&P.mini); MINI.last=''; miniDraw();});
+$('mini').addEventListener('click',function(){MINI.far=!MINI.far; MINI.last=''; miniDraw(); cv.focus({preventScroll:true});});
+$('j-clear').addEventListener('click',function(){
+  if(!window.confirm('Empty the journal? What you have found will be forgotten in this browser.')) return;
+  found={}; saveFound(); renderJournal();
+});
+if(window.matchMedia){var mqDark=window.matchMedia('(prefers-color-scheme: dark)'), reTheme=function(){miniPlan(); MINI.last=''; miniDraw();};
+  if(mqDark.addEventListener) mqDark.addEventListener('change',reTheme); else if(mqDark.addListener) mqDark.addListener(reTheme);}
 $('p-mlook').addEventListener('change',function(e){P.mlook=e.target.checked; if(!P.mlook&&locked()) document.exitPointerLock(); setHint();});
 $('tier-presets').addEventListener('click',function(e){
   var b=e.target.closest('button'); if(!b) return;
