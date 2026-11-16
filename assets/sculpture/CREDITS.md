@@ -178,7 +178,9 @@ The three small files are left at the source's own resolution, not enlarged, so 
 
 ### Base panels (JPG)
 
-**Edits to every panel file:** cropped to the panel's frame and saved as JPEG (quality 90 for S, 92 for N). Nothing else was changed, and nothing was scaled.
+**Edits to every panel file:** cropped to the panel's frame and saved as JPEG (quality 90 for S, 92 for N). Nothing was scaled.
+
+**One further edit, 16 November 2026, to `west-panel-N1.jpg`, `west-panel-N2.jpg` and `west-panel-N3.jpg`:** visitors, their clothes and a signboard, which stood in front of the wall in Mortel (42), were painted over with a plain stone colour taken from the stone just above them, plus a little noise for grain. No carving was drawn in, so those areas show nothing of what is behind the people. The share of each image painted: N1 about 20%, N2 about 6%, N3 about 1%. The files were saved again at quality 93. The other west-face panels are unchanged.
 
 | File | Position | Source | Region of the original (x, y, w, h) | Notes |
 |---|---|---|---|---|
@@ -186,9 +188,9 @@ The three small files are left at the source's own resolution, not enlarged, so 
 | `west-panel-S2.jpg` (488 × 740) | S2 | same | 672, 448, 488, 740 | The bottom row is only roughed out, apparently unfinished. |
 | `west-panel-S3.jpg` (608 × 760) | S3, the widest | same | 1282, 460, 608, 760 | Three rows plus a strip of small figures at the foot. |
 | `west-panel-S4.jpg` (178 × 440) | S4, the narrow strip at the outer end | same | 1982, 720, 178, 440 | The photo is slightly oblique here. |
-| `west-panel-N1.jpg` (280 × 305) | N1, next to the porch | Mortel (42), as above | 1145, 3230, 280, 305 | Standing figures. **The lower right is hidden behind a visitor's head.** |
-| `west-panel-N2.jpg` (245 × 305) | N2 | same | 905, 3230, 245, 305 | A figure with arms raised. The bottom right corner is slightly obstructed. |
-| `west-panel-N3.jpg` (285 × 305) | N3 | same | 620, 3230, 285, 305 | A large standing figure with smaller figures beside it. |
+| `west-panel-N1.jpg` (280 × 305) | N1, next to the porch | Mortel (42), as above | 1145, 3230, 280, 305 | Standing figures. Visitors' heads hid the foot of the panel and its right edge; that area is painted over (see the edit above). |
+| `west-panel-N2.jpg` (245 × 305) | N2 | same | 905, 3230, 245, 305 | A figure with arms raised. A person and a signboard hid the bottom right corner; painted over. |
+| `west-panel-N3.jpg` (285 × 305) | N3 | same | 620, 3230, 285, 305 | A large standing figure with smaller figures beside it. The top of a head at the bottom edge is painted over. |
 | `west-panel-N4.jpg` (115 × 305) | N4, the outer end | same | 500, 3230, 115, 305 | Plain, uncarved blocks |
 
 - **Why S1–S4 are named as the south half (about 85%).** The close view's four units match, in width order and row pattern, the four south-bay units in the frontal view PH2. The north bay looks different.
