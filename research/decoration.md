@@ -71,7 +71,7 @@ The gateways' detail rests on `gopuram.md`, the halls' on `mandapa.md` and the c
 | Tier entablatures | Same parts as the wall's, one dormer to each part of the side | Rule-derived | Parts: Text (ch. 16). Shares and counts: Estimate. |
 | Kutas | Square roof curving in to one pot finial, replacing the pyramid and the invented ball finial | Rule-derived | Roof and finial: Text (22.82–89). Curve: Estimate. BS-C: "ornamental salas and kutas". |
 | Salas | Three finials on the ridge, a dormer on the front | Rule-derived | Several finials: Text (22.82–89). Arch on pavilions: Text (20.38). Count: Estimate. |
-| Nandis at the top | A pair at each corner of the platform under the neck, blank blocks 1.98 by 1.68 m | Rule-derived | Count, place, size: Buildings (BS-C). Breadth and facing: Estimate. |
+| Nandis at the top | A pair at each corner of the platform under the neck, 1.98 by 1.68 m. First blank blocks; generic seated bulls since the owner asked for them. | Rule-derived | Count, place, size: Buildings (BS-C). Breadth and facing: Estimate. |
 | Sikhara dormers | Eight plain horseshoe dormers, one a face | Part of the sikhara (Rule-derived) | Presence: Text (19.18–19a; ch. 21). Size: Estimate. Thanjavur's own not described in BS-C. |
 | Hall walls | Pilasters at the tower's spacing on every outside face; a pilaster each side of a door as its jamb, with a lintel band | Part of each hall (Rule-derived) | Form: Text (ch. 15; 19.20–22 for jambs). Count and size: Estimate. |
 | Hall entablature | The tower wall's cornice and dormers round all three halls; ceiling beams over each row of pillars | Rule-derived | Parts: Text (ch. 16; MS 34.70–72). Beams: Text (16.36 on). Sizes: Estimate. |
@@ -87,7 +87,7 @@ The gateways' detail rests on `gopuram.md`, the halls' on `mandapa.md` and the c
 | Gateway pilasters | Bell capital, abacus and bracket | Rule-derived | Text (ch. 15). Not checked in the photographs. |
 | Passages | Four plain pilasters on plain brackets each side, a beam across at each pair | Part of the stone storey | Keralantakan: Buildings (ES, `gopuram.md` §2.4). Rajarajan: assumed from it. Count: Estimate. |
 | Gateway tier pavilions | Corner pavilions domed with a small finial; barrels with a net pattern and two finials | Rule-derived | Domes, finial and net: Buildings (PH, `gopuram.md` §2.1–2.2). Barrel finials: Text (22.82–89). |
-| Wagon roofs | Net (jala) pattern drawn in the surface by the shader; end gables with an inner step and two horn discs at High detail | Rule-derived | Net and horns: Buildings (PH). Mesh size: Estimate. Lion-face crests stay plain blocks. |
+| Wagon roofs | Net (jala) pattern drawn in the surface by the shader; end gables with an inner step and two horn discs at High detail | Rule-derived | Net and horns: Buildings (PH). Mesh size: Estimate. Lion-face crests: first plain blocks, generic lion faces since the owner asked for them. |
 
 ## 5. Not read or still needed
 
@@ -95,3 +95,11 @@ The gateways' detail rests on `gopuram.md`, the halls' on `mandapa.md` and the c
 - Mayamata ch. 17 (joinery) and ch. 18 beyond the finial.
 - Pichard (1995) for Thanjavur's actual mouldings, pilasters and bay counts.
 - Whether Thanjavur's base torus is rounded or faceted, and what its friezes carry.
+
+## 6. Generic bulls and lion faces (added 16 November 2026, at the owner's request)
+
+No source read describes the carving of any Nandi or of the gateways' lion-face crests, so both are generic shapes, like the generic human figures.
+
+- **Bull** (`bullGeoms`): a body, a hump, a neck, a head and two horns on a plinth; the great bull also has folded forelegs, haunches and ears. Used for the great bull at its recorded size (3.65 by 5.94 by 2.59 m, BS via WP), the pairs at the tower's top (1.98 by 1.68 m, BS-C) and the row on the court wall (size estimated). Which way the wall and tower-top bulls face is an estimate.
+- **Lion face** (`lionFaceGeoms`): a round mane, a face, a brow, two eyes, a muzzle, a jaw and two ears. Used for the crests on the gateways' end gables and central gables (`gopuram.md` §2.2), about 1.15 m across, which is an estimate.
+
