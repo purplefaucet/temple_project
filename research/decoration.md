@@ -67,6 +67,12 @@ The gateways' detail rests on `gopuram.md`, the halls' on `mandapa.md` and the c
 | Niche figures | Generic standing figures | Rule-derived (presence); form invented | Presence: Buildings. Form: Estimate. |
 | Central openings | South, west and north, **drawn closed** | Rule-derived | Position: Buildings. Size: Text (19.20–22). |
 | Stone surface | Grain and block joints in the shader | Artistic, stated on the page | None |
+| Tier walls | The wall steps forward under each pavilion of the row it carries (Dagens, introduction p. lxvi: pavilions project to match projections of the face beneath), with a pilaster at each edge | Part of each tier (Rule-derived) | Arrangement: Text. Depth and pilaster size: Estimate. |
+| Tier entablatures | Same parts as the wall's, one dormer to each part of the side | Rule-derived | Parts: Text (ch. 16). Shares and counts: Estimate. |
+| Kutas | Square roof curving in to one pot finial, replacing the pyramid and the invented ball finial | Rule-derived | Roof and finial: Text (22.82–89). Curve: Estimate. BS-C: "ornamental salas and kutas". |
+| Salas | Three finials on the ridge, a dormer on the front | Rule-derived | Several finials: Text (22.82–89). Arch on pavilions: Text (20.38). Count: Estimate. |
+| Nandis at the top | A pair at each corner of the platform under the neck, blank blocks 1.98 by 1.68 m | Rule-derived | Count, place, size: Buildings (BS-C). Breadth and facing: Estimate. |
+| Sikhara dormers | Eight plain horseshoe dormers, one a face | Part of the sikhara (Rule-derived) | Presence: Text (19.18–19a; ch. 21). Size: Estimate. Thanjavur's own not described in BS-C. |
 
 ## 5. Not read or still needed
 

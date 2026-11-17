@@ -53,7 +53,7 @@ There is no test suite. Check changes in headless Chromium with Playwright:
 - **Sound:** nothing can be heard in headless tests. Render `footstep()` into an `OfflineAudioContext` and check the result is neither silent nor NaN.
 - **Pointer lock:** headless Chromium refuses it. Test mouse look by replacing `document.pointerLockElement` and the canvas's `requestPointerLock` with stand-ins and sending `pointermove` events that carry `movementX`.
 - **What to check:** no console or page errors; screenshots of the views touched; walking routes (stairs, doors, walls); tapping elements; a 390 × 844 touch viewport with no horizontal scroll.
-- **Performance:** `renderer.info.render.calls` is about 136 in the default view; don't let it climb back toward 1,000. The model is about 100,000 triangles at High detail and 83,000 at Standard. That figure leaves out the shadow pass, which three.js does not count. The shadow pass costs about as much again, and now runs only when the light or the model changes.
+- **Performance:** `renderer.info.render.calls` is about 123 in the default view; don't let it climb back toward 1,000. The model is about 180,000 triangles at High detail and 155,000 at Standard. That figure leaves out the shadow pass, which three.js does not count. The shadow pass costs about as much again, and now runs only when the light or the model changes.
 - **Light:** check noon, a low sun, dusk and night. A colour or intensity that becomes NaN turns the whole model black with no error.
 
 Run a syntax check after edits:
