@@ -404,7 +404,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <button type="button" disabled title="Not built yet">Gopuram</button>
         </div>
         <p class="muted" style="margin-top:10px">Idealized composite, not a model of any specific temple. No sanctum interior, and no deity imagery inside any building. Deities may appear on exterior decoration; the sculpture on the gateways and in the tower's wall niches is shown as generic figures that depict no one. In walk mode the front halls can be entered, and the walk stops at the closed sanctum door. Figure sculpture in the court, such as the Nandis on the wall and the Nandi bull, is drawn as blank blocks. Dashed buttons are not built yet.</p>
-        <p class="muted">Walk puts the camera at eye height, 1.6 m, taking the base as 30.18 m wide, the Thanjavur figure the model's base heights are scaled from <a data-cite="bala_tanj"></a>. Walking is 2.5 m a second and running 7. The head-bob, the eased steps and the stride length are there for feel and have no source, like the paving pattern, which is there to show movement. The stone's grain and the joints between its blocks are drawn in code and have no source, and they fade out with distance. Up close, the gateways' mouldings are still plain blocks.</p>
+        <p class="muted">Walk puts the camera at eye height, 1.6 m, taking the base as 30.18 m wide, the Thanjavur figure the model's base heights are scaled from <a data-cite="bala_tanj"></a>. Walking is 2.5 m a second and running 7. The head-bob, the eased steps and the stride length are there for feel and have no source, like the paving pattern, which is there to show movement. The stone's grain and the joints between its blocks are drawn in code and have no source, and they fade out with distance.</p>
       </section>
 
       <section class="blk">
@@ -453,7 +453,7 @@ ul.nv{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
           <li>The halls follow the mapped outline by default: their main east face is 67.2 m from the tower's centre, with a porch 10.5 m wide in front <a data-cite="osm"></a>. Reading that porch as the mukhamandapa is an inference. How the length divides between the ardhamandapa and the great hall is estimated.</li>
           <li>The map labels the small shrine north of the tower “Perumal temple”. It stands where the Chandesvara shrine should be, so it is drawn as that shrine, which is about 70% certain. The later shrines' names are also the map's own and unverified.</li>
           <li>Wall height and thickness, pillar spacing and all building heights are estimates. The wall's height follows the Mayamata's rule tying it to the cloister <a data-cite="maya"></a>. The cloister is drawn whole, but its upper storey has almost disappeared today <a data-cite="sp_notes"></a>.</li>
-          <li>The gateways' decoration comes mainly from photographs examined for this project <a data-cite="gop_photos"></a>, because the Mayamata's chapters on gateways are in its second volume, which was not available. Their heights are scaled from photographs, about ±15%. No height is published for the inner gateway; the outer one is drawn about 27 m, within reported heights of 25 to 30 m <a data-cite="th2010"></a> <a data-cite="ic87"></a>. Pavilion counts on the tiers are only about 35 to 50% reliable, because later stucco figures hide them, and the short faces were not counted. The outer gateway's seven finials are about 60% likely. Where the granite stops and the brick begins is disputed <a data-cite="ignca_out"></a> <a data-cite="es"></a>, and both are drawn the same colour. The guardians, the base reliefs and the 17th-century stucco figures are drawn as generic figures. Their forms are invented, and the stucco figures' number and places are estimates.</li>
+          <li>The gateways' decoration comes mainly from photographs examined for this project <a data-cite="gop_photos"></a>, because the Mayamata's chapters on gateways are in its second volume, which was not available. Their heights are scaled from photographs, about ±15%. No height is published for the inner gateway; the outer one is drawn about 27 m, within reported heights of 25 to 30 m <a data-cite="th2010"></a> <a data-cite="ic87"></a>. Pavilion counts on the tiers are only about 35 to 50% reliable, because later stucco figures hide them, and the short faces were not counted. The outer gateway's seven finials are about 60% likely. Where the granite stops and the brick begins is disputed <a data-cite="ignca_out"></a> <a data-cite="es"></a>, and both are drawn the same colour. The gateways' moulding profiles, the dormers on their cornices and their pilasters' capitals are drawn like the tower's, because the Mayamata calls gateways very similar to temples <a data-cite="maya"></a>; photographs show which parts are there, not their profiles. The pilasters in the inner gateway's passage are assumed from a description of the outer one's <a data-cite="es"></a>. The net pattern on the barrel roofs is seen in photographs, and its mesh size is an estimate. The lion-face crests are plain blocks. The guardians, the base reliefs and the 17th-century stucco figures are drawn as generic figures. Their forms are invented, and the stucco figures' number and places are estimates.</li>
           <li>ASI counts three side entrances to the court besides the gateway <a data-cite="asi"></a>, and Balasubrahmanyam three entrances in all <a data-cite="bala_composite"></a>. Three side openings are drawn, at estimated positions. The cloister shrines' positions are invented.</li>
           <li>Most sources date the present Nandi to the Nayak period <a data-cite="wiki"></a> <a data-cite="es"></a>, and an earlier Chola Nandi is unverified.</li>
           <li>The fort walls, the moat and the Maratha-period outer gate are left out. They are later than the temple <a data-cite="wiki"></a> <a data-cite="fh"></a>.</li>
@@ -804,6 +804,8 @@ function stoneSurface(m){
       '  float sJ=max(1.0-smoothstep(0.0,sW/0.46,min(sY,1.0-sY)),1.0-smoothstep(0.0,sW/sLen,min(sFx,1.0-sFx)))*step(vSF,500.0);',
       '  float sBk=(sHash(sRow*3.1+floor(sX)*7.7)-0.5)*step(vSF,500.0);',
       '  float sK=1.0+sAmt*(sNear*(0.34*sGr+0.09*sBk)+0.2*sBl);',
+      '  vec2 sNq=vec2(sq.x+sq.y,sq.x-sq.y)/0.62; vec2 sNf=min(fract(sNq),1.0-fract(sNq));',      /* a diagonal net, for barrel roofs marked with jala() */
+      '  sK*=1.0-0.38*sAmt*step(1500.0,vSF)*(1.0-smoothstep(0.0,0.07+0.003*sd,min(sNf.x,sNf.y)))*(1.0-smoothstep(40.0,110.0,sd));',
       '  diffuseColor.rgb*=sK*(1.0-0.4*sAmt*sJ*(1.0-smoothstep(20.0,70.0,sd))); }'].join('\n'));
   };
   return m;
@@ -1034,6 +1036,8 @@ function hara(y,cw,hn,lvlMax,den,label,id,gramHead){
 var HI=false;
 /* mark a geometry as one stone, so the stone shader draws no block joints across it (uv.x = 1000 is the flag) */
 function mono(g){var u=g.attributes.uv; if(u){for(var i=0;i<u.count;i++) u.setXY(i,1000,0);} return g;}
+/* mark a geometry as a barrel roof carrying the net (jala) pattern, which the stone shader draws (uv.x = 2000) */
+function jala(g){var u=g.attributes.uv; if(u){for(var i=0;i<u.count;i++) u.setXY(i,2000,0);} return g;}
 function arcPts(cx,cy,rx,ry,a0,a1,n){var p=[]; for(var i=0;i<=n;i++){var a=a0+(a1-a0)*i/n; p.push([cx+rx*Math.cos(a),cy+ry*Math.sin(a)]);} return p;}
 /* put a geometry made in a face's own frame (x along the face, z outward from the face plane) onto the side at angle t, r from the centre */
 function onSide(g,r,u,y,t){g.translate(u,y,r); if(t) g.rotateY(t); return g;}
@@ -1675,9 +1679,17 @@ function gopuramParts(G,cz,s,later,photo){
     return g;
   }
   var y=0, i;
+  /* a moulding profile given in metres, lifted to y0 (already in model units) */
+  function PR(pts,y0){return pts.map(function(q){return [m(q[0]),y0+m(q[1])];});}
+  /* a moulding round the plan: below the passage's lintel it runs round each half and is closed off at the passage */
+  function mould(list,prof){
+    if(prof[0][1]>=ph-1e-6){list.push(sweep([[w/2,cz-d/2],[w/2,cz+d/2],[-w/2,cz+d/2],[-w/2,cz-d/2]],prof,true)); return;}
+    list.push(sweep([[pw/2,cz-d/2],[w/2,cz-d/2],[w/2,cz+d/2],[pw/2,cz+d/2]],prof,false,{cap0:true,cap1:true}));
+    list.push(sweep([[-pw/2,cz+d/2],[-w/2,cz+d/2],[-w/2,cz-d/2],[-pw/2,cz-d/2]],prof,false,{cap0:true,cap1:true}));
+  }
   /* base */
   if(G.dado){
-    slab(P2.base,w*1.04,m(G.plinth),d*1.04,0); y=m(G.plinth);
+    slab(P2.base,w,m(G.plinth),d,0); mould(P2.base,PR([[0.5,0],[0.5,0.45],[0.38,0.6],[0,0.6]],0)); y=m(G.plinth);
     slab(P2.base,w,m(G.dado),d,y);
     /* blank relief panels between pilasters on the long faces */
     [['+z',G.panelsE,pw/2+m(0.6)],['-z',G.panelsW,pw/2+m(5.0)]].forEach(function(f){
@@ -1710,23 +1722,46 @@ function gopuramParts(G,cz,s,later,photo){
         P2.base.push(onFace(box(m(0.4),m(0.35),m(0.35)),f[0],sd*(a+k*pitch),y+m(G.dado)+m(G.dadoCap)+m(0.17),w/2,d/2,m(0.12)));
       });}
     });
-    y+=m(G.dado); slab(P2.base,w*1.03,m(G.dadoCap),d*1.03,y); y+=m(G.dadoCap);
-    G.courses.forEach(function(c,k){slab(P2.base,w*(1.015-0.01*k),m(c),d*(1.015-0.01*k),y); y+=m(c);});
+    /* the dado's cornice, rounded like a small kapota, then two courses with chamfered tops */
+    y+=m(G.dado); slab(P2.base,w,m(G.dadoCap),d,y);
+    mould(P2.base,PR([[0,0],[0.1,0],[0.1,0.12],[0.36,0.16],[0.42,0.22],[0.4,0.32],[0.3,0.4],[0.24,0.43],[0.24,0.5],[0,0.5]],y)); y+=m(G.dadoCap);
+    G.courses.forEach(function(c,k){
+      var o=k?0.07:0.19; slab(P2.base,w,m(c),d,y); mould(P2.base,PR([[0,0],[o,0],[o,c*0.75],[o*0.5,c],[0,c]],y)); y+=m(c);
+    });
   } else {
-    G.steps.forEach(function(c,k){slab(P2.base,w*(1.06-0.02*k),m(c),d*(1.06-0.02*k),y); y+=m(c);});
+    /* plain stepped courses, each with a chamfered top edge */
+    G.steps.forEach(function(c,k){
+      var o=G.w*(0.03-0.01*k); slab(P2.base,w,m(c),d,y);
+      if(o>0.01) mould(P2.base,PR([[o,0],[o,c*0.78],[o-0.16,c],[0,c]],y));
+      y+=m(c);
+    });
   }
   var baseTop=y;
   [-1,1].forEach(function(sd){var x0=sd>0?pw/2:-w*0.53, x1=sd>0?w*0.53:-pw/2; obs.push({x0:x0,x1:x1,z0:cz-d*0.53,z1:cz+d*0.53});});
   /* stone storey and its cornice */
   slab(P2.body,w,m(G.wall),d,y); y+=m(G.wall);
-  slab(P2.body,w*1.05,m(G.cornice),d*1.05,y); y+=m(G.cornice);
+  /* the main cornice in the entablature's parts, with a dormer over each bay */
+  var CE=entProf(y,m(G.cornice),m(0.18),0.025*w), ce=m(G.cornice);
+  slab(P2.body,w,ce,d,y); mould(P2.body,CE.prof);
+  pathPts([[w/2,cz-d/2],[w/2,cz+d/2],[-w/2,cz+d/2],[-w/2,cz-d/2]],true,m(2.6),function(px,pz,ry){
+    var kd=kuduGeom(0.5*ce,0.4*ce,CE.rim-0.03*ce-CE.back,true); kd.translate(0,y+0.47*ce,CE.back); P2.body.push(place(kd,px,pz,ry));
+  });
+  y+=ce;
+  /* the passage: plain pilasters on plain brackets along both walls, and a beam across at each pair */
+  for(i=0;i<4;i++){
+    var pz2=cz+(i-1.5)*d/4.4;
+    [-1,1].forEach(function(sd){
+      pilasterGeoms(m(0.42),ph-m(0.35),m(0.16),0,0,0,true).forEach(function(g){P2.body.push(place(g,sd*pw/2,pz2,-sd*Math.PI/2));});
+    });
+    B(P2.body,pw,m(0.35),m(0.45),0,ph-m(0.175),pz2);
+  }
   var bodyTop=y, wy=baseTop+m(G.wall)/2;
   /* wall ornament: pilasters on every face, niche frames, windows on the outer gateway */
   [['+z',w/2,G.w],['-z',w/2,G.w],['+x',d/2,G.d],['-x',d/2,G.d]].forEach(function(f){
     var len=f[1], n=Math.max(2,Math.round(f[2]/2.6)), long=f[0].indexOf('z')>=0;
     for(var k=0;k<=n;k++){
       var u=-len+k*2*len/n; if(long&&Math.abs(u)<pw/2+m(0.8)) continue;
-      P2.wall.push(onFace(box(m(0.45),m(G.wall)*0.94,m(0.18)),f[0],u,wy,w/2,d/2,m(0.09)));
+      pilasterGeoms(m(0.45),m(G.wall),m(0.18),0,0,0).forEach(function(g){P2.wall.push(onFace(g,f[0],u,baseTop,w/2,d/2,0));});
     }
     var westPhoto=photo&&f[0]==='-z', niches=long?(westPhoto?[-0.74*len,0.74*len]:[-len/2,len/2]):[0];
     if(westPhoto) ['N','S'].forEach(function(hs){
@@ -1777,7 +1812,9 @@ function gopuramParts(G,cz,s,later,photo){
     [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(function(c){
       var kx=c[0]*(ax-k/2), kz=cz+c[1]*(az-k/2);
       B(P2.pav,k*0.9,0.55*hv,k*0.9,kx,y+0.275*hv,kz);
-      var cg=new THREE.ConeGeometry(k*0.68,0.42*hv,4); cg.rotateY(Math.PI/4); cg.translate(kx,y+0.55*hv+0.21*hv,kz); P2.pav.push(cg);
+      B(P2.pav,k,0.07*hv,k,kx,y+0.585*hv,kz);
+      var cg=domeGeom(k*0.9*0.72,0.36*hv,4,Math.PI/4); cg.translate(kx,y+0.62*hv,kz); P2.pav.push(cg);
+      var cf=finialGeom(k*0.08,0.16*hv); cf.translate(kx,y+0.97*hv,kz); P2.pav.push(cf);
     });
     /* long faces: pavilions corner to centre, then the centre bay */
     var wt={G:2.2,S:2,P:0.8}, avail=ax-k-cb/2-0.15*k, gap=0.12*k, tot=0;
@@ -1789,7 +1826,9 @@ function gopuramParts(G,cz,s,later,photo){
           var L=wt[c]/tot*(avail-gap*T.row.length), uc=sd*(u-L/2); u-=L+gap;
           if(c==='P'){P2.pav.push(onFace(panjaraGeom(L*0.9,0.42*k,0.42*hv),face,uc,y,ax,az,-0.21*k));}
           else{
-            P2.pav.push(onFace(salaGeom(L*0.95,0.7*k,0.5*hv),face,uc,y,ax,az,-0.35*k));
+            P2.pav.push(onFace(jala(salaGeom(L*0.95,0.7*k,0.5*hv)),face,uc,y,ax,az,-0.35*k));
+            P2.pav.push(onFace(box(L,0.06*hv,0.76*k),face,uc,y+0.5*hv,ax,az,-0.35*k));
+            [-0.28,0.28].forEach(function(ff){var sf=finialGeom(0.06*k,0.14*hv); P2.pav.push(onFace(sf,face,uc+ff*L,y+0.5*hv+0.34*k,ax,az,-0.35*k));});
             if(c==='G') P2.pav.push(onFace(panjaraGeom(L*0.5,m(0.25),0.55*hv),face,uc,y+0.1*hv,ax,az,m(0.02)));
           }
         });
@@ -1821,7 +1860,8 @@ function gopuramParts(G,cz,s,later,photo){
       ['+x','-x'].forEach(function(face){[-0.5,0.5].forEach(function(t){figOn(P2.stucco,face,t*az,y,ax,az,m(0.2),fh,'stand');});});
     }
     var tw2=2*(ax-0.6*k), td=2*(az-0.6*k);
-    B(P2.tiers,tw2,0.72*h,td,0,y+0.36*h,cz); B(P2.tiers,tw2*1.05,0.28*h,td*1.05,0,y+0.72*h+0.14*h,cz);
+    B(P2.tiers,tw2,h,td,0,y+0.5*h,cz);
+    P2.tiers.push(sweep([[tw2/2,cz-td/2],[tw2/2,cz+td/2],[-tw2/2,cz+td/2],[-tw2/2,cz-td/2]],entProf(y+0.72*h,0.28*h,0,0.025*tw2).prof,true));
     y+=h;
   });
   /* neck and wagon roof, with horseshoe gables at the ends and at the centre of each long face */
@@ -1834,9 +1874,15 @@ function gopuramParts(G,cz,s,later,photo){
     ['+x','-x'].forEach(function(face){[-0.25,0.25].forEach(function(t){figOn(P2.stucco,face,t*D,y,L/2,D/2,m(0.15),nk*0.75,'sit');});});
   }
   y+=nk;
-  var bar=salaGeom(L,D,0.25*D); bar.scale(1,rf/(0.75*D),1); bar.translate(0,y,cz); P2.roof.push(bar);
+  var bar=jala(salaGeom(L,D,0.25*D)); bar.scale(1,rf/(0.75*D),1); bar.translate(0,y,cz); P2.roof.push(bar);
+  B(P2.roof,L*1.01,m(0.14),D*1.025,0,y+rf*0.335,cz);
   [['+x',L/2],['-x',L/2]].forEach(function(f){
-    var eg=panjaraGeom(D*1.08,m(0.35),0.6*D); eg.scale(1,rf*1.3/(1.14*D),1);
+    /* at high detail the end gable gets an inner step and the two out-curled horns photographs show under its crest */
+    if(HI){
+      var e2=panjaraGeom(D*0.72,m(0.2),0.4*D); e2.scale(1,rf*0.95/(0.76*D),1); P2.roof.push(onFace(mono(e2),f[0],0,y,L/2,D/2,m(0.36)));
+      [-1,1].forEach(function(sd){var hn=new THREE.CylinderGeometry(m(0.32),m(0.32),m(0.4),10); hn.rotateX(Math.PI/2); P2.roof.push(onFace(mono(hn),f[0],sd*D*0.5,y+rf*0.95,L/2,D/2,m(0.2)));});
+    }
+    var eg=mono(panjaraGeom(D*1.08,m(0.35),0.6*D)); eg.scale(1,rf*1.3/(1.14*D),1);
     P2.roof.push(onFace(eg,f[0],0,y,L/2,D/2,m(0.1)));
     P2.roof.push(onFace(box(m(0.8),m(0.8),m(0.35)),f[0],0,y+rf*1.3+m(0.35),L/2,D/2,m(0.12)));
   });
@@ -1850,7 +1896,7 @@ function gopuramParts(G,cz,s,later,photo){
   for(i=0;i<G.fins;i++){
     var fx=G.fins>1?-0.42*L+i*0.84*L/(G.fins-1):0;
     var kg=new THREE.LatheGeometry([[0,0],[0.5,0],[1,0.45],[0.8,0.9],[0.3,1.1],[0.15,1.8],[0,2.2]].map(function(p){return new THREE.Vector2(p[0]*fh*0.3,p[1]*fh/2.2);}),10);
-    kg.translate(fx,ridge-m(0.05),cz); P2.fin.push(kg);
+    kg.translate(fx,ridge-m(0.05),cz); P2.fin.push(mono(kg));
   }
   return {parts:P2,obs:obs,top:ridge+fh,photos:photos};
 }
@@ -2010,46 +2056,46 @@ function buildCourt(W,upH,adH,padH){
     });
   }
   gopuram('rr',GOP.R,zR,[
-    {part:'base',name:'Rajarajan gateway, base',tier:'inf',rule:'A plinth, a dado carrying one row of relief panels between pilasters, a cornice with lion heads over the pilasters, and two plain courses, as photographs of the east face show [@gop_photos]. Balasubrahmanyam notes attractive panels on this base [@bala_complex]. The Mayamata\'s rules for gateway bases are in its second volume, which was not available [@maya], so the mouldings are not named.',
-     o:{src:['gop_photos','bala_complex','maya'],conf:60,basis:'Buildings',gram:'Rajarajan → Base → Plinth | Dado | Cornice | Courses×2',dims:[['Sequence',B,'from photographs of the east face [@gop_photos]'],heightNote]}},
+    {part:'base',name:'Rajarajan gateway, base',tier:'inf',rule:'A plinth, a dado carrying one row of relief panels between pilasters, a cornice with lion heads over the pilasters, and two plain courses, as photographs of the east face show [@gop_photos]. Balasubrahmanyam notes attractive panels on this base [@bala_complex]. The Mayamata\'s rules for gateway bases are in its second volume, which was not available [@maya], so the mouldings are not named. The plinth\'s chamfer, the cornice\'s rounded profile and the courses\' chamfered tops are estimates.',
+     o:{src:['gop_photos','bala_complex','maya'],conf:60,basis:'Buildings',gram:'Rajarajan → Base → Plinth | Dado | Cornice | Courses×2',dims:[['Sequence',B,'from photographs of the east face [@gop_photos]'],heightNote,['Moulding profiles',E,'estimated: the text\'s rules for gateway bases are unread']]}},
     {part:'panels',name:'Rajarajan gateway, relief panels (generic figures)',tier:'inf',rule:'One row of relief panels runs along the base, about 16 on the east face and 9 on the west [@gop_photos]. They show forms of Siva, among them the wedding, Kirata and Arjuna, and Kamantaka, and were left unfinished [@ignca_in][@bala_early]. Each panel is drawn with two generic figures in low relief. Their forms are invented and depict no one in particular.',
      o:{src:['gop_photos','ignca_in','bala_early'],conf:60,basis:'Buildings',gram:'Base → Dado → Repeat(Panel → Figure×2)',dims:[['Count',B,'about 16 east and 9 west, ±4 [@gop_photos]'],['Size',E,'estimated'],['Figures',E,'generic, invented']]},n:GOP.R.panelsE+GOP.R.panelsW},
-    {part:'body',name:'Rajarajan gateway, stone storey and passage',tier:'rule',rule:'The stone ground storey with the passage through it. Balasubrahmanyam counts three storeys [@bala_early], and IGNCA calls it a three-storeyed stone structure [@ignca_in]. Photographs show what that count means: this stone storey, two tiers, then the wagon roof, which is not counted [@gop_photos]. Sources disagree on where the stone stops and brick begins [@ignca_in][@es][@th2010]. The passage is drawn flat-lintelled, as Chola doorways normally are. The arched frame seen in it today is undated.',
-     o:{src:['bala_early','ignca_in','gop_photos','es','th2010','osm'],conf:75,basis:'Buildings',gram:'Rajarajan → Stone storey | Passage | Cornice',dims:[['Plan',B,'25.6 by 16.7 m [@osm]'],['Height',E,'12.4 m to the top of the cornice, about half the gateway\'s height [@gop_photos]'],['Passage',E,'3.6 m wide']]}},
+    {part:'body',name:'Rajarajan gateway, stone storey and passage',tier:'rule',rule:'The stone ground storey with the passage through it. Balasubrahmanyam counts three storeys [@bala_early], and IGNCA calls it a three-storeyed stone structure [@ignca_in]. Photographs show what that count means: this stone storey, two tiers, then the wagon roof, which is not counted [@gop_photos]. Sources disagree on where the stone stops and brick begins [@ignca_in][@es][@th2010]. The passage is drawn flat-lintelled, as Chola doorways normally are. The arched frame seen in it today is undated. The main cornice is drawn in the entablature\'s parts with a dormer over each bay, like the tower\'s, since the Mayamata calls gateways very similar to temples (introduction, chapter 16) [@maya]. The pilasters and beams in the passage follow a description of the outer gateway\'s passage [@es]; for this gateway they are an assumption.',
+     o:{src:['bala_early','ignca_in','gop_photos','es','th2010','osm','maya'],conf:75,basis:'Buildings',gram:'Rajarajan → Stone storey | Passage(Pilasters + Beams) | Cornice + Dormers',dims:[['Plan',B,'25.6 by 16.7 m [@osm]'],['Height',E,'12.4 m to the top of the cornice, about half the gateway\'s height [@gop_photos]'],['Passage',E,'3.6 m wide'],['Cornice parts',T,'architrave, frieze, rounded cornice with dormers, upper frieze (Mayamata 16.2 to 35) [@maya]'],['Cornice profile, dormer count and passage pilasters',E,'estimated']]}},
     {part:'guard',name:'Rajarajan gateway, guardians (generic figures)',tier:'rule',rule:'Two giant four-armed guardians stand centred in the two halves of the east face, not beside the door. Balasubrahmanyam calls the position peculiar for a gopuram [@bala_early]. They are monolithic granite, over 16 feet high [@ignca_in], or 18 feet [@es]. They are drawn as generic four-armed figures of that height. Their form is otherwise invented: they hold nothing and carry no identifying features.',
      o:{src:['bala_early','ignca_in','es','gop_photos','ic87'],conf:80,basis:'Buildings',gram:'Rajarajan → East face → Guardian×2',dims:[['Position',B,'centred in each half of the east face [@bala_early][@gop_photos]'],['Height',B,'about 5.2 m, between 16 and 18 feet [@ignca_in][@es]'],['Four arms',B,'[@bala_early]'],['Form',E,'generic, invented']]},n:2},
     {part:'porch',name:'Rajarajan gateway, west porches',tier:'inf',rule:'Two projecting two-level pavilions flank the passage on the court side, each with a small door below and a niche above, as photographs show [@gop_photos]. A travel write-up mentions two subshrines on either side [@es], which may be these. Their size is estimated.',
      o:{src:['gop_photos','es'],conf:55,basis:'Buildings',gram:'Rajarajan → West face → Porch×2',dims:[['Form',B,'two levels with a door and a niche [@gop_photos]'],['Size',E,'estimated']]},n:2},
-    {part:'wall',name:'Rajarajan gateway, pilasters and niches',tier:'rule',rule:'Pilasters and niche frames on the stone storey [@gop_photos]. The Mayamata names ten deities to be installed on the facades of the gateways (23.106) [@maya], so the niches are where figures belonged. The niches are drawn empty.',
-     o:{src:['gop_photos','maya'],conf:65,basis:'Buildings and text',gram:'Stone storey → Pilasters | Niches',dims:[['Spacing and size',E,'estimated']]}},
-    {part:'tiers',name:'Rajarajan gateway, tiers (2)',tier:'rule',rule:'Two tiers above the stone storey, stepping in sharply above the first, as photographs show [@gop_photos]. With the stone storey that makes the three storeys the sources count [@bala_early][@ignca_in]. The superstructure is brick and lime [@th2010].',
-     o:{src:['gop_photos','bala_early','ignca_in','th2010'],conf:75,basis:'Buildings',gram:'Rajarajan → Tier×2',dims:[['Count',B,'two, by the sources\' counting [@bala_early][@gop_photos]'],heightNote,['Step-in',E,'0.9 and 4.9 m from the cornice edge, from photographs, ±25% [@gop_photos]']]}},
-    {part:'pav',name:'Rajarajan gateway, tier pavilions',tier:'rule',rule:'Each tier ends in a row of pavilions like a vimana\'s: square corner pavilions with domed roofs, oblong pavilions with barrel roofs running along the face, some fronted by a large gable, and narrow pavilions fronted by a horseshoe gable [@gop_photos]. The Mayamata describes the same rows on every storey (introduction and 22.82 to 89) and says gateways are very similar to temples [@maya]. The counts are only about 50% reliable, because 17th-century Nayaka stucco figures stand in front of the pavilions [@ignca_in]. Those figures are later, and are shown only with the later additions.',
-     o:{src:['gop_photos','maya','ignca_in'],conf:60,basis:'Buildings and text',gram:'Tier → Kuta · G · P · S · Centre (tier 1); Kuta · P · S · Centre (tier 2)',dims:[['Kinds',B,'kuta, sala, panjara [@gop_photos][@maya]'],['Counts per face',E,'from photographs, about 50% [@gop_photos]'],['Short faces',E,'not counted; a central gabled niche is drawn']]}},
+    {part:'wall',name:'Rajarajan gateway, pilasters and niches',tier:'rule',rule:'Pilasters and niche frames on the stone storey [@gop_photos]. The Mayamata names ten deities to be installed on the facades of the gateways (23.106) [@maya], so the niches are where figures belonged. The niches are drawn empty. Each pilaster has a bell capital, an abacus and a bracket, as the Mayamata gives every pilaster (chapter 15) [@maya]; photographs were not read closely enough to check their capitals.',
+     o:{src:['gop_photos','maya'],conf:65,basis:'Buildings and text',gram:'Stone storey → Pilasters | Niches',dims:[['Capitals',T,'bell capital, abacus and bracket (Mayamata 15.13 to 16, 15.28) [@maya]'],['Spacing and size',E,'estimated']]}},
+    {part:'tiers',name:'Rajarajan gateway, tiers (2)',tier:'rule',rule:'Two tiers above the stone storey, stepping in sharply above the first, as photographs show [@gop_photos]. With the stone storey that makes the three storeys the sources count [@bala_early][@ignca_in]. The superstructure is brick and lime [@th2010]. Each tier\'s cornice has the rounded profile used on the tower; that profile is an estimate.',
+     o:{src:['gop_photos','bala_early','ignca_in','th2010'],conf:75,basis:'Buildings',gram:'Rajarajan → Tier×2',dims:[['Count',B,'two, by the sources\' counting [@bala_early][@gop_photos]'],heightNote,['Cornice profile',E,'as on the tower, estimated'],['Step-in',E,'0.9 and 4.9 m from the cornice edge, from photographs, ±25% [@gop_photos]']]}},
+    {part:'pav',name:'Rajarajan gateway, tier pavilions',tier:'rule',rule:'Each tier ends in a row of pavilions like a vimana\'s: square corner pavilions with domed roofs, oblong pavilions with barrel roofs running along the face, some fronted by a large gable, and narrow pavilions fronted by a horseshoe gable [@gop_photos]. The Mayamata describes the same rows on every storey (introduction and 22.82 to 89) and says gateways are very similar to temples [@maya]. The counts are only about 50% reliable, because 17th-century Nayaka stucco figures stand in front of the pavilions [@ignca_in]. Those figures are later, and are shown only with the later additions. The corner pavilions have a domed roof and a small finial, and the barrel roofs carry a net pattern, as photographs show [@gop_photos]; the barrels\' finials follow the text (22.82 to 89) [@maya].',
+     o:{src:['gop_photos','maya','ignca_in'],conf:60,basis:'Buildings and text',gram:'Tier → Kuta · G · P · S · Centre (tier 1); Kuta · P · S · Centre (tier 2)',dims:[['Kinds',B,'kuta, sala, panjara [@gop_photos][@maya]'],['Domed corner roofs and net pattern',B,'seen in photographs [@gop_photos]'],['Size of the net and of the finials',E,'estimated'],['Counts per face',E,'from photographs, about 50% [@gop_photos]'],['Short faces',E,'not counted; a central gabled niche is drawn']]}},
     {part:'centre',name:'Rajarajan gateway, centre bays and central gables',tier:'rule',rule:'The centre of each long face is a projecting pavilion stacked tier on tier, with a window opening in the first tier, crowned by horseshoe gables that rise into a large gable in the roof with a lion-face crest [@gop_photos]. Dagens glosses this false dormer as nasi, Tamil kudu [@maya].',
      o:{src:['gop_photos','maya'],conf:70,basis:'Buildings',gram:'Long face → Centre bay(window) → Gable → Roof gable',dims:[['Form',B,'from photographs [@gop_photos]'],['Size',E,'estimated']]}},
-    {part:'roof',name:'Rajarajan gateway, neck and wagon roof',tier:'rule',rule:'A wagon (barrel) roof on a neck, with a tall horseshoe gable at each end crowned by a lion-face crest [@gop_photos]. Balasubrahmanyam calls the top a sala type of pavilion [@bala_early], and Dagens says gateways are almost always wagon-roofed [@maya]. The seated stucco figures on the neck are Nayaka additions [@ignca_in], so the neck is plain except with the later additions.',
-     o:{src:['gop_photos','bala_early','maya','ignca_in'],conf:75,basis:'Buildings and text',gram:'Rajarajan → Neck | Wagon roof + End gables×2',dims:[['Ridge length',E,'about half the base width, from photographs, ±25% [@gop_photos]'],heightNote]}},
+    {part:'roof',name:'Rajarajan gateway, neck and wagon roof',tier:'rule',rule:'A wagon (barrel) roof on a neck, with a tall horseshoe gable at each end crowned by a lion-face crest [@gop_photos]. Balasubrahmanyam calls the top a sala type of pavilion [@bala_early], and Dagens says gateways are almost always wagon-roofed [@maya]. The seated stucco figures on the neck are Nayaka additions [@ignca_in], so the neck is plain except with the later additions. The barrel carries a net (jala) pattern in photographs [@gop_photos], drawn here as lines in the surface. The lion-face crests are plain blocks, and the out-curled horns under them, shown at high detail, are simple discs.',
+     o:{src:['gop_photos','bala_early','maya','ignca_in'],conf:75,basis:'Buildings and text',gram:'Rajarajan → Neck | Wagon roof(net) + End gables×2',dims:[['Ridge length',E,'about half the base width, from photographs, ±25% [@gop_photos]'],['Net pattern',B,'seen on the barrel in photographs [@gop_photos]'],['Size of the net',E,'estimated'],heightNote]}},
     {part:'stucco',name:'Rajarajan gateway, stucco figures (Nayaka, generic)',tier:'inf',rule:'Painted stucco figures crowd the tiers and the roof\'s neck. They are 17th-century Nayaka additions: on this gateway, Siva\'s exploits face east and Vishnu and his incarnations face west, with a Nayaka portrait on top [@ignca_in]. Shown only with the later additions. They are drawn as generic standing figures in front of the tier pavilions and seated ones along the neck. Their number, places and forms are estimated, and they depict no one in particular.',
      o:{src:['ignca_in','gop_photos'],conf:45,basis:'Buildings, loosely',gram:'Tier → Repeat(Figure) · Neck → Repeat(Seated figure)',dims:[['Date',B,'17th century, Nayaka [@ignca_in]'],['Number and places',E,'estimated from photographs [@gop_photos]'],['Figures',E,'generic, invented']]}},
     {part:'fin',name:'Rajarajan gateway, finials (5)',tier:'rule',rule:'Five pot finials along the ridge, the middle one behind the central crest [@th2010][@bala_early][@gop_photos]. That matches the Manasara\'s five spires for a three-storey gate-house (33a.174) [@man33]. One was destroyed by lightning in 2010 and replaced [@th2010].',
      o:{src:['th2010','bala_early','gop_photos','man33'],conf:90,basis:'Buildings and text',gram:'Roof → Finial×5',dims:[['Count',B,'five [@th2010][@bala_early]'],['Size',E,'about 1 m, from photographs [@gop_photos]']]},n:5}
   ]);
   gopuram('kk',GOP.K,zK,[
-    {part:'base',name:'Keralantakan gateway, base',tier:'inf',rule:'A tall base of plain stepped courses with no relief panels, as photographs show [@gop_photos]. Balasubrahmanyam calls the gateway unpretentious [@bala_complex]. The Mayamata\'s rules for gateway bases are in its second volume, which was not available [@maya].',
-     o:{src:['gop_photos','bala_complex','maya'],conf:60,basis:'Buildings',gram:'Keralantakan → Base → Courses×4',dims:[['Form',B,'plain courses [@gop_photos]'],heightNote]}},
-    {part:'body',name:'Keralantakan gateway, stone storey and passage',tier:'rule',rule:'The outer gateway, on the axis 71.9 m beyond the inner one [@osm], built under Rajaraja I [@fh]. It has five storeys [@bala_early][@ignca_out][@es]: photographs show this stone storey and four tiers, with the wagon roof not counted [@gop_photos]. No Chola wall round it was found, and the later fort wall now runs through it [@osm], so it is drawn standing alone. How much of it is granite is disputed: the first three storeys [@ignca_out], or up to the first floor [@es].',
-     o:{src:['osm','fh','bala_early','ignca_out','es','gop_photos'],conf:75,basis:'Buildings',gram:'Axis → Keralantakan → Stone storey | Passage | Cornice',dims:[['Plan',B,'29.4 by 17.6 m [@osm]'],['Distance from the inner gateway',B,'71.9 m, centre to centre [@osm]'],['Height',E,'11.3 m to the top of the cornice [@gop_photos]'],['Passage',E,'3.6 m wide']]}},
-    {part:'wall',name:'Keralantakan gateway, pilasters, windows and niches',tier:'rule',rule:'Pilasters and small rectangular windows on the stone storey [@gop_photos]. Its outer niches are empty, according to Balasubrahmanyam [@bala_early]. IGNCA says they were meant for stone images, a few of which remain on the north and south faces [@ignca_out]. The Mayamata names ten deities for the facades of gateways (23.106) [@maya]. The niches are drawn empty.',
-     o:{src:['gop_photos','bala_early','ignca_out','maya'],conf:65,basis:'Buildings and text',gram:'Stone storey → Pilasters | Windows | Niches',dims:[['Spacing and size',E,'estimated']]}},
-    {part:'tiers',name:'Keralantakan gateway, tiers (4)',tier:'rule',rule:'Four tiers above the stone storey, narrowing evenly, as photographs show [@gop_photos]. With the stone storey that makes the five storeys the sources count [@bala_early][@ignca_out][@es]. Balasubrahmanyam calls the superstructure stocky and short [@bala_complex].',
-     o:{src:['gop_photos','bala_early','ignca_out','es','bala_complex'],conf:75,basis:'Buildings',gram:'Keralantakan → Tier×4',dims:[['Count',B,'four, by the sources\' counting [@bala_early][@gop_photos]'],heightNote,['Step-in',E,'1.3, 3.2, 5.9 and 7.7 m from the cornice edge, ±25% [@gop_photos]']]}},
-    {part:'pav',name:'Keralantakan gateway, tier pavilions',tier:'rule',rule:'Each tier ends in a row of corner pavilions, oblong barrel-roofed pavilions and narrow gabled pavilions, thinning toward the top [@gop_photos], the rows the Mayamata gives every storey (22.82 to 89) [@maya]. Above the first tier the counts are only about 35% reliable, because 17th-century Nayaka stucco figures hide the pavilions [@ignca_out]. Those figures are later, and are shown only with the later additions.',
-     o:{src:['gop_photos','maya','ignca_out'],conf:55,basis:'Buildings and text',gram:'Tier → Kuta · G · S · P · Centre (tier 1), thinning upward',dims:[['Kinds',B,'kuta, sala, panjara [@gop_photos][@maya]'],['Counts per face',E,'from photographs, about 35 to 50% [@gop_photos]']]}},
+    {part:'base',name:'Keralantakan gateway, base',tier:'inf',rule:'A tall base of plain stepped courses with no relief panels, as photographs show [@gop_photos]. Balasubrahmanyam calls the gateway unpretentious [@bala_complex]. The Mayamata\'s rules for gateway bases are in its second volume, which was not available [@maya]. Each course is drawn with a chamfered top edge, which is an estimate.',
+     o:{src:['gop_photos','bala_complex','maya'],conf:60,basis:'Buildings',gram:'Keralantakan → Base → Courses×4',dims:[['Form',B,'plain courses [@gop_photos]'],heightNote,['Edge profile',E,'estimated']]}},
+    {part:'body',name:'Keralantakan gateway, stone storey and passage',tier:'rule',rule:'The outer gateway, on the axis 71.9 m beyond the inner one [@osm], built under Rajaraja I [@fh]. It has five storeys [@bala_early][@ignca_out][@es]: photographs show this stone storey and four tiers, with the wagon roof not counted [@gop_photos]. No Chola wall round it was found, and the later fort wall now runs through it [@osm], so it is drawn standing alone. How much of it is granite is disputed: the first three storeys [@ignca_out], or up to the first floor [@es]. Its passage has plain pilasters on plain brackets [@es], drawn four a side with a beam across at each pair. The main cornice is drawn in the entablature\'s parts with dormers, like the tower\'s, since the Mayamata calls gateways very similar to temples (introduction, chapter 16) [@maya].',
+     o:{src:['osm','fh','bala_early','ignca_out','es','gop_photos','maya'],conf:75,basis:'Buildings',gram:'Axis → Keralantakan → Stone storey | Passage(Pilasters + Beams) | Cornice + Dormers',dims:[['Plan',B,'29.4 by 17.6 m [@osm]'],['Distance from the inner gateway',B,'71.9 m, centre to centre [@osm]'],['Height',E,'11.3 m to the top of the cornice [@gop_photos]'],['Passage',E,'3.6 m wide'],['Passage pilasters',B,'plain pilasters on plain brackets [@es]'],['Cornice parts',T,'architrave, frieze, rounded cornice with dormers, upper frieze (Mayamata 16.2 to 35) [@maya]'],['Cornice profile, dormer count, number of passage pilasters',E,'estimated']]}},
+    {part:'wall',name:'Keralantakan gateway, pilasters, windows and niches',tier:'rule',rule:'Pilasters and small rectangular windows on the stone storey [@gop_photos]. Its outer niches are empty, according to Balasubrahmanyam [@bala_early]. IGNCA says they were meant for stone images, a few of which remain on the north and south faces [@ignca_out]. The Mayamata names ten deities for the facades of gateways (23.106) [@maya]. The niches are drawn empty. Each pilaster has a bell capital, an abacus and a bracket, as the Mayamata gives every pilaster (chapter 15) [@maya].',
+     o:{src:['gop_photos','bala_early','ignca_out','maya'],conf:65,basis:'Buildings and text',gram:'Stone storey → Pilasters | Windows | Niches',dims:[['Capitals',T,'bell capital, abacus and bracket (Mayamata 15.13 to 16, 15.28) [@maya]'],['Spacing and size',E,'estimated']]}},
+    {part:'tiers',name:'Keralantakan gateway, tiers (4)',tier:'rule',rule:'Four tiers above the stone storey, narrowing evenly, as photographs show [@gop_photos]. With the stone storey that makes the five storeys the sources count [@bala_early][@ignca_out][@es]. Balasubrahmanyam calls the superstructure stocky and short [@bala_complex]. Each tier\'s cornice has the rounded profile used on the tower; that profile is an estimate.',
+     o:{src:['gop_photos','bala_early','ignca_out','es','bala_complex'],conf:75,basis:'Buildings',gram:'Keralantakan → Tier×4',dims:[['Count',B,'four, by the sources\' counting [@bala_early][@gop_photos]'],heightNote,['Cornice profile',E,'as on the tower, estimated'],['Step-in',E,'1.3, 3.2, 5.9 and 7.7 m from the cornice edge, ±25% [@gop_photos]']]}},
+    {part:'pav',name:'Keralantakan gateway, tier pavilions',tier:'rule',rule:'Each tier ends in a row of corner pavilions, oblong barrel-roofed pavilions and narrow gabled pavilions, thinning toward the top [@gop_photos], the rows the Mayamata gives every storey (22.82 to 89) [@maya]. Above the first tier the counts are only about 35% reliable, because 17th-century Nayaka stucco figures hide the pavilions [@ignca_out]. Those figures are later, and are shown only with the later additions. The corner pavilions have a domed roof and a small finial, and the barrel roofs carry a net pattern, as photographs show [@gop_photos].',
+     o:{src:['gop_photos','maya','ignca_out'],conf:55,basis:'Buildings and text',gram:'Tier → Kuta · G · S · P · Centre (tier 1), thinning upward',dims:[['Kinds',B,'kuta, sala, panjara [@gop_photos][@maya]'],['Domed corner roofs and net pattern',B,'seen in photographs [@gop_photos]'],['Size of the net and of the finials',E,'estimated'],['Counts per face',E,'from photographs, about 35 to 50% [@gop_photos]']]}},
     {part:'centre',name:'Keralantakan gateway, centre bays and central gables',tier:'rule',rule:'A projecting centre bay stacked on each long face, with window openings in the lower tiers (tiers 1 and 2 on the west face, 1 to 3 on the east), crowned by gables rising into a large gable in the roof [@gop_photos].',
      o:{src:['gop_photos','maya'],conf:65,basis:'Buildings',gram:'Long face → Centre bay(window) → Gable → Roof gable',dims:[['Windows',B,'tiers 1 to 2 west, 1 to 3 east [@gop_photos]'],['Size',E,'estimated']]}},
-    {part:'roof',name:'Keralantakan gateway, neck and wagon roof',tier:'rule',rule:'A wagon roof on a neck, with horseshoe end gables crowned by lion-face crests [@gop_photos], the gateway roof Dagens describes [@maya]. The neck\'s stucco figures are Nayaka additions [@ignca_out], shown only with the later additions. Published heights for the gateway are 25 m [@th2010], 27.4 m and 30 m [@ic87]. The drawn height, about 27 m, fits those.',
-     o:{src:['gop_photos','maya','ignca_out','th2010','ic87'],conf:75,basis:'Buildings and text',gram:'Keralantakan → Neck | Wagon roof + End gables×2',dims:[['Height overall',B,'about 27 m, within published 25 to 30 m [@th2010][@ic87]'],['Ridge length',E,'0.42 of the base width, from photographs, ±25% [@gop_photos]']]}},
+    {part:'roof',name:'Keralantakan gateway, neck and wagon roof',tier:'rule',rule:'A wagon roof on a neck, with horseshoe end gables crowned by lion-face crests [@gop_photos], the gateway roof Dagens describes [@maya]. The neck\'s stucco figures are Nayaka additions [@ignca_out], shown only with the later additions. Published heights for the gateway are 25 m [@th2010], 27.4 m and 30 m [@ic87]. The drawn height, about 27 m, fits those. The barrel carries a net (jala) pattern in photographs [@gop_photos], drawn here as lines in the surface. The lion-face crests are plain blocks.',
+     o:{src:['gop_photos','maya','ignca_out','th2010','ic87'],conf:75,basis:'Buildings and text',gram:'Keralantakan → Neck | Wagon roof(net) + End gables×2',dims:[['Height overall',B,'about 27 m, within published 25 to 30 m [@th2010][@ic87]'],['Net pattern',B,'seen on the barrel in photographs [@gop_photos]'],['Size of the net',E,'estimated'],['Ridge length',E,'0.42 of the base width, from photographs, ±25% [@gop_photos]']]}},
     {part:'stucco',name:'Keralantakan gateway, stucco figures (Nayaka, generic)',tier:'inf',rule:'Painted stucco figures on the tiers and the roof\'s neck are 17th-century Nayaka additions: Kali and Siva dancing face east, Krishna and Vishnu west [@ignca_out]. Shown only with the later additions, as generic standing and seated figures. Their number, places and forms are estimated, and they depict no one in particular.',
      o:{src:['ignca_out','gop_photos'],conf:45,basis:'Buildings, loosely',gram:'Tier → Repeat(Figure) · Neck → Repeat(Seated figure)',dims:[['Date',B,'17th century, Nayaka [@ignca_out]'],['Number and places',E,'estimated from photographs [@gop_photos]'],['Figures',E,'generic, invented']]}},
     {part:'fin',name:'Keralantakan gateway, finials (7)',tier:'inf',rule:'Photographs show six pot finials from the west, with a gap at the centre where the crest stands; a seventh behind the crest fits the spacing, and an oblique view seems to show seven [@gop_photos]. Seven is about 60% likely. The Manasara gives a five-storey gate-house eleven spires (33a.202) [@man33], which this does not match.',
