@@ -82,6 +82,12 @@ The gateways' detail rests on `gopuram.md`, the halls' on `mandapa.md` and the c
 | Cloister | Moulded base, a cornice with dormers on the ground storey and a cornice on the upper; pillars with abacus and bracket | Rule-derived | Base, pillars, entablature: Text (MM 23.30–31, 23.67b–69; MS 31.61–62). Shapes: Estimate. |
 | Shrines | Stepped base, pilasters, three-step entablature with a dormer a face, pot finial | As each shrine | Shrines may look like temples: Text (MM 23.57b–58a). Shapes: Estimate. |
 | Nandi pavilion (later) | Moulded platform, twelve pillars round the edge, beams, cornice | Inferred | All Estimate. Not the Nayak building as it stands. |
+| Gateway bases | Rajarajan: chamfered plinth, a rounded cornice over the dado, two chamfered courses. Keralantakan: four plain courses with chamfered tops. | Inferred (as before) | Sequence: Buildings (`gopuram.md` §2.3). Profiles: Estimate (MM 24.27–28 unread). |
+| Gateway main cornice | The tower's entablature profile with a dormer over each bay | Part of the stone storey (Rule-derived) | Parts: Text (ch. 16, with p. lxx "very similar to the temples"). Profile and count: Estimate. |
+| Gateway pilasters | Bell capital, abacus and bracket | Rule-derived | Text (ch. 15). Not checked in the photographs. |
+| Passages | Four plain pilasters on plain brackets each side, a beam across at each pair | Part of the stone storey | Keralantakan: Buildings (ES, `gopuram.md` §2.4). Rajarajan: assumed from it. Count: Estimate. |
+| Gateway tier pavilions | Corner pavilions domed with a small finial; barrels with a net pattern and two finials | Rule-derived | Domes, finial and net: Buildings (PH, `gopuram.md` §2.1–2.2). Barrel finials: Text (22.82–89). |
+| Wagon roofs | Net (jala) pattern drawn in the surface by the shader; end gables with an inner step and two horn discs at High detail | Rule-derived | Net and horns: Buildings (PH). Mesh size: Estimate. Lion-face crests stay plain blocks. |
 
 ## 5. Not read or still needed
 
